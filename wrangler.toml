@@ -1,6 +1,11 @@
 name = "mindflow"
-compatibility_date = "2023-07-10"
-main = "index.js"
 
 [site]
 bucket = "./"
+
+[build]
+command = ""
+dest = "."
+
+# Directory where your built static files are located
+pages_build_output_dir = "."
