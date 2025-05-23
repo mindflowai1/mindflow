@@ -1,10 +1,43 @@
 name = "mindflow"
+<<<<<<< HEAD
 compatibility_date = "2025-05-23"
 main = "workers-site/index.js"
+=======
+type = "javascript"
+account_id = "" # Será preenchido automaticamente pela Cloudflare
+compatibility_date = "2025-05-23"
+main = "workers-site/index.js"
+workers_dev = true
+>>>>>>> 97b8c50 (Commit inicial: Configuração do MindFlow com novos planos e wrangler.toml atualizado)
 
 [site]
 bucket = "./"
 
+<<<<<<< HEAD
 # Configuração de domínio personalizado
 [env.production]
 routes = [{pattern = "mindflowdigital.com.br", custom_domain = true}]
+=======
+# Configuração de ambientes e domínios personalizados
+[env.production]
+routes = [{pattern = "mindflowdigital.com.br", custom_domain = true}]
+zone_id = "" # Será preenchido automaticamente pela Cloudflare
+
+# Configuração para preview de branches
+[env.staging]
+# Automaticamente criado ao fazer PR no GitHub
+
+# Configurações de build e deploy
+[build]
+command = "" # Se necessário, adicione comandos de build aqui como "npm run build"
+upload.format = "service-worker"
+
+[triggers]
+branches = ["main"]
+
+# Minimizar tempo de inatividade durante implantações
+[deployment]
+order = "sequential"
+concurrency = "10"
+
+>>>>>>> 97b8c50 (Commit inicial: Configuração do MindFlow com novos planos e wrangler.toml atualizado)
