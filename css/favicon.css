@@ -1,0 +1,4 @@
+/* Estilos para favicon com fundo transparente */
+link[rel="icon"] {
+    background-color: transparent;
+}

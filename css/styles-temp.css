@@ -878,10 +878,10 @@ body.menu-open {
 }
 
 .reasons-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     gap: 1.5rem;
-    max-width: 900px;
+    max-width: 1200px;
     margin: 2rem auto 3rem;
     padding: 0.5rem 1rem;
 }

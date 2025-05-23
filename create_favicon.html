@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favicon Creator</title>
+</head>
+<body>
+    <h1>Favicon Creator</h1>
+    <p>This page will help you create a favicon.ico file from your logo</p>
+    
+    <div>
+        <img id="logo" src="images/logo.svg" style="width: 64px; height: 64px;" />
+        <canvas id="canvas" width="64" height="64" style="border: 1px solid black;"></canvas>
+    </div>
+    
+    <button id="downloadBtn">Download favicon.ico</button>
+    
+    <script>
+        // Wait for image to load
+        window.onload = function() {
+            const img = document.getElementById('logo');
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Draw image on canvas
+            ctx.drawImage(img, 0, 0, 64, 64);
+            
+            // Create download button functionality
+            document.getElementById('downloadBtn').addEventListener('click', function() {
+                // Convert canvas to blob
+                canvas.toBlob(function(blob) {
+                    // Create download link
+                    const link = document.createElement('a');
+                    link.download = 'favicon.ico';
+                    link.href = URL.createObjectURL(blob);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }, 'image/x-icon');
+            });
+        };
+    </script>
+</body>
+</html>
