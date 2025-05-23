@@ -30,4 +30,4 @@ branches = ["main"]
 order = "sequential"
 concurrency = "10"
 
->>>>>>> 97b8c50 (Commit inicial: Configuração do MindFlow com novos planos e wrangler.toml atualizado)
+
