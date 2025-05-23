@@ -1,0 +1,61 @@
+/* Soluu00e7u00e3o definitiva para o overlay do hero */
+
+/* Reset completo da seu00e7u00e3o hero */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 2rem 60px 2rem; /* Adicionado mais padding na parte inferior */
+    margin-top: 60px;
+    background-attachment: scroll !important;
+    overflow: visible; /* Alterado para visível para o botão não ser cortado */
+}
+
+/* Criar um novo overlay com pseudo-elemento */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1;
+}
+
+/* Desativar o overlay original */
+.hero::after {
+    display: none !important;
+}
+
+/* Garantir que o conteu00fado fique acima do overlay */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    min-height: 100%;
+    text-align: center;
+    padding-bottom: 80px; /* Aumentado para dar mais espaço ao botão */
+    box-sizing: border-box;
+}
+
+/* Ajustes específicos para dispositivos móveis */
+@media (max-width: 768px) {
+    .hero {
+        min-height: 100vh;
+        height: auto;
+        padding-bottom: 3rem; /* Adicionar padding extra na parte inferior */
+    }
+    
+    /* Garantir que o overlay cubra toda a área em dispositivos móveis sem extravasar a viewport */
+    .hero::before {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}

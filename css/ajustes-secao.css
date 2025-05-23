@@ -1,0 +1,63 @@
+/* Ajustes específicos para a seção "O que fazemos por você" */
+
+/* Centralizar o conteúdo da seção */
+#how-it-works .section-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Garantir que os cards fiquem centralizados */
+#how-it-works .steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Definir ordem padrão dos cards para telas grandes */
+#config-step {
+    order: 1;
+}
+
+#whatsapp-step {
+    order: 2;
+}
+
+#results-step {
+    order: 3;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    #how-it-works .steps-container {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    #how-it-works .step {
+        margin: 0 auto;
+        max-width: 100%;
+    }
+    
+    /* Reordenar os cards em telas menores */
+    #whatsapp-step {
+        order: 1;
+    }
+    
+    #config-step {
+        order: 2;
+    }
+    
+    #results-step {
+        order: 3;
+    }
+}

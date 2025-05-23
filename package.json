@@ -1,0 +1,21 @@
+{
+  "name": "mindflow",
+  "version": "1.0.0",
+  "description": "Site da MindFlow - Automação Inteligente de WhatsApp",
+  "main": "index.html",
+  "scripts": {
+    "dev": "wrangler pages dev .",
+    "deploy": "wrangler pages publish ."
+  },
+  "keywords": [
+    "mindflow",
+    "whatsapp",
+    "automation",
+    "ai"
+  ],
+  "author": "MindFlow",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

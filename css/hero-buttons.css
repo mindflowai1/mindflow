@@ -1,0 +1,73 @@
+/* Estilos para os botões do hero */
+.hero-button {
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hero-button:hover {
+    text-decoration: none;
+}
+
+/* Estilos para o botão de rolagem */
+.scroll-down-button {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    animation: bounce 2s infinite;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.scroll-down-button:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+    transform: translate(-50%, 0) scale(1.1);
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    .scroll-down-button {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) translateX(-50%);
+    }
+    40% {
+        transform: translateY(-10px) translateX(-50%);
+    }
+    60% {
+        transform: translateY(-5px) translateX(-50%);
+    }
+}
+
+/* Estilos específicos para o botão de demonstração na seção Solução Completa */
+.solution-cta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3.5rem;
+}
+
+.solution-cta .hero-button.secondary {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    width: auto;
+    margin: 0 auto;
+}

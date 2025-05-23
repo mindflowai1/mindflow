@@ -1,0 +1,20 @@
+# Arquivos de configuração e desenvolvimento
+node_modules/
+.git/
+.gitignore
+README.md
+LICENSE
+wrangler.toml
+
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Arquivos de ambiente e desenvolvimento
+.env
+.env.local
+.vscode/
+.idea/

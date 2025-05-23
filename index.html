@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindFlow - Atendimento Inteligente para o seu Negócio</title>
+    
+    <!-- Metatags para SEO e compartilhamento em redes sociais -->
+    <meta name="description" content="Da captação ao atendimento automatizado: eficiência e disponibilidade 24/7 para o seu negócio com inteligência artificial.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://matheusmdeabreu.github.io/mindflow/">
+    <meta property="og:title" content="MindFlow - Atendimento Inteligente para o seu Negócio">
+    <meta property="og:description" content="Da captação ao atendimento automatizado: eficiência e disponibilidade 24/7 para o seu negócio com inteligência artificial.">
+    <meta property="og:image" content="https://matheusmdeabreu.github.io/mindflow/images/preview%20mindflow.webp">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://matheusmdeabreu.github.io/mindflow/">
+    <meta property="twitter:title" content="MindFlow - Atendimento Inteligente para o seu Negócio">
+    <meta property="twitter:description" content="Da captação ao atendimento automatizado: eficiência e disponibilidade 24/7 para o seu negócio com inteligência artificial.">
+    <meta property="twitter:image" content="https://matheusmdeabreu.github.io/mindflow/images/preview%20mindflow.webp">
+    <link rel="stylesheet" href="css/styles-temp.css">
+    <link rel="stylesheet" href="css/menu-responsivo.css">
+    <link rel="stylesheet" href="css/ajustes-secao.css">
+    <link rel="stylesheet" href="css/hero-overlay.css">
+    <link rel="stylesheet" href="css/hero-buttons.css">
+    <link rel="stylesheet" href="css/timeline.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Ajuste adicional para melhorar espaçamento das seções */
+        section {
+            scroll-margin-top: 80px; /* Espaço extra para compensar menus fixos, se houver */
+        }
+        
+        /* Redução do tamanho da fonte do título principal em dispositivos móveis */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.1rem !important; /* 3.5rem reduzido em 40% com !important para garantir aplicação */
+            }
+            
+            /* Redução do tamanho da fonte do subtítulo em dispositivos móveis */
+            .hero p {
+                font-size: 1.05rem !important; /* 1.3rem reduzido em ~20% */
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">
+                <a href="#" class="logo-link">
+                    <h1>MindFlow</h1>
+                </a>
+            </div>
+            
+            <!-- Menu Desktop -->
+            <div class="nav-links">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#how-it-works" class="nav-link">Conheça</a>
+                <a href="#projects" class="nav-link">Portfólio</a>
+                <a href="#plans" class="nav-link">Planos</a>
+                <a href="#contact" class="nav-link">Contato</a>
+            </div>
+            
+            <!-- Hamburger Menu Button -->
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#">Home</a>
+        <a href="#how-it-works">Conheça</a>
+        <a href="#projects">Portfólio</a>
+        <a href="#plans">Planos</a>
+        <a href="#contact">Contato</a>
+    </div>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Atendimento Inteligente para o seu Negócio</h1>
+            <p>Da captação ao atendimento automatizado: eficiência e disponibilidade 24/7.</p>
+            <div class="hero-buttons">
+                <a href="#complete-solution" class="hero-button primary">A Solução Completa</a>
+                <a href="#projects" class="hero-button secondary" style="text-decoration:none;">O Que Já Fizemos</a>
+            </div>
+        </div>
+        <a href="#how-it-works" class="scroll-down-button" aria-label="Rolar para baixo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </a>
+    </div>
+    <section id="how-it-works" class="section how-it-works">
+        <div class="section-content">
+            <h2 class="section-title">O que fazemos por você</h2>
+            <p style="text-align:center; margin-bottom: 2rem;">Na MindFlow, criamos <strong>soluções completas</strong> para transformar sua jornada de vendas:</p>
+            
+            <div class="steps-container">
+                <div class="step" id="config-step">
+                    <div class="step-icon">
+                        <svg class="icon" viewBox="0 0 1024 1024">
+                            <path d="M854.7 828.1H169.9c-38.9 0-70.5-31.6-70.5-70.5v-499c0-38.9 31.6-70.5 70.5-70.5h684.7c38.9 0 70.5 31.6 70.5 70.5v499c0.1 38.9-31.5 70.5-70.4 70.5z" fill="#FFFFFF" />
+                            <path d="M885.2 258.1c0-16.5-13.5-30-30-30H169.4c-16.5 0-30 13.5-30 30v120.1h745.7V258.1z m-649.7 96.1c-28.2 0-51.2-23-51.2-51.2s23-51.2 51.2-51.2 51.2 23 51.2 51.2-22.9 51.2-51.2 51.2z m281.8-6.8H374.7c-24.1 0-43.7-19.6-43.7-43.7s19.6-43.7 43.7-43.7h142.6c24.1 0 43.7 19.6 43.7 43.7s-19.6 43.7-43.7 43.7z" fill="#E6E6E6" />
+                            <path d="M213.3 752.8h298.8c5.5 0 10-4.5 10-10s-4.5-10-10-10H213.3c-8.5 0-15.4-6.9-15.4-15.4V524.6c0-5.5-4.5-10-10-10s-10 4.5-10 10v192.9c0.1 19.4 15.9 35.3 35.4 35.3z" fill="#06F3FF" />
+                            <path d="M235.5 271.8c-17.2 0-31.2 14-31.2 31.2s14 31.2 31.2 31.2 31.2-14 31.2-31.2-14-31.2-31.2-31.2z" fill="#FFFFFF" />
+                            <path d="M235.5 251.8c-28.2 0-51.2 23-51.2 51.2s23 51.2 51.2 51.2 51.2-23 51.2-51.2-22.9-51.2-51.2-51.2z m0 82.4c-17.2 0-31.2-14-31.2-31.2s14-31.2 31.2-31.2 31.2 14 31.2 31.2-14 31.2-31.2 31.2z" fill="#005BFF" />
+                            <path d="M517.3 280.1H374.7c-13 0-23.7 10.6-23.7 23.7s10.6 23.7 23.7 23.7h142.6c13 0 23.7-10.6 23.7-23.7s-10.7-23.7-23.7-23.7z" fill="#FFFFFF" />
+                            <path d="M517.3 260.1H374.7c-24.1 0-43.7 19.6-43.7 43.7s19.6 43.7 43.7 43.7h142.6c24.1 0 43.7-19.6 43.7-43.7s-19.6-43.7-43.7-43.7z m0 67.3H374.7c-13 0-23.7-10.6-23.7-23.7s10.6-23.7 23.7-23.7h142.6c13 0 23.7 10.6 23.7 23.7s-10.7 23.7-23.7 23.7z" fill="#005BFF" />
+                            <path d="M855.2 188.1H169.4c-38.6 0-70 31.4-70 70v500c0 38.6 31.4 70 70 70h685.7c38.6 0 70-31.4 70-70v-500c0.1-38.6-31.3-70-69.9-70z m30 570c0 16.5-13.5 30-30 30H169.4c-16.5 0-30-13.5-30-30V398.2h745.7v359.9z m0-379.9H139.5V258.1c0-16.5 13.5-30 30-30h685.7c16.5 0 30 13.5 30 30v120.1z" fill="#005BFF" />
+                            <path d="M459.9 624.6l-114.3-45.3 114.3-43.7v-46.5L296.1 560v39.5l163.8 71.2zM568.7 454.8h-34.4L475.1 702h33.8zM747.9 560.3l-164-70.9v45.8l114.4 44.5-114.4 45v46.2l164-71.4z" fill="#005BFF" />
+                        </svg>
+                    </div>
+                    <h3>Landing Pages inteligentes</h3>
+                    <p>Que captam leads de forma estratégica, com design otimizado e copy persuasiva.</p>
+                </div>
+                <div class="step" id="whatsapp-step">
+                    <div class="step-icon">
+                        <img src="images/whatsapp-icon.svg" alt="WhatsApp Icon" class="whatsapp-icon" />
+                    </div>
+                    <h3>Chatbots personalizados</h3>
+                    <p>Que automatizam o atendimento no WhatsApp, oferecendo suporte rápido e eficiente, 24/7.</p>
+                </div>
+                <div class="step" id="results-step">
+                    <div class="step-icon">
+                        <svg class="icon" viewBox="0 0 15 15">
+                            <defs>
+                                <linearGradient id="rocket-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#0ea5e9" />
+                                    <stop offset="100%" stop-color="#2563eb" />
+                                </linearGradient>
+                            </defs>
+                            <path id="path7143" d="M12.5547,1c-2.1441,0-5.0211,1.471-6.9531,4H4 C2.8427,5,2.1794,5.8638,1.7227,6.7773L1.1113,8h1.4434H4l1.5,1.5L7,11v1.4453v1.4434l1.2227-0.6113 C9.1362,12.8206,10,12.1573,10,11V9.3984c2.529-1.932,4-4.809,4-6.9531V1H12.5547z M10,4c0.5523,0,1,0.4477,1,1l0,0 c0,0.5523-0.4477,1-1,1l0,0C9.4477,6,9,5.5523,9,5v0C9,4.4477,9.4477,4,10,4L10,4z M3.5,10L3,10.5C2.2778,11.2222,2,13,2,13 s1.698-0.198,2.5-1L5,11.5L3.5,10z" fill="#000000" stroke="#0ea5e9" stroke-width="1.2" />
+                        </svg>
+                    </div>
+                    <h3>Entrega rápida em até 48 horas</h3>
+                    <p>Sua solução pronta e funcionando com agilidade e eficiência.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Seção Solução Completa para Captar e Converter Leads -->
+    <section id="complete-solution" class="section complete-solution">
+        <div class="section-content solution-content">
+            <h2 class="section-title">Solução Completa para Captar e Converter Leads</h2>
+            <div class="solution-container">
+                <div class="solution-image">
+                    <div class="site-image-container">
+                        <img src="images/site.webp" alt="Landing Page MindFlow" class="site-image" />
+                    </div>
+                </div>
+                <div class="solution-text">
+                    <ul class="solution-list">
+                        <li class="solution-item">
+                            <div class="solution-icon">
+                                <svg viewBox="0 0 24 24" class="solution-svg">
+                                    <path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                    <path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="2" fill="none" />
+                                </svg>
+                            </div>
+                            <div class="solution-content">
+                                <h3 class="solution-title">Landing Pages de Alta Conversão</h3>
+                                <p class="solution-description">Criamos páginas otimizadas para atrair, convencer e captar seus leads com design moderno e estratégia comprovada.</p>
+                            </div>
+                        </li>
+                        <li class="solution-item">
+                            <div class="solution-icon">
+                                <svg viewBox="0 0 24 24" class="solution-svg">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16h2v-6h-2v6zm0-8h2V8h-2v2z" stroke="currentColor" stroke-width="1" fill="none" />
+                                    <path d="M17.7 7.7a.996.996 0 00-1.41 0l-5.6 5.6-2.58-2.58a.996.996 0 10-1.41 1.41l3.3 3.29c.39.39 1.02.39 1.41 0l6.3-6.3a.996.996 0 000-1.42z" stroke="currentColor" stroke-width="1" fill="none" />
+                                </svg>
+                            </div>
+                            <div class="solution-content">
+                                <h3 class="solution-title">Integração com Bot no WhatsApp</h3>
+                                <p class="solution-description">Seus leads são atendidos automaticamente assim que preenchem a landing page.</p>
+                            </div>
+                        </li>
+                        <li class="solution-item">
+                            <div class="solution-icon">
+                                <svg viewBox="0 0 24 24" class="solution-svg">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+                                </svg>
+                            </div>
+                            <div class="solution-content">
+                                <h3 class="solution-title">Fluxo Completo Automatizado</h3>
+                                <p class="solution-description">Da captação à venda — sua empresa operando no piloto automático.</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="solution-cta">
+                        <a href="#plans" class="hero-button secondary" style="transform: translateY(-2px);">Conheça Nossos Planos</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Seção Projetos que ajudamos a transformar -->
+    <section id="projects" class="section projects-section">
+        <div class="section-content">
+            <h2 class="section-title">Projetos que ajudamos a transformar</h2>
+            <p class="section-intro">Ao longo da nossa trajetória, criamos soluções personalizadas que impactaram diversos negócios. Confira alguns dos destaques:</p>
+            
+            <div class="showcase-container">
+                <!-- Projeto 1 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/1 (1)_11zon.webp" alt="Landing Page Clínica BemEstar" class="project-screenshot">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Produtora de Eventos — Landing + Bot</h3>
+                        <p class="project-description">Criamos uma landing page elegante com captação automatizada, integrada a chatbot com Inteligência Artificial para atendimento ágil de clientes e organização de eventos.</p>
+                        <a href="https://matheusmdeabreu.github.io/Rafaela_Cassano/" target="_blank" class="project-button">Ver projeto</a>
+                    </div>
+                </div>
+                
+                <!-- Projeto 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/2 (1)_11zon.webp" alt="Landing Page Loja Virtual XYZ" class="project-screenshot">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Clínica de Estética — Solução FullFlow</h3>
+                        <p class="project-description">Desenvolvemos uma landing otimizada para agendamentos e um chatbot no WhatsApp, automatizando o atendimento e melhorando a experiência do paciente.</p>
+                        <a href="https://mindflowai1.github.io/medinova/" target="_blank" class="project-button">Ver projeto</a>
+                    </div>
+                </div>
+                
+                <!-- Projeto 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/3 (1)_11zon.webp" alt="Landing Page Startup ABC" class="project-screenshot">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Escritório de Advocacia — Captação Digital</h3>
+                        <p class="project-description">Criamos uma landing institucional com copy persuasiva, focada em captação de leads qualificados e integração com WhatsApp para atendimento consultivo.</p>
+                        <a href="https://alcantara-cardoso-rohlfs.mindflowwia.workers.dev/" target="_blank" class="project-button">Ver projeto</a>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </section>
+    
+    <!-- Seção Nossos Planos -->
+    <section id="plans" class="section plans-section">
+        <div class="section-content">
+            <h2 class="section-title">Nossos Planos</h2>
+            <div class="plans-container">
+                <!-- Plano BotFlow -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3 class="plan-title">BotFlow</h3>
+                        <div class="plan-price">A partir de R$750/mês</div>
+                        <div class="plan-price-note">+ R$1.000 de taxa única de implementação</div>
+                    </div>
+                    <div class="plan-content">
+                        <ul class="plan-features">
+                            <li>Criação de chatbot personalizado</li>
+                            <li>Integração com número comercial</li>
+                            <li>Fluxos automatizados de atendimento</li>
+                            <li>Relatórios mensais</li>
+                            <li>Suporte técnico contínuo</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <button class="plan-button">Quero este plano</button>
+                        <p class="plan-note" style="font-size: 0.8em; opacity: 0.7; margin-top: 10px; text-align: center;">As mensalidades são a partir de R$ 750/mês, podendo variar conforme a complexidade do fluxo e integrações.</p>
+                    </div>
+                </div>
+
+                <!-- Plano LeadFlow (Destacado) -->
+                <div class="plan-card featured">
+                    <div class="plan-badge">Mais escolhido</div>
+                    <div class="plan-header">
+                        <h3 class="plan-title">LeadFlow</h3>
+                        <div class="plan-price">R$2.000 pela criação da landing page</div>
+                        <div class="plan-price-note">+ A partir de R$750/mês</div>
+                        <div class="plan-price-highlight" style="font-size: 1.05rem; font-weight: 600; letter-spacing: 0.3px; padding: 8px 15px; margin: 12px auto 5px; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border-radius: 3px; max-width: 85%; box-shadow: 0 3px 8px rgba(14, 165, 233, 0.2);">Implementação grátis (economia de R$1.000!)</div>
+                    </div>
+                    <div class="plan-content">
+                        <ul class="plan-features">
+                            <li>Criação da landing page personalizada</li>
+                            <li>Copywriting persuasivo</li>
+                            <li>Integração total com chatbot no WhatsApp</li>
+                            <li>Implementação grátis</li>
+                            <li>Suporte e relatórios mensais</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <button class="plan-button featured">Quero este plano</button>
+                        <p class="plan-note" style="font-size: 0.8em; opacity: 0.7; margin-top: 10px; text-align: center;">As mensalidades são a partir de R$ 750/mês, podendo variar conforme a complexidade do fluxo e integrações.</p>
+                    </div>
+                </div>
+
+                <!-- Plano LandingFlow -->
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <h3 class="plan-title">LandingFlow</h3>
+                        <div class="plan-price">R$2.000</div>
+                        <div class="plan-price-note">(valor único, sem mensalidade)</div>
+                    </div>
+                    <div class="plan-content">
+                        <ul class="plan-features">
+                            <li>Landing page exclusiva e responsiva</li>
+                            <li>Copywriting estratégico para conversão</li>
+                            <li>Estrutura pronta para integração com CRM ou WhatsApp manual</li>
+                        </ul>
+                    </div>
+                    <div class="plan-footer">
+                        <button class="plan-button">Quero este plano</button>
+                        <p class="plan-note" style="font-size: 0.8em; opacity: 0.8; margin-top: 10px; text-align: center; font-weight: 500;">Somos referência na criação de landing pages de alto desempenho com taxas de conversão comprovadas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="plans-info">
+                <p class="plans-note" style="margin-bottom: 20px;">Todos os planos incluem: chatbot com IA no WhatsApp, personalização inicial e suporte dedicado.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Por que escolher a MindFlow -->
+    <section id="why-choose" class="section why-choose">
+        <div class="section-content">
+            <h2 class="section-title">Por que escolher a MindFlow?</h2>
+            <p style="text-align:center; margin-bottom: 2rem;">Porque oferecemos muito mais do que uma landing page ou um chatbot:</p>
+            <div class="reasons-container">
+                <!-- Bloco 1 -->
+                <div class="reason-block">
+                    <div class="reason-header">
+                        <div class="reason-icon">
+                            <svg viewBox="0 0 24 24" class="reason-svg">
+                                <path d="M4 6h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4 12h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4 18h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M8 6v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M16 6v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <rect x="2" y="3" width="20" height="18" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" />
+                            </svg>
+                        </div>
+                        <h3 class="reason-title">Sistemas integrados</h3>
+                    </div>
+                    <p class="reason-description">Somos especialistas em sistemas integrados de captação e atendimento.</p>
+                </div>
+
+                <!-- Bloco 2 -->
+                <div class="reason-block">
+                    <div class="reason-header">
+                        <div class="reason-icon">
+                            <svg viewBox="0 0 24 24" class="reason-svg">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                <path d="M3 8h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M8 14h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M8 17h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <circle cx="6" cy="6" r="1" fill="currentColor" />
+                                <circle cx="9" cy="6" r="1" fill="currentColor" />
+                                <circle cx="12" cy="6" r="1" fill="currentColor" />
+                            </svg>
+                        </div>
+                        <h3 class="reason-title">Landing Pages</h3>
+                    </div>
+                    <p class="reason-description">Criamos Landing Pages com foco em conversão, personalizadas para sua marca.</p>
+                </div>
+
+                <!-- Bloco 3 -->
+                <div class="reason-block">
+                    <div class="reason-header">
+                        <div class="reason-icon">
+                            <svg viewBox="0 0 24 24" class="reason-svg">
+                                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                                <circle cx="8" cy="10" r="1" fill="currentColor" />
+                                <circle cx="12" cy="10" r="1" fill="currentColor" />
+                                <circle cx="16" cy="10" r="1" fill="currentColor" />
+                            </svg>
+                        </div>
+                        <h3 class="reason-title">Chatbots inteligentes</h3>
+                    </div>
+                    <p class="reason-description">Desenvolvemos Chatbots inteligentes que automatizam o contato e qualificam seus leads.</p>
+                </div>
+
+                <!-- Bloco 4 -->
+                <div class="reason-block">
+                    <div class="reason-header">
+                        <div class="reason-icon">
+                            <svg viewBox="0 0 24 24" class="reason-svg">
+                                <path d="M20 4v5h-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4 20v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M4 7.5C5.5 5.3 8.5 4 12 4c2.3 0 4.4.8 6 2l2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M20 16.5c-1.5 2.2-4.5 3.5-8 3.5-2.3 0-4.4-.8-6-2l-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h3 class="reason-title">Fluxo automatizado</h3>
+                    </div>
+                    <p class="reason-description">Garantimos que todo o fluxo — da primeira visita até o atendimento final — seja automatizado, eficiente e humanizado.</p>
+                </div>
+
+                <!-- Bloco 5 -->
+                <div class="reason-block">
+                    <div class="reason-header">
+                        <div class="reason-icon">
+                            <svg viewBox="0 0 24 24" class="reason-svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none" />
+                                <path d="M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M8 12h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M15 9l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                <path d="M9 9l6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                            </svg>
+                        </div>
+                        <h3 class="reason-title">Sem complicação</h3>
+                    </div>
+                    <p class="reason-description">Cuidamos de toda a implementação para que você comece a gerar resultados rapidamente.</p>
+                </div>
+            </div>
+            <p style="text-align:center; margin-top: 2rem; font-weight: 500; font-size: 1.2rem;">MindFlow: <strong>da captação ao atendimento, um sistema completo</strong> para transformar o relacionamento com seus clientes.</p>
+        </div>
+    </section>
+
+    <!-- Seção Vamos Conversar? -->
+    <section id="contact" class="section contact-section">
+        <div class="section-content contact-content">
+            <div class="contact-info">
+                <h2 class="contact-title">Vamos Conversar?</h2>
+                <p class="contact-subtitle">Preencha o formulário e nossa equipe entrará em contato para entender sua demanda e apresentar a melhor solução com IA.</p>
+                <p class="contact-trust"><img src="images/patch-check-fill.svg" alt="Verificado" class="verified-icon" /> <em>Atendimento rápido e sem compromisso.</em></p>
+            </div>
+            <div class="contact-form-container">
+                <form id="contactForm" class="contact-form" onsubmit="return sendEmail(event)">
+                    <!-- EmailJS substituirá o envio para o e-mail -->
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Empresa <span class="optional">(opcional)</span></label>
+                        <input type="text" id="company" name="company" placeholder="Nome da sua empresa">
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp">WhatsApp</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Como podemos te ajudar?</label>
+                        <textarea id="message" name="message" placeholder="Descreva brevemente sua necessidade" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-submit">
+                        <button type="submit" class="submit-button">Quero ser atendido</button>
+                        <p class="form-disclaimer">Não enviamos spam. Usamos IA para facilitar sua vida, não complicar 😉</p>
+                    </div>
+                </form>
+                <div id="formSuccess" class="form-success">
+                    <div class="success-content">
+                        <h3>Obrigado!</h3>
+                        <p>Em breve entraremos em contato 👋</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Coluna 1: Logo e Missão -->
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <h2>MindFlow</h2>
+                </div>
+                <p class="footer-mission">
+                    Automatizamos o atendimento da sua empresa com inteligência artificial e foco em resultados. Tecnologia que vende, agenda e resolve.
+                </p>
+            </div>
+
+            <!-- Coluna 2: Links Rápidos -->
+            <div class="footer-column">
+                <h3 class="footer-heading">Links Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#how-it-works">Conheça</a></li>
+                    <li><a href="#projects">Portfólio</a></li>
+                    <li><a href="#plans">Planos</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Contato -->
+            <div class="footer-column">
+                <h3 class="footer-heading">Contato</h3>
+                <p class="footer-contact">
+                    <span class="contact-label">E-mail:</span>
+                    <a href="mailto:atendimento@mindflow.com.br" class="contact-link">atendimento@mindflow.com.br</a>
+                </p>
+            </div>
+
+            <!-- Coluna 4: Redes Sociais -->
+            <div class="footer-column">
+                <h3 class="footer-heading">Redes Sociais</h3>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/ai.mindflow/" target="_blank" class="social-icon" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com/company/mindflow" target="_blank" class="social-icon" aria-label="LinkedIn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="https://wa.me/5531972661278" target="_blank" class="social-icon" aria-label="WhatsApp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="copyright">
+            <p>&copy; 2025 MindFlow. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+    
+    <script src="js/script.js"></script>
+    <script src="js/menu-final.js"></script>
+    <script src="js/showcase-animations.js"></script>
+    <!-- EmailJS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        // Inicialização do EmailJS
+        (function() {
+            // User ID (Public Key) do EmailJS
+            emailjs.init("aOHxfvraarCfkeO5M");
+        })();
+        
+        // Função para enviar o email
+        function sendEmail(event) {
+            event.preventDefault();
+            
+            // Ativar tooltips do Bootstrap
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+            
+            // Animação para os itens da timeline quando entrarem na viewport
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar todos os itens da timeline
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                observer.observe(item);
+            });
+            
+            // Mostra indicador de carregamento
+            const submitButton = document.querySelector('.submit-button');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Enviando...';
+            submitButton.disabled = true;
+            
+            // Preparar os parâmetros do template - com variáveis adicionais para depuração
+            const companyValue = document.getElementById('company').value || 'Não informado';
+            console.log('Valor do campo empresa:', companyValue);
+            
+            const templateParams = {
+                name: document.getElementById('name').value,
+                company: companyValue,
+                whatsapp: document.getElementById('whatsapp').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value,
+                // Destinatários dos e-mails
+                to_email: 'creaty12345@gmail.com',
+                cc: 'mindflowwia@gmail.com,matheusmdeabreu@gmail.com',
+                // Configurando corretamente o nome do remetente e outras variáveis
+                from_name: document.getElementById('name').value,
+                sender_name: document.getElementById('name').value,
+                contact_name: document.getElementById('name').value,
+                company_name: companyValue,
+                empresa: companyValue,
+                companyName: companyValue,
+                subject: `Novo contato de ${document.getElementById('name').value} - ${companyValue}`,
+                phone: document.getElementById('whatsapp').value,
+                reply_to: document.getElementById('email').value
+            };
+            
+            // Log para depuração
+            console.log('Parâmetros enviados:', templateParams);
+            
+            // Enviar o email com os IDs configurados
+            emailjs.send('service_n4e55v5', 'template_nw1urrn', templateParams)
+                .then(function(response) {
+                    console.log('SUCESSO!', response.status, response.text);
+                    
+                    // Mostrar a mensagem de sucesso
+                    document.getElementById('contactForm').style.display = 'none';
+                    document.getElementById('formSuccess').style.display = 'flex';
+                    
+                }, function(error) {
+                    console.log('ERRO:', error);
+                    submitButton.textContent = originalText;
+                    submitButton.disabled = false;
+                    alert('Ocorreu um erro ao enviar o formulário. Por favor, tente novamente.');
+                });
+                
+            return false;
+        }
+        
+        // Script para modificar todos os botões de planos para direcionar para o WhatsApp
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animação para os itens da timeline quando entrarem na viewport
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar todos os itens da timeline
+            document.querySelectorAll('.timeline-item').forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                observer.observe(item);
+            });
+            
+            // Botões dos planos
+            const planButtons = document.querySelectorAll('.plan-button');
+            const whatsappNumber = '5531972661278';
+            
+            // Planos e suas mensagens
+            const planMessages = {
+                'BotFlow': 'Olá! Tenho interesse no plano BotFlow.',
+                'LeadFlow': 'Olá! Tenho interesse no plano LeadFlow.',
+                'LandingFlow': 'Olá! Tenho interesse no plano LandingFlow.'
+            };
+            
+            // Para cada botão de plano
+            planButtons.forEach(button => {
+                // Encontrar o título do plano
+                const planCard = button.closest('.plan-card');
+                const planTitle = planCard ? planCard.querySelector('.plan-title').textContent : 'Starter';
+                
+                // Criar o link do WhatsApp
+                const message = planMessages[planTitle] || 'Olá! Tenho interesse em um plano.';
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+                
+                // Adicionar evento de clique
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.open(whatsappLink, '_blank');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
