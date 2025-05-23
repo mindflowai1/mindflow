@@ -1,3 +1,7 @@
 [build]
 command = ""
 output_directory = "."
+
+[site]
+root = "."
+index = "index.html"
