@@ -853,10 +853,11 @@ body.menu-open {
 
 /* Estilos para a seu00e7u00e3o 'Por que escolher a MindFlow?' */
 .why-choose {
-    background: linear-gradient(to bottom, #0f172a, #020617);
-    padding: 6rem 2rem;
+    background: #0c0c0c;
+    padding: 5rem 2rem 7rem;
     position: relative;
     overflow: hidden;
+    max-width: 100%;
 }
 
 .why-choose::before {
@@ -881,14 +882,15 @@ body.menu-open {
     flex-direction: column;
     gap: 1.5rem;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 2rem auto 3rem;
+    padding: 0.5rem 1rem;
 }
 
 .reason-block {
-    padding: 1.5rem;
+    padding: 1.75rem;
     border-radius: 0.75rem;
     background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     transition: all 0.3s ease;
     opacity: 0;
     transform: translateY(20px);
@@ -896,6 +898,7 @@ body.menu-open {
     animation-play-state: paused;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .reason-block:hover {
