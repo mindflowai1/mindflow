@@ -1,5 +1,6 @@
 name = "mindflow"
 compatibility_date = "2023-07-10"
+main = "index.js"
 
 [site]
 bucket = "./"
