@@ -4,3 +4,7 @@ main = "workers-site/index.js"
 
 [site]
 bucket = "./"
+
+# Configuração de domínio personalizado
+[env.production]
+routes = [{pattern = "mindflowdigital.com.br", custom_domain = true}]
