@@ -1,0 +1,11 @@
+{
+  "name": "workers-site",
+  "version": "1.0.0",
+  "description": "Worker for MindFlow site",
+  "main": "index.js",
+  "author": "MindFlow",
+  "license": "MIT",
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.3.0"
+  }
+}
