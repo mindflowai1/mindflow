@@ -1,0 +1,99 @@
+/* Estilos para a seção de Dúvidas Frequentes */
+.faq-section {
+    background-color: #f9f9fb;
+    padding: 5rem 0;
+}
+
+.faq-container {
+    max-width: 900px;
+    margin: 3rem auto 0;
+}
+
+.faq-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.faq-question {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.faq-question:hover {
+    background-color: rgba(0, 91, 255, 0.03);
+}
+
+.faq-question h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+    flex: 1;
+}
+
+.faq-toggle {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.faq-icon {
+    width: 20px;
+    height: 20px;
+    stroke: #005BFF;
+    stroke-width: 2;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+}
+
+.faq-answer p {
+    margin: 0;
+    padding: 0 1.5rem 1.5rem;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* Classe para quando o FAQ está aberto */
+.faq-item.active .faq-toggle {
+    transform: rotate(45deg);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 300px; /* Altura máxima para o conteúdo - ajustar conforme necessário */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .faq-question {
+        padding: 1.25rem;
+    }
+    
+    .faq-question h3 {
+        font-size: 1rem;
+    }
+    
+    .faq-answer p {
+        padding: 0 1.25rem 1.25rem;
+        font-size: 0.95rem;
+    }
+}
