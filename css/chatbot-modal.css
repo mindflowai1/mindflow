@@ -2,6 +2,7 @@
 .chatbot-demo {
     text-align: center;
     padding: 3rem 2rem;
+    margin-bottom: 1rem;
 }
 
 .chatbot-demo-container {
@@ -118,6 +119,22 @@
 .modal-body {
     padding: 1.5rem;
     overflow-y: auto;
+}
+
+/* Animação para o iframe do chatbot */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.iframe-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+#n8n-chat-iframe {
+    display: block;
+    margin: 0 auto;
+    transition: height 0.3s ease;
 }
 
 /* Responsividade */
