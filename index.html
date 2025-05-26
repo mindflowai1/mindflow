@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/faq.css">
+    <link rel="stylesheet" href="css/chatbot-modal.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -227,6 +228,37 @@
 
         </div>
     </section>
+
+    <!-- Seção Teste do Chatbot -->
+    <section id="chatbot-demo" class="section chatbot-demo">
+        <div class="section-content">
+            <div class="chatbot-demo-container">
+                <button id="open-chatbot-modal" class="chatbot-demo-button">
+                    [ Testar o Chatbot ao Vivo ]
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal do Chatbot -->
+    <div id="chatbot-modal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Teste nosso Chatbot</h3>
+                <button id="close-chatbot-modal" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe 
+                  src="https://n8n-n8n-start.kof6cn.easypanel.host/webhook/938d2eef-4bc6-4241-9c2a-26796cdda09b/chat" 
+                  width="100%" 
+                  height="500" 
+                  style="border:1px solid #ccc; border-radius:8px; overflow:hidden;" 
+                  scrolling="no">
+                </iframe>
+            </div>
+        </div>
+    </div>
 
     <!-- Seção Solução Completa para Captar e Converter Leads -->
     <section id="complete-solution" class="section complete-solution">
@@ -522,6 +554,53 @@
         </div>
     </section>
 
+    <!-- Seção Vamos Conversar? -->
+    <section id="contact" class="section contact-section">
+        <div class="section-content contact-content">
+            <div class="contact-info">
+                <h2 class="contact-title">Vamos Conversar?</h2>
+                <p class="contact-subtitle">Preencha o formulário e nossa equipe entrará em contato para entender sua demanda e apresentar a melhor solução com IA.</p>
+                <p class="contact-trust"><img src="images/patch-check-fill.svg" alt="Verificado" class="verified-icon" /> <em>Atendimento rápido e sem compromisso.</em></p>
+            </div>
+            <div class="contact-form-container">
+                <form id="contactForm" class="contact-form" onsubmit="return sendEmail(event)">
+                    <!-- EmailJS substituirá o envio para o e-mail -->
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" placeholder="Seu nome completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Empresa <span class="optional">(opcional)</span></label>
+                        <input type="text" id="company" name="company" placeholder="Nome da sua empresa">
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp">WhatsApp</label>
+                        <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Como podemos te ajudar?</label>
+                        <textarea id="message" name="message" placeholder="Descreva brevemente sua necessidade" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-submit">
+                        <button type="submit" class="submit-button">Quero ser atendido</button>
+                        <p class="form-disclaimer">Não enviamos spam. Usamos IA para facilitar sua vida, não complicar 😉</p>
+                    </div>
+                </form>
+                <div id="formSuccess" class="form-success">
+                    <div class="success-content">
+                        <h3>Obrigado!</h3>
+                        <p>Em breve entraremos em contato 👋</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Seção Dúvidas Frequentes -->
     <section id="faq" class="section faq-section">
         <div class="section-content">
@@ -607,53 +686,6 @@
         </div>
     </section>
 
-    <!-- Seção Vamos Conversar? -->
-    <section id="contact" class="section contact-section">
-        <div class="section-content contact-content">
-            <div class="contact-info">
-                <h2 class="contact-title">Vamos Conversar?</h2>
-                <p class="contact-subtitle">Preencha o formulário e nossa equipe entrará em contato para entender sua demanda e apresentar a melhor solução com IA.</p>
-                <p class="contact-trust"><img src="images/patch-check-fill.svg" alt="Verificado" class="verified-icon" /> <em>Atendimento rápido e sem compromisso.</em></p>
-            </div>
-            <div class="contact-form-container">
-                <form id="contactForm" class="contact-form" onsubmit="return sendEmail(event)">
-                    <!-- EmailJS substituirá o envio para o e-mail -->
-                    <div class="form-group">
-                        <label for="name">Nome</label>
-                        <input type="text" id="name" name="name" placeholder="Seu nome completo" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Empresa <span class="optional">(opcional)</span></label>
-                        <input type="text" id="company" name="company" placeholder="Nome da sua empresa">
-                    </div>
-                    <div class="form-group">
-                        <label for="whatsapp">WhatsApp</label>
-                        <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Como podemos te ajudar?</label>
-                        <textarea id="message" name="message" placeholder="Descreva brevemente sua necessidade" rows="4" required></textarea>
-                    </div>
-
-                    <div class="form-submit">
-                        <button type="submit" class="submit-button">Quero ser atendido</button>
-                        <p class="form-disclaimer">Não enviamos spam. Usamos IA para facilitar sua vida, não complicar 😉</p>
-                    </div>
-                </form>
-                <div id="formSuccess" class="form-success">
-                    <div class="success-content">
-                        <h3>Obrigado!</h3>
-                        <p>Em breve entraremos em contato 👋</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Rodapé -->
     <footer class="footer">
         <div class="footer-content">
@@ -719,6 +751,7 @@
     <script src="js/menu-final.js"></script>
     <script src="js/showcase-animations.js"></script>
     <script src="js/faq.js"></script>
+    <script src="js/chatbot-modal.js"></script>
     <!-- EmailJS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
