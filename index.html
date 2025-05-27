@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/faq.css">
     <link rel="stylesheet" href="css/chatbot-modal.css">
+    <link rel="stylesheet" href="css/portfolio.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -226,16 +227,19 @@
                 </div>
             </div>
 
-        </div>
-    </section>
-
-    <!-- Seção Teste do Chatbot -->
-    <section id="chatbot-demo" class="section chatbot-demo">
-        <div class="section-content">
-            <div class="chatbot-demo-container">
+            <div class="chatbot-demo-container" style="margin-top: 40px; text-align: center; width: 100%; display: flex; justify-content: center;">
                 <button id="open-chatbot-modal" class="chatbot-demo-button">
                     [ Testar o Chatbot ao Vivo ]
                 </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Teste do Chatbot (removida) -->
+    <section id="chatbot-demo" class="section chatbot-demo" style="display: none;">
+        <div class="section-content">
+            <div class="chatbot-demo-container">
+                <!-- Botão movido para a seção how-it-works -->
             </div>
         </div>
     </section>
@@ -320,51 +324,49 @@
         </div>
     </section>
     
-    <!-- Seção Projetos que ajudamos a transformar -->
-    <section id="projects" class="section projects-section">
+    <!-- Seção de Portfólio -->    
+    <section id="projects" class="section portfolio-section">
         <div class="section-content">
-            <h2 class="section-title">Projetos que ajudamos a transformar</h2>
-            <p class="section-intro">Ao longo da nossa trajetória, criamos soluções personalizadas que impactaram diversos negócios. Confira alguns dos destaques:</p>
+            <h2 class="section-title" style="color: white;">Nosso Portfólio</h2>
+            <p class="section-intro" style="color: #cbd5e1;">Conheça alguns dos projetos que desenvolvemos com excelência!</p>
             
-            <div class="showcase-container">
-                <!-- Projeto 1 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/1 (1)_11zon.webp" alt="Landing Page Clínica BemEstar" class="project-screenshot">
+            <div class="portfolio-grid">
+                <!-- Projeto 1 - Clínica Medinova -->                
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="portfolio-image">
+                        <img src="images/2 (1)_11zon.webp" alt="Clínica Medinova" class="project-img">
                     </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Produtora de Eventos — Site Premium + Bot</h3>
-                        <p class="project-description">Criamos um site elegante com captação automatizada, integrada a chatbot com Inteligência Artificial para atendimento ágil de clientes e organização de eventos.</p>
-                        <a href="https://matheusmdeabreu.github.io/Rafaela_Cassano/" target="_blank" class="project-button">Ver projeto</a>
-                    </div>
-                </div>
-                
-                <!-- Projeto 2 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/2 (1)_11zon.webp" alt="Landing Page Loja Virtual XYZ" class="project-screenshot">
-                    </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Clínica de Estética — Solução FullFlow</h3>
-                        <p class="project-description">Desenvolvemos um site otimizado para agendamentos e um chatbot no WhatsApp, automatizando o atendimento e melhorando a experiência do paciente.</p>
-                        <a href="https://mindflowai1.github.io/medinova/" target="_blank" class="project-button">Ver projeto</a>
+                    <div class="portfolio-content">
+                        <h3 class="project-title">Clínica Medinova</h3>
+                        <p class="project-description">Plataforma integrada de agendamento com IA que otimizou em 47% o fluxo de pacientes e reduziu custos operacionais em 35%.</p>
+                        <a href="https://mindflowai1.github.io/medinova/" target="_blank" class="project-link">Acessar <span class="arrow-icon">→</span></a>
                     </div>
                 </div>
                 
-                <!-- Projeto 3 -->
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="images/3 (1)_11zon.webp" alt="Landing Page Startup ABC" class="project-screenshot">
+                <!-- Projeto 2 - Produtora de Eventos -->                
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-image">
+                        <img src="images/1 (1)_11zon.webp" alt="Produtora de Eventos" class="project-img">
                     </div>
-                    <div class="project-info">
-                        <h3 class="project-title">Escritório de Advocacia — Captação Digital</h3>
-                        <p class="project-description">Criamos um site institucional com copy persuasiva, focado em captação de leads qualificados e integração com WhatsApp para atendimento consultivo.</p>
-                        <a href="https://alcantara-cardoso-rohlfs.mindflowwia.workers.dev/" target="_blank" class="project-button">Ver projeto</a>
+                    <div class="portfolio-content">
+                        <h3 class="project-title">Produtora de Eventos</h3>
+                        <p class="project-description">Solução digital completa que elevou conversões em 62% e automatizou o ciclo de vendas com sistema de CRM integrado a assistente virtual.</p>
+                        <a href="https://matheusmdeabreu.github.io/Rafaela_Cassano/" target="_blank" class="project-link">Acessar <span class="arrow-icon">→</span></a>
+                    </div>
+                </div>
+                
+                <!-- Projeto 3 - Escritório de Advocacia -->                
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-image">
+                        <img src="images/3 (1)_11zon.webp" alt="Escritório de Advocacia" class="project-img">
+                    </div>
+                    <div class="portfolio-content">
+                        <h3 class="project-title">Escritório de Advocacia</h3>
+                        <p class="project-description">Landing page jurídica que aumentou a taxa de conversão em 83% através de copywriting estratégico e funil de captação multicanal.</p>
+                        <a href="https://alcantara-cardoso-rohlfs.mindflowwia.workers.dev/" target="_blank" class="project-link">Acessar <span class="arrow-icon">→</span></a>
                     </div>
                 </div>
             </div>
-            
-
         </div>
     </section>
     
