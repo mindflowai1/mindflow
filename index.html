@@ -41,6 +41,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Swiper.js para o carrossel 3D do portfólio (versão estável) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    
+    <!-- AOS - Animate on Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Fontes adicionais -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
         html {
             scroll-behavior: smooth;
@@ -324,50 +335,335 @@
         </div>
     </section>
     
-    <!-- Seção de Portfólio -->    
+    <!-- Nova Seção de Portfólio com Vue Carousel 3D Moderno -->
     <section id="projects" class="section portfolio-section">
-        <div class="section-content">
-            <h2 class="section-title" style="color: white;">Nosso Portfólio</h2>
-            <p class="section-intro" style="color: #cbd5e1;">Conheça alguns dos projetos que desenvolvemos com excelência!</p>
-            
-            <div class="portfolio-grid">
-                <!-- Projeto 1 - Clínica Medinova -->                
-                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="0">
-                    <div class="portfolio-image">
-                        <img src="images/2 (1)_11zon.webp" alt="Clínica Medinova" class="project-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3 class="project-title">Clínica Medinova</h3>
-                        <p class="project-description">Plataforma integrada de agendamento com IA que otimizou em 47% o fluxo de pacientes e reduziu custos operacionais em 35%.</p>
-                        <a href="https://mindflowai1.github.io/medinova/" target="_blank" class="project-link">Acessar <span class="arrow-icon">→</span></a>
-                    </div>
+      <div class="section-content" data-aos="fade-up" data-aos-duration="800">
+        <h2 class="section-title" style="color: white; font-family: 'Montserrat', sans-serif; margin-bottom: 15px;">Nosso Portfólio</h2>
+        <p class="section-intro" style="color: #cbd5e1; font-family: 'Inter', sans-serif; max-width: 700px; margin: 0 auto 40px; font-size: 1.1rem;">Conheça alguns dos sites premium que desenvolvemos com excelência e alta conversão!</p>
+        
+        <!-- Carousel 3D com Swiper.js -->
+        <div class="portfolio-carousel" style="max-width: 1200px; margin: 0 auto; padding: 30px 0 70px;">
+          <!-- Swiper Container -->
+          <div class="swiper portfolio-swiper">
+            <div class="swiper-wrapper">
+              <!-- Slide 1: Produtora de Eventos -->
+              <div class="swiper-slide">
+                <div class="slide-content">
+                  <div class="slide-image">
+                    <img src="images/1 (1)_11zon.webp" alt="Rafaela Cassano">
+                  </div>
+                  <div class="slide-text">
+                    <h3>Rafaela Cassano</h3>
+                    <p>Site premium para produtora de eventos que elevou conversões em 62% e automatizou o ciclo de vendas.</p>
+                    <a href="https://matheusmdeabreu.github.io/Rafaela_Cassano/" target="_blank" class="slide-btn">Ver Mais</a>
+                  </div>
                 </div>
-                
-                <!-- Projeto 2 - Produtora de Eventos -->                
-                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="portfolio-image">
-                        <img src="images/1 (1)_11zon.webp" alt="Produtora de Eventos" class="project-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3 class="project-title">Produtora de Eventos</h3>
-                        <p class="project-description">Solução digital completa que elevou conversões em 62% e automatizou o ciclo de vendas com sistema de CRM integrado a assistente virtual.</p>
-                        <a href="https://matheusmdeabreu.github.io/Rafaela_Cassano/" target="_blank" class="project-link">Acessar <span class="arrow-icon">→</span></a>
-                    </div>
+              </div>
+              
+              <!-- Slide 2: Clínica Medinova -->
+              <div class="swiper-slide">
+                <div class="slide-content">
+                  <div class="slide-image">
+                    <img src="images/2 (1)_11zon.webp" alt="Clínica Medinova">
+                  </div>
+                  <div class="slide-text">
+                    <h3>Clínica Medinova</h3>
+                    <p>Plataforma integrada que otimizou em 47% o fluxo de pacientes.</p>
+                    <a href="https://mindflowai1.github.io/medinova/" target="_blank" class="slide-btn">Ver Mais</a>
+                  </div>
                 </div>
-                
-                <!-- Projeto 3 - Escritório de Advocacia -->                
-                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="portfolio-image">
-                        <img src="images/3 (1)_11zon.webp" alt="Escritório de Advocacia" class="project-img">
-                    </div>
-                    <div class="portfolio-content">
-                        <h3 class="project-title">Escritório de Advocacia</h3>
-                        <p class="project-description">Landing page jurídica que aumentou a taxa de conversão em 83% através de copywriting estratégico e funil de captação multicanal.</p>
-                        <a href="https://alcantara-cardoso-rohlfs.mindflowwia.workers.dev/" target="_blank" class="project-link">Acessar <span class="arrow-icon">→</span></a>
-                    </div>
+              </div>
+              
+              <!-- Slide 3: Escritório de Advocacia -->
+              <div class="swiper-slide">
+                <div class="slide-content">
+                  <div class="slide-image">
+                    <img src="images/3 (1)_11zon.webp" alt="Escritório de Advocacia">
+                  </div>
+                  <div class="slide-text">
+                    <h3>Escritório de Advocacia</h3>
+                    <p>Site premium jurídico com taxa de conversão 83% superior à média.</p>
+                    <a href="https://alcantara-cardoso-rohlfs.mindflowwia.workers.dev/" target="_blank" class="slide-btn">Ver Mais</a>
+                  </div>
                 </div>
+              </div>
+              
+              <!-- Slide 4: Thees Construtora -->
+              <div class="swiper-slide">
+                <div class="slide-content">
+                  <div class="slide-image">
+                    <img src="images/fundothees.webp" alt="Thees Construtora - Site Premium">
+                  </div>
+                  <div class="slide-text">
+                    <h3>Thees Engenharia</h3>
+                    <p>Site premium para engenharia civil que aumentou em 60% os contatos qualificados para obras e reformas.</p>
+                    <a href="https://mindflowai1.github.io/theesconstrutora/" target="_blank" class="slide-btn">Ver Mais</a>
+                  </div>
+                </div>
+              </div>
             </div>
+            
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            
+            <!-- Add Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
         </div>
+      </div>
+      
+      <!-- Estilos para o carousel de portfólio -->
+      <style>
+        /* Container e slides */
+        .portfolio-carousel {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .portfolio-swiper {
+          width: 100%;
+          padding: 50px 0;
+        }
+        
+        .swiper-slide {
+          width: 380px;
+          height: 440px;
+          background-color: #1a1c23;
+          border-radius: 15px;
+          overflow: hidden;
+          box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+          border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .swiper-slide-active {
+          transform: scale(1.12);
+          z-index: 2;
+          box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+          border: 1px solid rgba(255,255,255,0.15);
+        }
+        
+        .swiper-slide-prev, .swiper-slide-next {
+          filter: brightness(0.7);
+        }
+        
+        /* Conteúdo dos slides */
+        .slide-content {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+        }
+        
+        .slide-image {
+          width: 100%;
+          height: 220px;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        .slide-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.7s ease;
+          filter: brightness(0.95);
+        }
+        
+        .swiper-slide-active .slide-image img {
+          transform: scale(1.08);
+          filter: brightness(1.05);
+        }
+        
+        .slide-text {
+          padding: 25px;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          z-index: 1;
+        }
+        
+        .slide-text h3 {
+          color: white;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 700;
+          font-size: 22px;
+          margin: 0 0 12px 0;
+          letter-spacing: -0.5px;
+        }
+        
+        .slide-text p {
+          color: #cbd5e1;
+          font-family: 'Inter', sans-serif;
+          font-size: 16px;
+          line-height: 1.6;
+          margin: 0 0 25px 0;
+          flex-grow: 1;
+        }
+        
+        .slide-btn {
+          display: inline-block;
+          background: linear-gradient(135deg, #005BFF, #06F3FF);
+          color: white;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 600;
+          font-size: 16px;
+          padding: 12px 28px;
+          border-radius: 8px;
+          text-decoration: none;
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          align-self: flex-start;
+          border: none;
+          box-shadow: 0 4px 10px rgba(0, 91, 255, 0.2);
+        }
+        
+        .slide-btn:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(0, 91, 255, 0.4);
+        }
+        
+        /* Navegação e paginação */
+        .swiper-button-next, 
+        .swiper-button-prev {
+          color: white;
+          background: linear-gradient(135deg, #005BFF, #06F3FF);
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          box-shadow: 0 5px 15px rgba(0, 91, 255, 0.25);
+          opacity: 0.9;
+          transition: all 0.3s ease;
+        }
+        
+        .swiper-button-next:hover, 
+        .swiper-button-prev:hover {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+        
+        .swiper-button-next:after, 
+        .swiper-button-prev:after {
+          font-size: 18px;
+          font-weight: bold;
+        }
+        
+        .swiper-pagination-bullet {
+          width: 10px;
+          height: 10px;
+          opacity: 0.7;
+        }
+        
+        .swiper-pagination-bullet-active {
+          background: #005BFF;
+          opacity: 1;
+        }
+        
+        /* Remover sombras padrão do Swiper 3D */
+        .swiper-3d .swiper-slide-shadow-left,
+        .swiper-3d .swiper-slide-shadow-right {
+          background-image: none;
+        }
+        
+        /* Responsividade para mobile */
+        /* Responsividade para diferentes dispositivos */
+        @media (max-width: 1200px) {
+          .swiper-slide {
+            width: 360px;
+            height: 420px;
+          }
+        }
+        
+        @media (max-width: 992px) {
+          .swiper-slide {
+            width: 340px;
+            height: 400px;
+          }
+          
+          .slide-image {
+            height: 200px;
+          }
+          
+          .slide-text h3 {
+            font-size: 20px;
+          }
+          
+          .slide-text p {
+            font-size: 15px;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .swiper-slide {
+            width: 300px;
+            height: 380px;
+          }
+          
+          .slide-image {
+            height: 180px;
+          }
+          
+          .slide-text {
+            padding: 20px;
+          }
+          
+          .slide-text h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+          }
+          
+          .slide-text p {
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+          }
+          
+          .slide-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+          }
+          
+          .swiper-button-next, 
+          .swiper-button-prev {
+            width: 35px;
+            height: 35px;
+          }
+          
+          .swiper-button-next:after, 
+          .swiper-button-prev:after {
+            font-size: 16px;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .swiper-slide {
+            width: 280px;
+            height: 360px;
+          }
+          
+          .slide-image {
+            height: 160px;
+          }
+          
+          .slide-text {
+            padding: 15px;
+          }
+          
+          .slide-text h3 {
+            font-size: 17px;
+          }
+          
+          .slide-text p {
+            font-size: 13px;
+            margin-bottom: 15px;
+          }
+          
+          .slide-btn {
+            padding: 8px 18px;
+            font-size: 13px;
+          }
+        }
+      </style>
     </section>
     
     <!-- Seção Nossos Planos -->
@@ -906,6 +1202,62 @@
                 });
             });
         });
+    </script>
+    
+    <!-- Script para Inicializar o Swiper e o AOS -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar AOS (Animate on Scroll)
+        AOS.init({
+          duration: 800,
+          easing: 'ease',
+          once: true
+        });
+        
+        // Inicializar o Swiper - versão simplificada e testada
+        var portfolioSwiper = new Swiper('.portfolio-swiper', {
+          // Configurações básicas aprimoradas
+          effect: 'coverflow',
+          grabCursor: true,
+          centeredSlides: true,
+          slidesPerView: 'auto',
+          initialSlide: 1,
+          loop: true,
+          speed: 900,
+          loopAdditionalSlides: 3,
+          observer: true,
+          observeParents: true,
+          
+          
+          // Efeito 3D aprimorado
+          coverflowEffect: {
+            rotate: 5,
+            stretch: 0,
+            depth: 150,
+            modifier: 1.8,
+            slideShadows: false,
+          },
+          
+          // Autoplay
+          autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true
+          },
+          
+          // Paginação e navegação
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          }
+        });
+        
+        console.log('Swiper inicializado com sucesso!');
+      });
     </script>
 </body>
 </html>
