@@ -352,6 +352,31 @@
                             </div>
                         </li>
                     </ul>
+                    
+                    <!-- Botão de Fale Conosco -->
+                    <div class="solution-cta" style="margin-top: 2.5rem; text-align: center;">
+                        <a href="#contact" class="cta-button" style="display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #0ea5e9, #0d9488); color: white; padding: 14px 32px; border-radius: 50px; font-weight: 600; text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3); position: relative; overflow: hidden; z-index: 1;">
+                            <span style="position: relative; z-index: 2; display: flex; align-items: center;">
+                                Fale Conosco
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-left: 10px; transition: transform 0.4s ease;">
+                                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span style="position: absolute; top: 0; left: 0; width: 0; height: 100%; background: linear-gradient(135deg, #0d9488, #0c7a6f); transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1; border-radius: 50px;"></span>
+                        </a>
+                        <style>
+                            .cta-button:hover {
+                                transform: translateY(-3px);
+                                box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
+                            }
+                            .cta-button:hover svg {
+                                transform: translateX(5px);
+                            }
+                            .cta-button:hover span:last-child {
+                                width: 100%;
+                            }
+                        </style>
+                    </div>
                 </div>
             </div>
         </div>
