@@ -1,0 +1,63 @@
+/* Correção específica para o botão na seção solution-cta */
+.solution-cta .hero-button.secondary {
+    background: transparent !important;
+    color: #38bdf8 !important;
+    border: 2px solid #38bdf8 !important;
+    padding: 0.8rem 2rem !important;
+    border-radius: 10px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    letter-spacing: 0.5px !important;
+    position: relative !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2) !important;
+    line-height: normal !important;
+    min-height: 45px !important;
+    z-index: 0 !important;
+}
+
+.solution-cta .hero-button.secondary span {
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+.solution-cta .hero-button.secondary::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -20% !important;
+    left: -20% !important;
+    width: 140% !important;
+    height: 140% !important;
+    background: linear-gradient(
+        to right,
+        rgba(56, 189, 248, 0) 0%,
+        rgba(56, 189, 248, 0.1) 50%,
+        rgba(56, 189, 248, 0) 100%
+    ) !important;
+    transform: rotate(30deg) !important;
+    transition: 0.6s !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+.solution-cta .hero-button.secondary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4) !important;
+}
+
+.solution-cta .hero-button.secondary:hover::before {
+    left: 100% !important;
+}
+
+.solution-cta .hero-button.secondary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
+}

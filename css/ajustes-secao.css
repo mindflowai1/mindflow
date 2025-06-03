@@ -1,5 +1,61 @@
 /* Ajustes específicos para a seção "O que fazemos por você" */
 
+/* Estilos da seção de FAQ */
+section#faq.faq-section,
+#faq,
+.faq-section {
+    background-color: #e2e8f0 !important;
+    background: #e2e8f0 !important;
+    color: #1e293b;
+    padding: 5rem 0;
+}
+
+/* Melhora a legibilidade dos textos */
+.faq-section .section-title {
+    color: #0f172a;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.faq-section .section-intro {
+    color: #475569;
+    font-size: 1.125rem;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Melhora a legibilidade dos itens do FAQ */
+.faq-item {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.faq-question h3 {
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.faq-answer p {
+    color: #334155;
+    line-height: 1.7;
+}
+
+
+/* Seção Por que escolher a MindFlow */
+.why-choose {
+    background-color: #0f172a;
+    color: #e2e8f0;
+    padding: 5rem 0;
+}
+
 /* Centralizar o conteúdo da seção */
 #how-it-works .section-content {
     display: flex;
@@ -60,4 +116,274 @@
     #results-step {
         order: 3;
     }
+}
+
+/* Estilos para a seção how-it-works */
+#how-it-works {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #1a202c; /* Cor do texto principal */
+}
+
+/* Melhorias nos cards */
+#how-it-works .step {
+    background-color: #f8fafc !important;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    transition: transform 0.15s ease, box-shadow 0.15s ease; /* Transição mais rápida */
+}
+
+#how-it-works .step:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(5, 91, 255, 0.25); /* Sombra azul */
+    border-color: rgba(5, 91, 255, 0.1); /* Borda levemente azulada */
+}
+
+/* Melhorias nos títulos e textos */
+#how-it-works .section-title {
+    color: #0f172a !important;
+    margin-bottom: 0.75rem;
+    padding-bottom: 1.5rem; /* Adiciona espaço abaixo do título, antes da barra */
+}
+
+/* Ajuste para a barra divisória abaixo do título */
+#how-it-works .section-title::before {
+    bottom: 0; /* Posiciona a barra no final do padding do título */
+}
+
+#how-it-works p {
+    color: #334155 !important;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+/* Aumentando espaço entre a barra e o texto de intro */
+#how-it-works .section-intro {
+    margin-top: 1.25rem; /* Espaço entre a barra e o texto de introdução */
+    margin-bottom: 1rem;
+}
+
+/* Melhorias nos ícones */
+#how-it-works .step-icon {
+    background-color: #e6f7ff !important;
+    border-radius: 50%;
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    padding: 0; /* Removendo padding interno */
+    overflow: visible; /* Permite que o ícone ultrapasse um pouco o círculo se necessário */
+}
+
+/* Aumentando significativamente o tamanho dos ícones para ocupar quase todo o círculo */
+#how-it-works .step-icon svg.icon {
+    width: 55px !important; /* Muito maior para ocupar quase todo o círculo */
+    height: 55px !important;
+    display: block;
+}
+
+/* Ajuste específico para o ícone do WhatsApp */
+#how-it-works .whatsapp-icon {
+    width: 52px !important;
+    height: 52px !important;
+    display: block;
+}
+
+/* Ajuste para o ícone de foguete (tamanho reduzido conforme solicitado) */
+#how-it-works #results-step .step-icon svg {
+    width: 48px !important;
+    height: 48px !important;
+    transform: scale(1); /* Removido o scaling extra */
+}
+
+/* Ajuste fino para o ícone de foguete */
+#how-it-works .step-icon .icon path[stroke] {
+    stroke-width: 0.8px !important;
+}
+
+#how-it-works .step-content h3 {
+    color: #0f172a !important;
+    margin-bottom: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+}
+
+/* Ajuste para garantir que todos os h3 na seção tenham a mesma estilização */
+#how-it-works h3 {
+    color: #0f172a !important;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+#how-it-works .step-content p {
+    color: #475569 !important;
+    font-size: 0.95rem;
+}
+
+/* Ajustes na seção Solução Completa - Estilo do rodapé */
+.complete-solution {
+    background: linear-gradient(to bottom, #0f172a, #020617) !important;
+    background-color: #0f172a !important;
+    background-image: none !important;
+    padding: 5rem 2rem !important;
+    position: relative;
+    overflow: hidden !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+    border-top: 1px solid rgba(14, 165, 233, 0.3) !important;
+    border-bottom: none !important;
+    color: #f3f4f6 !important;
+}
+
+.complete-solution::before {
+    background: #edf2f7 !important;
+    background-color: #edf2f7 !important;
+    background-image: none !important;
+    content: "" !important;
+}
+
+.solution-title {
+    color: #0f172a !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.solution-description {
+    color: #475569 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.7 !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+}
+
+.complete-solution .section-title {
+    color: #0f172a !important;
+}
+
+.site-image-container {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.solution-icon svg {
+    stroke: #0ea5e9 !important;
+}
+
+.solution-icon {
+    background-color: rgba(14, 165, 233, 0.1) !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+}
+
+/* Aplicando o estilo do chatbot-demo-button ao botão hero-button.secondary */
+.hero-button.secondary {
+    background: linear-gradient(135deg, #0ea5e9, #059669) !important;
+    color: white !important;
+    border: none !important;
+    padding: 1.2rem 2.5rem !important;
+    border-radius: 0.5rem !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+}
+
+.hero-button.secondary:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3) !important;
+}
+
+.hero-button.secondary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 4px 8px rgba(14, 165, 233, 0.2) !important;
+}
+.complete-solution {
+    background: #edf2f7 !important;
+    background-color: #edf2f7 !important;
+    background-image: none !important;
+    padding: 5rem 2rem !important;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.complete-solution::before {
+    background: #edf2f7 !important;
+    background-color: #edf2f7 !important;
+    background-image: none !important;
+    content: "" !important;
+}
+
+.solution-title {
+    color: #0f172a !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.solution-description {
+    color: #475569 !important;
+    font-size: 0.95rem !important;
+    line-height: 1.7 !important;
+    font-family: 'Space Grotesk', sans-serif !important;
+}
+
+.complete-solution .section-title {
+    color: #0f172a !important;
+}
+
+.site-image-container {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.solution-icon svg {
+    stroke: #0ea5e9 !important;
+}
+
+.solution-icon {
+    background-color: rgba(14, 165, 233, 0.1) !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
+}
+
+/* Aplicando o estilo do chatbot-demo-button ao botão hero-button.secondary */
+.hero-button.secondary {
+    background: linear-gradient(135deg, #0ea5e9, #059669) !important;
+    color: white !important;
+    border: none !important;
+    padding: 1.2rem 2.5rem !important;
+    border-radius: 0.5rem !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+}
+
+.hero-button.secondary:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3) !important;
+}
+
+.hero-button.secondary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 4px 8px rgba(14, 165, 233, 0.2) !important;
 }

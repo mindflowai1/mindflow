@@ -315,6 +315,13 @@ body.menu-open {
     background: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9));
 }
 
+/* Estilo específico para a seção 'O que fazemos por você' */
+#how-it-works.section {
+    background: white !important;
+    background-color: white !important;
+    background-image: none !important;
+}
+
 .section-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -344,31 +351,40 @@ body.menu-open {
 .steps-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    padding: 0 1rem;
+    gap: 2.5rem;
+    padding: 1rem;
+    margin-top: 2rem;
 }
 
 .step {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 2rem;
+    background: #f8fafc;
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    padding: 2.5rem 2rem;
     border-radius: 1rem;
     text-align: center;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .step:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 25px rgba(14, 165, 233, 0.15);
+    border-color: rgba(14, 165, 233, 0.5);
 }
 
 .step-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 1.5rem;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1.8rem;
     position: relative;
+    background: rgba(14, 165, 233, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
 }
 
 .icon {
@@ -376,7 +392,7 @@ body.menu-open {
     height: 100%;
     fill: none;
     stroke: #0ea5e9;
-    stroke-width: 2;
+    stroke-width: 2.5;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
@@ -388,16 +404,20 @@ body.menu-open {
 }
 
 .step h3 {
-    font-size: 1.5rem;
-    color: #fff;
-    margin-bottom: 1rem;
+    font-size: 1.6rem;
+    color: #0f172a;
+    margin-bottom: 1.2rem;
     font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
 }
 
 .step p {
-    color: rgba(255, 255, 255, 0.8);
+    color: #334155;
     font-family: 'JetBrains Mono', monospace;
-    line-height: 1.6;
+    line-height: 1.7;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 /* Section Button */
@@ -1668,6 +1688,11 @@ body.menu-open {
     .contact-form-container {
         max-width: 100%;
     }
+}
+
+/* Efeitos de hover */
+.hero-button:hover {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
 }
 
 /* Efeitos de hover */

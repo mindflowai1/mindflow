@@ -37,6 +37,11 @@
     <link rel="stylesheet" href="css/faq.css">
     <link rel="stylesheet" href="css/chatbot-modal.css">
     <link rel="stylesheet" href="css/portfolio.css">
+    <link rel="stylesheet" href="css/complete-solution.css">
+    <link rel="stylesheet" href="css/plans-background.css">
+    <!-- Estilos personalizados para botões (deve ser o último para sobrescrever outros estilos) -->
+    <link rel="stylesheet" href="css/custom-buttons.css">
+    <link rel="stylesheet" href="css/solution-button-fix.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -97,7 +102,7 @@
             .reason-icon {
                 width: 40px;
                 height: 40px;
-                background: linear-gradient(135deg, #005BFF, #06F3FF);
+                background: linear-gradient(135deg, #005BFF, #06F3FF) !important;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
@@ -105,11 +110,7 @@
                 margin-right: 12px;
             }
             
-            .reason-svg {
-                width: 22px;
-                height: 22px;
-                color: white;
-            }
+            /* Estilos de responsividade mantidos, mas sem alterações nos ícones */
             
             .reason-title {
                 font-size: 1.1rem;
@@ -155,7 +156,7 @@
                 <a href="#" class="nav-link">Home</a>
                 <a href="#how-it-works" class="nav-link">Conheça</a>
                 <a href="#projects" class="nav-link">Portfólio</a>
-                <a href="#plans" class="nav-link">Planos</a>
+                <a href="#faq" class="nav-link">FAQ</a>
                 <a href="#contact" class="nav-link">Contato</a>
             </div>
             
@@ -173,7 +174,7 @@
         <a href="#">Home</a>
         <a href="#how-it-works">Conheça</a>
         <a href="#projects">Portfólio</a>
-        <a href="#plans">Planos</a>
+        <a href="#faq">FAQ</a>
         <a href="#contact">Contato</a>
     </div>
     <div class="hero">
@@ -182,7 +183,7 @@
             <p>Da captação ao atendimento automatizado: eficiência e disponibilidade 24/7.</p>
             <div class="hero-buttons">
                 <a href="#complete-solution" class="hero-button primary">A Solução Completa</a>
-                <a href="#projects" class="hero-button secondary" style="text-decoration:none;">O Que Já Fizemos</a>
+                <a href="#projects" class="hero-button secondary"><span>O Que Já Fizemos</span></a>
             </div>
         </div>
         <a href="#how-it-works" class="scroll-down-button" aria-label="Rolar para baixo">
@@ -191,10 +192,10 @@
             </svg>
         </a>
     </div>
-    <section id="how-it-works" class="section how-it-works">
+    <section id="how-it-works" class="section how-it-works" style="background: white !important; background-color: white !important; background-image: none !important;">
         <div class="section-content">
             <h2 class="section-title">O que fazemos por você</h2>
-            <p class="section-intro">Na MindFlow, criamos <strong>soluções completas</strong> para transformar sua jornada de vendas:</p>
+            <p class="section-intro">Na MindFlow, criamos <strong>soluções completas</strong> para transformar sua jornada de vendas.</p>
             
             <div class="steps-container">
                 <div class="step" id="config-step">
@@ -293,8 +294,10 @@
                         <li class="solution-item">
                             <div class="solution-icon">
                                 <svg viewBox="0 0 24 24" class="solution-svg">
-                                    <path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                                    <path d="M4 4h16a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z" stroke="currentColor" stroke-width="2" fill="none" />
+                                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M2 12h20" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <path d="M12 2v20" stroke="currentColor" stroke-width="1.5" fill="none"/>
                                 </svg>
                             </div>
                             <div class="solution-content">
@@ -305,19 +308,42 @@
                         <li class="solution-item">
                             <div class="solution-icon">
                                 <svg viewBox="0 0 24 24" class="solution-svg">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 16h2v-6h-2v6zm0-8h2V8h-2v2z" stroke="currentColor" stroke-width="1" fill="none" />
-                                    <path d="M17.7 7.7a.996.996 0 00-1.41 0l-5.6 5.6-2.58-2.58a.996.996 0 10-1.41 1.41l3.3 3.29c.39.39 1.02.39 1.41 0l6.3-6.3a.996.996 0 000-1.42z" stroke="currentColor" stroke-width="1" fill="none" />
+                                    <!-- Moldura do laptop -->
+                                    <rect x="2" y="4" width="20" height="14" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    
+                                    <!-- Base do laptop -->
+                                    <rect x="2" y="18" width="20" height="2" rx="1" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    
+                                    <!-- Pontos/botões na base -->
+                                    <circle cx="19" cy="19" r="0.5" stroke="currentColor" stroke-width="1" fill="currentColor"/>
+                                    <circle cx="17" cy="19" r="0.5" stroke="currentColor" stroke-width="1" fill="currentColor"/>
+                                    
+                                    <!-- Linhas de conteúdo (como na imagem) -->
+                                    <line x1="5" y1="8" x2="12" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    <line x1="5" y1="12" x2="12" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    <line x1="5" y1="16" x2="12" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    
+                                    <!-- Cursor do mouse/seta -->
+                                    <path d="M16 8l3 3-3 3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+                                    <line x1="19" y1="11" x2="14" y2="11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                 </svg>
                             </div>
                             <div class="solution-content">
-                                <h3 class="solution-title">Integração com Bot no WhatsApp</h3>
+                                <h3 class="solution-title">Captação estratégica através do site</h3>
                                 <p class="solution-description">Seus leads são atendidos automaticamente assim que preenchem o formulário no site.</p>
                             </div>
                         </li>
                         <li class="solution-item">
                             <div class="solution-icon">
                                 <svg viewBox="0 0 24 24" class="solution-svg">
-                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none" />
+                                    <!-- Seta principal -->
+                                    <path d="M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                                    <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                    <!-- Setas menores de processo -->
+                                    <path d="M3 7l2 2-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                    <path d="M3 17l2 2-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                                    <path d="M3 3h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                                    <path d="M3 21h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
                                 </svg>
                             </div>
                             <div class="solution-content">
@@ -326,126 +352,336 @@
                             </div>
                         </li>
                     </ul>
-                    <div class="solution-cta">
-                        <a href="#plans" class="hero-button secondary" style="transform: translateY(-2px);">Conheça Nossos Planos</a>
-                    </div>
-
                 </div>
             </div>
         </div>
     </section>
     
     <!-- Nova Seção de Portfólio com Vue Carousel 3D Moderno -->
-    <section id="projects" class="section portfolio-section">
-      <div class="section-content" data-aos="fade-up" data-aos-duration="800">
-        <h2 class="section-title" style="color: white; font-family: 'Montserrat', sans-serif; margin-bottom: 15px;">Nosso Portfólio</h2>
-        <p class="section-intro" style="color: #cbd5e1; font-family: 'Inter', sans-serif; max-width: 700px; margin: 0 auto 40px; font-size: 1.1rem;">Conheça alguns dos sites premium que desenvolvemos com excelência e alta conversão!</p>
-        
-        <!-- Carousel 3D com Swiper.js -->
-        <div class="portfolio-carousel" style="max-width: 1200px; margin: 0 auto; padding: 30px 0 70px;">
-          <!-- Swiper Container -->
-          <div class="swiper portfolio-swiper">
-            <div class="swiper-wrapper">
-              <!-- Slide 1: Produtora de Eventos -->
-              <div class="swiper-slide">
-                <div class="slide-content">
-                  <div class="slide-image">
-                    <img src="images/1 (1)_11zon.webp" alt="Rafaela Cassano">
+    <section id="projects" class="section portfolio-section" style="padding-top: 3.5rem;">
+      <div class="container">
+        <div class="section-content" data-aos="fade-up" data-aos-duration="800">
+          <h2 class="section-title" style="margin-bottom: 1.5rem;">Nosso Portfólio</h2>
+          <p class="section-intro" style="margin-bottom: 0.5rem;">Conheça alguns dos sites premium que desenvolvemos com <strong>excelência e alta conversão</strong>!</p>
+          
+          <!-- Carousel 3D com Swiper.js -->
+          <div class="portfolio-carousel" style="width: 100%; max-width: 100%; margin: 0; padding: 10px 0 40px;">
+            <!-- Swiper Container -->
+            <div class="swiper portfolio-swiper">
+              <div class="swiper-wrapper">
+                <!-- Slide 1: Produtora de Eventos -->
+                <div class="swiper-slide">
+                  <div class="slide-content">
+                    <div class="slide-image">
+                      <img src="images/1 (1)_11zon.webp" alt="Rafaela Cassano">
+                    </div>
+                    <div class="slide-text">
+                      <h3>Rafaela Cassano</h3>
+                      <p>Site premium para produtora de eventos que elevou conversões em 62% e automatizou o ciclo de vendas.</p>
+                      <a href="https://matheusmdeabreu.github.io/Rafaela_Cassano/" target="_blank" class="slide-btn">Ver Mais</a>
+                    </div>
                   </div>
-                  <div class="slide-text">
-                    <h3>Rafaela Cassano</h3>
-                    <p>Site premium para produtora de eventos que elevou conversões em 62% e automatizou o ciclo de vendas.</p>
-                    <a href="https://matheusmdeabreu.github.io/Rafaela_Cassano/" target="_blank" class="slide-btn">Ver Mais</a>
+                </div>
+                
+                <!-- Slide 2: Clínica Medinova -->
+                <div class="swiper-slide">
+                  <div class="slide-content">
+                    <div class="slide-image">
+                      <img src="images/minimedinova.webp" alt="Clínica Medinova">
+                    </div>
+                    <div class="slide-text">
+                      <h3>Clínica Medinova</h3>
+                      <p>Experiência digital premium que transformou o atendimento médico, com agendamento simplificado e gestão eficiente de pacientes.</p>
+                      <a href="https://mindflowai1.github.io/medinova/" target="_blank" class="slide-btn">Ver Mais</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Slide 3: Escritório de Advocacia -->
+                <div class="swiper-slide">
+                  <div class="slide-content">
+                    <div class="slide-image">
+                      <img src="images/3 (1)_11zon.webp" alt="Escritório de Advocacia">
+                    </div>
+                    <div class="slide-text">
+                      <h3>Escritório de Advocacia</h3>
+                      <p>Site premium jurídico com taxa de conversão 83% superior à média.</p>
+                      <a href="https://alcantara-cardoso-rohlfs.mindflowwia.workers.dev/" target="_blank" class="slide-btn">Ver Mais</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Slide 4: Thees Construtora -->
+                <div class="swiper-slide">
+                  <div class="slide-content">
+                    <div class="slide-image">
+                      <img src="images/fundothees.webp" alt="Thees Construtora - Site Premium">
+                    </div>
+                    <div class="slide-text">
+                      <h3>Thees Engenharia</h3>
+                      <p>Site premium para engenharia civil que aumentou em 60% os contatos qualificados para obras e reformas.</p>
+                      <a href="https://mindflowai1.github.io/theesconstrutora/" target="_blank" class="slide-btn">Ver Mais</a>
+                    </div>
                   </div>
                 </div>
               </div>
               
-              <!-- Slide 2: Clínica Medinova -->
-              <div class="swiper-slide">
-                <div class="slide-content">
-                  <div class="slide-image">
-                    <img src="images/minimedinova.webp" alt="Clínica Medinova">
-                  </div>
-                  <div class="slide-text">
-                    <h3>Clínica Medinova</h3>
-                    <p>Experiência digital premium que transformou o atendimento médico, com agendamento simplificado e gestão eficiente de pacientes.</p>
-                    <a href="https://mindflowai1.github.io/medinova/" target="_blank" class="slide-btn">Ver Mais</a>
-                  </div>
-                </div>
-              </div>
+              <!-- Add Pagination -->
+              <div class="swiper-pagination"></div>
               
-              <!-- Slide 3: Escritório de Advocacia -->
-              <div class="swiper-slide">
-                <div class="slide-content">
-                  <div class="slide-image">
-                    <img src="images/3 (1)_11zon.webp" alt="Escritório de Advocacia">
-                  </div>
-                  <div class="slide-text">
-                    <h3>Escritório de Advocacia</h3>
-                    <p>Site premium jurídico com taxa de conversão 83% superior à média.</p>
-                    <a href="https://alcantara-cardoso-rohlfs.mindflowwia.workers.dev/" target="_blank" class="slide-btn">Ver Mais</a>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Slide 4: Thees Construtora -->
-              <div class="swiper-slide">
-                <div class="slide-content">
-                  <div class="slide-image">
-                    <img src="images/fundothees.webp" alt="Thees Construtora - Site Premium">
-                  </div>
-                  <div class="slide-text">
-                    <h3>Thees Engenharia</h3>
-                    <p>Site premium para engenharia civil que aumentou em 60% os contatos qualificados para obras e reformas.</p>
-                    <a href="https://mindflowai1.github.io/theesconstrutora/" target="_blank" class="slide-btn">Ver Mais</a>
-                  </div>
-                </div>
-              </div>
+              <!-- Add Navigation -->
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
             </div>
-            
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
-            
-            <!-- Add Navigation -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
           </div>
         </div>
       </div>
+    </section>
+    
+    <!-- Estilos para o carrossel de portfólio -->
+    <style>
+      /* Container e slides */
+      .portfolio-carousel {
+        position: relative;
+        width: 100%;
+        max-width: 100vw;
+        margin: 2rem 0 0;
+        padding: 0;
+        overflow: visible;
+        box-sizing: border-box;
+      }
       
-      <!-- Estilos para o carousel de portfólio -->
-      <style>
-        /* Container e slides */
+      .portfolio-swiper {
+        width: 100%;
+        max-width: 100%;
+        padding: 40px 0 80px;
+        overflow: visible;
+        margin: 0 auto;
+      }
+      
+      .swiper-wrapper {
+        padding: 20px 0 40px;
+        align-items: center;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        max-width: 100%;
+      }
+      
+      .swiper-slide {
+        width: 360px;
+        height: 500px;
+        background-color: #0f172a;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(14, 165, 233, 0.15);
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 1px solid rgba(14, 165, 233, 0.2);
+        transform: scale(0.92);
+        will-change: transform, box-shadow;
+        opacity: 0.9;
+      }
+      
+      .swiper-slide-active {
+        transform: scale(1);
+        z-index: 2;
+        box-shadow: 0 25px 50px rgba(14, 165, 233, 0.3);
+        border: 1px solid rgba(14, 165, 233, 0.3);
+        opacity: 1;
+      }
+      
+      .swiper-slide-prev, .swiper-slide-next {
+        opacity: 0.8;
+        filter: brightness(0.98);
+      }
+      
+      /* Conteúdo dos slides */
+      .slide-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+      
+      .slide-image {
+        width: 100%;
+        height: 240px;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      .slide-image::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: linear-gradient(to top, rgba(15, 23, 42, 0.95), transparent);
+        z-index: 1;
+      }
+      
+      .slide-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      
+      .swiper-slide-active .slide-image img {
+        transform: scale(1.05);
+      }
+      
+      .slide-text {
+        padding: 28px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+      
+      .slide-text h3 {
+        color: #ffffff;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 1.5rem;
+        margin: 0 0 12px 0;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+      }
+      
+      .slide-text p {
+        color: #cbd5e1;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        margin: 0 0 24px 0;
+        flex-grow: 1;
+        font-weight: 400;
+      }
+      
+      .slide-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #0ea5e9, #0d9488);
+        color: #ffffff;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: 14px 28px;
+        border-radius: 50px;
+        text-decoration: none;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        align-self: flex-start;
+        border: none;
+        box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .slide-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .slide-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
+        background: linear-gradient(135deg, #0d94e0, #0a7c6e);
+      }
+      
+      .slide-btn:hover::before {
+        opacity: 1;
+      }
+      
+      /* Navegação e paginação */
+      .swiper-button-next, 
+      .swiper-button-prev {
+        color: #0ea5e9;
+        background: #ffffff;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+        opacity: 0.9;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+      }
+      
+      .swiper-button-next:hover, 
+      .swiper-button-prev:hover {
+        opacity: 1;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.25);
+        color: #0d94e0;
+      }
+      
+      .swiper-button-next:after, 
+      .swiper-button-prev:after {
+        font-size: 20px;
+        font-weight: bold;
+        font-family: 'swiper-icons';
+      }
+      
+      .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+        background: rgba(14, 165, 233, 0.2);
+        opacity: 1;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        border: 2px solid transparent;
+        margin: 0 5px;
+      }
+      
+      .swiper-pagination-bullet-active {
+        background: #0ea5e9;
+        opacity: 1;
+        transform: scale(1.3);
+        box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+        border: 2px solid #ffffff;
+      }
+      
+      /* Remover sombras padrão do Swiper 3D */
+      .swiper-3d .swiper-slide-shadow-left,
+      .swiper-3d .swiper-slide-shadow-right {
+        background-image: none;
+      }
+      
+      /* Responsividade para diferentes dispositivos */
+      @media (max-width: 768px) {
         .portfolio-carousel {
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .portfolio-swiper {
-          width: 100%;
-          padding: 50px 0;
+          padding: 0 15px;
+          max-width: 100%;
         }
         
         .swiper-slide {
-          width: 380px;
-          height: 440px;
-          background-color: #1a1c23;
-          border-radius: 15px;
-          overflow: hidden;
-          box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-          transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-          border: 1px solid rgba(255,255,255,0.05);
+          width: 320px;
+          height: 480px;
+          transform: scale(0.95);
+          will-change: transform, box-shadow;
         }
         
         .swiper-slide-active {
-          transform: scale(1.12);
+          transform: scale(1.05);
           z-index: 2;
-          box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-          border: 1px solid rgba(255,255,255,0.15);
+          box-shadow: 0 25px 50px rgba(14, 165, 233, 0.12);
+          border: 1px solid rgba(14, 165, 233, 0.15);
         }
         
         .swiper-slide-prev, .swiper-slide-next {
-          filter: brightness(0.7);
+          opacity: 0.8;
+          filter: brightness(0.98);
         }
         
         /* Conteúdo dos slides */
@@ -453,116 +689,158 @@
           display: flex;
           flex-direction: column;
           height: 100%;
+          background: #0f172a;
+          color: #e2e8f0;
         }
         
         .slide-image {
           width: 100%;
-          height: 220px;
+          height: 240px;
           overflow: hidden;
           position: relative;
+        }
+        
+        .slide-image::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 60px;
+          background: linear-gradient(to top, rgba(15, 23, 42, 0.95), transparent);
+          z-index: 1;
         }
         
         .slide-image img {
           width: 100%;
           height: 100%;
           object-fit: cover;
-          transition: transform 0.7s ease;
-          filter: brightness(0.95);
+          transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .swiper-slide-active .slide-image img {
-          transform: scale(1.08);
-          filter: brightness(1.05);
+          transform: scale(1.05);
         }
         
         .slide-text {
-          padding: 25px;
+          padding: 28px;
           flex-grow: 1;
           display: flex;
           flex-direction: column;
           position: relative;
           z-index: 1;
+          background: #0f172a;
+          color: #e2e8f0;
         }
         
         .slide-text h3 {
-          color: white;
-          font-family: 'Montserrat', sans-serif;
-          font-weight: 700;
-          font-size: 22px;
+          color: #ffffff;
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 1.5rem;
           margin: 0 0 12px 0;
-          letter-spacing: -0.5px;
+          font-weight: 700;
+          line-height: 1.3;
+          letter-spacing: -0.01em;
         }
         
         .slide-text p {
           color: #cbd5e1;
           font-family: 'Inter', sans-serif;
-          font-size: 16px;
-          line-height: 1.6;
-          margin: 0 0 25px 0;
+          font-size: 1rem;
+          line-height: 1.7;
+          margin: 0 0 24px 0;
           flex-grow: 1;
+          font-weight: 400;
         }
         
         .slide-btn {
-          display: inline-block;
-          background: linear-gradient(135deg, #005BFF, #06F3FF);
-          color: white;
-          font-family: 'Montserrat', sans-serif;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #0ea5e9, #0d9488);
+          color: #ffffff;
+          font-family: 'Space Grotesk', sans-serif;
           font-weight: 600;
-          font-size: 16px;
-          padding: 12px 28px;
-          border-radius: 8px;
+          font-size: 0.95rem;
+          padding: 14px 28px;
+          border-radius: 50px;
           text-decoration: none;
-          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           align-self: flex-start;
           border: none;
-          box-shadow: 0 4px 10px rgba(0, 91, 255, 0.2);
+          box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .slide-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+          opacity: 0;
+          transition: opacity 0.3s ease;
         }
         
         .slide-btn:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 10px 20px rgba(0, 91, 255, 0.4);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
+          background: linear-gradient(135deg, #0d94e0, #0a7c6e);
+        }
+        
+        .slide-btn:hover::before {
+          opacity: 1;
         }
         
         /* Navegação e paginação */
         .swiper-button-next, 
         .swiper-button-prev {
-          color: white;
-          background: linear-gradient(135deg, #005BFF, #06F3FF);
-          width: 40px;
-          height: 40px;
+          color: #0ea5e9;
+          background: #ffffff;
+          width: 48px;
+          height: 48px;
           border-radius: 50%;
-          box-shadow: 0 5px 15px rgba(0, 91, 255, 0.25);
+          box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
           opacity: 0.9;
-          transition: all 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          backdrop-filter: blur(5px);
+          -webkit-backdrop-filter: blur(5px);
         }
         
         .swiper-button-next:hover, 
         .swiper-button-prev:hover {
           opacity: 1;
-          transform: scale(1.05);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(14, 165, 233, 0.25);
+          color: #0d94e0;
         }
         
         .swiper-button-next:after, 
         .swiper-button-prev:after {
-          font-size: 18px;
+          font-size: 20px;
           font-weight: bold;
+          font-family: 'swiper-icons';
         }
         
         .swiper-pagination-bullet {
-          width: 12px;
-          height: 12px;
-          background: rgba(255, 255, 255, 0.5);
-          opacity: 0.8;
-          transition: all 0.3s ease;
+          width: 10px;
+          height: 10px;
+          background: rgba(14, 165, 233, 0.2);
+          opacity: 1;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           border: 2px solid transparent;
+          margin: 0 5px;
         }
         
         .swiper-pagination-bullet-active {
-          background: #06F3FF;
+          background: #0ea5e9;
           opacity: 1;
-          transform: scale(1.15);
-          box-shadow: 0 0 10px rgba(6, 243, 255, 0.7);
-          border: 2px solid white;
+          transform: scale(1.3);
+          box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+          border: 2px solid #ffffff;
         }
         
         /* Remover sombras padrão do Swiper 3D */
@@ -571,19 +849,33 @@
           background-image: none;
         }
         
-        /* Responsividade para mobile */
         /* Responsividade para diferentes dispositivos */
         @media (max-width: 1200px) {
+          .portfolio-carousel {
+            max-width: 1000px;
+            display: flex;
+            justify-content: center;
+          }
+          
           .swiper-slide {
-            width: 360px;
-            height: 420px;
+            width: 320px;
+            height: 480px;
+            margin: 0 10px;
+          }
+          
+          .slide-image {
+            height: 220px;
           }
         }
         
         @media (max-width: 992px) {
+          .portfolio-carousel {
+            max-width: 800px;
+          }
+          
           .swiper-slide {
-            width: 340px;
-            height: 400px;
+            width: 300px;
+            height: 460px;
           }
           
           .slide-image {
@@ -591,18 +883,29 @@
           }
           
           .slide-text h3 {
-            font-size: 20px;
+            font-size: 1.4rem;
           }
           
           .slide-text p {
-            font-size: 15px;
+            font-size: 0.95rem;
+          }
+          
+          .swiper-button-next,
+          .swiper-button-prev {
+            width: 42px;
+            height: 42px;
           }
         }
         
         @media (max-width: 768px) {
+          .portfolio-carousel {
+            max-width: 600px;
+            padding: 10px 0 50px;
+          }
+          
           .swiper-slide {
-            width: 300px;
-            height: 380px;
+            width: 280px;
+            height: 440px;
           }
           
           .slide-image {
@@ -610,147 +913,136 @@
           }
           
           .slide-text {
-            padding: 20px;
+            padding: 24px;
           }
           
           .slide-text h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
           }
           
           .slide-text p {
-            font-size: 14px;
+            font-size: 0.9rem;
+            line-height: 1.6;
             margin-bottom: 20px;
-            line-height: 1.5;
           }
           
           .slide-btn {
-            padding: 10px 20px;
-            font-size: 14px;
+            padding: 12px 24px;
+            font-size: 0.9rem;
           }
           
-          .swiper-button-next, 
+          .swiper-button-next,
           .swiper-button-prev {
-            width: 35px;
-            height: 35px;
-          }
-          
-          .swiper-button-next:after, 
-          .swiper-button-prev:after {
-            font-size: 16px;
+            display: none;
           }
         }
         
         @media (max-width: 480px) {
+          .portfolio-carousel {
+            max-width: 100%;
+            padding: 0 0 40px;
+          }
+          
           .swiper-slide {
-            width: 280px;
-            height: 360px;
+            width: 260px;
+            height: 420px;
+            margin: 0 10px;
           }
           
           .slide-image {
-            height: 160px;
+            height: 170px;
           }
           
           .slide-text {
-            padding: 15px;
+            padding: 20px;
           }
           
           .slide-text h3 {
-            font-size: 17px;
+            font-size: 1.2rem;
           }
           
           .slide-text p {
-            font-size: 13px;
-            margin-bottom: 15px;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
           }
           
           .slide-btn {
-            padding: 8px 18px;
-            font-size: 13px;
+            width: 100%;
+            text-align: center;
+            justify-content: center;
           }
         }
       </style>
     </section>
     
-    <!-- Seção Nossos Planos -->
-    <section id="plans" class="section plans-section">
-        <div class="section-content">
-            <h2 class="section-title">Nossos Planos</h2>
-            <div class="plans-container">
-                <!-- Plano BotFlow -->
-                <div class="plan-card">
-                    <div class="plan-header">
-                        <h3 class="plan-title">BotFlow</h3>
-                        <div class="plan-price">A partir de R$750/mês</div>
-                        <div class="plan-price-note">+ R$1.000 de taxa única de implementação</div>
-                    </div>
-                    <div class="plan-content">
-                        <ul class="plan-features">
-                            <li>Criação de chatbot personalizado</li>
-                            <li>Integração com número comercial</li>
-                            <li>Fluxos automatizados de atendimento</li>
-                            <li>Relatórios mensais</li>
-                            <li>Suporte técnico contínuo</li>
-                        </ul>
-                    </div>
-                    <div class="plan-footer">
-                        <button class="plan-button">Quero este plano</button>
-                        <p class="plan-note" style="font-size: 0.8em; opacity: 0.7; margin-top: 10px; text-align: center;">As mensalidades são a partir de R$ 750/mês, podendo variar conforme a complexidade do fluxo e integrações.</p>
-                    </div>
-                </div>
-
-                <!-- Plano LeadFlow (Destacado) -->
-                <div class="plan-card featured">
-                    <div class="plan-badge">Mais escolhido</div>
-                    <div class="plan-header">
-                        <h3 class="plan-title">LeadFlow</h3>
-                        <div class="plan-price">R$2.000 pela criação do Site Premium</div>
-                        <div class="plan-price-note">+ A partir de R$750/mês</div>
-                        <div class="plan-price-highlight" style="font-size: 1.05rem; font-weight: 600; letter-spacing: 0.3px; padding: 8px 15px; margin: 12px auto 5px; background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; border-radius: 3px; max-width: 85%; box-shadow: 0 3px 8px rgba(14, 165, 233, 0.2);">Implementação grátis (economia de R$1.000!)</div>
-                    </div>
-                    <div class="plan-content">
-                        <ul class="plan-features">
-                            <li>Criação de Site Premium personalizada</li>
-                            <li>Copywriting persuasivo</li>
-                            <li>Integração total com chatbot no WhatsApp</li>
-                            <li>Implementação grátis</li>
-                            <li>Suporte e relatórios mensais</li>
-                        </ul>
-                    </div>
-                    <div class="plan-footer">
-                        <button class="plan-button featured">Quero este plano</button>
-                        <p class="plan-note" style="font-size: 0.8em; opacity: 0.7; margin-top: 10px; text-align: center;">As mensalidades são a partir de R$ 750/mês, podendo variar conforme a complexidade do fluxo e integrações.</p>
-                    </div>
-                </div>
-
-                <!-- Plano LandingFlow -->
-                <div class="plan-card">
-                    <div class="plan-header">
-                        <h3 class="plan-title">LandingFlow</h3>
-                        <div class="plan-price">R$2.000</div>
-                        <div class="plan-price-note">(valor único, sem mensalidade)</div>
-                    </div>
-                    <div class="plan-content">
-                        <ul class="plan-features">
-                            <li>Site Premium exclusivo e responsivo</li>
-                            <li>Copywriting estratégico para conversão</li>
-                            <li>Estrutura pronta para integração com CRM ou WhatsApp manual</li>
-                        </ul>
-                    </div>
-                    <div class="plan-footer">
-                        <button class="plan-button">Quero este plano</button>
-                        <p class="plan-note" style="font-size: 0.8em; opacity: 0.8; margin-top: 10px; text-align: center; font-weight: 500;">Somos referência na criação de Sites com alto desempenho e taxas de conversão comprovadas.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="plans-info">
-                <p class="plans-note" style="margin-bottom: 20px;">Todos os planos incluem: chatbot com IA no WhatsApp, personalização inicial e suporte dedicado.</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Seção Por que escolher a MindFlow -->
+    <style>
+      .why-choose {
+        background-color: #f8fafc !important;
+        padding: 6rem 0 !important;
+      }
+      
+      .why-choose .section-title {
+        color: #1e293b !important;
+        margin-bottom: 1.5rem !important;
+      }
+      
+      .why-choose .section-intro {
+        color: #475569 !important;
+        font-size: 1.1rem !important;
+        margin-bottom: 3rem !important;
+        max-width: 800px;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+      
+      .reason-block {
+        background: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05) !important;
+        transition: all 0.3s ease !important;
+        padding: 2rem !important;
+        margin-bottom: 1.5rem !important;
+      }
+      
+      .reason-block:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+      }
+      
+      .reason-title {
+        color: #1e293b !important;
+        font-size: 1.25rem !important;
+        margin-bottom: 1rem !important;
+      }
+      
+      .reason-description {
+        color: #475569 !important;
+        line-height: 1.6 !important;
+        margin: 0 !important;
+      }
+      
+      .reason-icon {
+        background: #f1f5f9 !important;
+        color: #0ea5e9 !important;
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-bottom: 1.25rem !important;
+      }
+      
+      .reason-icon svg {
+        width: 24px !important;
+        height: 24px !important;
+        stroke-width: 1.5px !important;
+      }
+    </style>
     <section id="why-choose" class="section why-choose">
         <div class="section-content">
             <h2 class="section-title">Por que escolher a MindFlow?</h2>
@@ -813,11 +1105,8 @@
                 <div class="reason-block">
                     <div class="reason-header">
                         <div class="reason-icon">
-                            <svg viewBox="0 0 24 24" class="reason-svg">
-                                <path d="M20 4v5h-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M4 20v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M4 7.5C5.5 5.3 8.5 4 12 4c2.3 0 4.4.8 6 2l2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M20 16.5c-1.5 2.2-4.5 3.5-8 3.5-2.3 0-4.4-.8-6-2l-2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <svg viewBox="0 0 24 24" class="reason-svg" data-component-name="&lt;svg /&gt;">
+                                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
                         <h3 class="reason-title">Fluxo automatizado</h3>
@@ -861,13 +1150,79 @@
         </div>
     </section>
 
-    <!-- Seção Vamos Conversar? -->
+    <!-- Seção Contato -->
+    <style>
+      .contact-section {
+        position: relative;
+        background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)), 
+                    url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #ffffff;
+        padding: 6rem 1.5rem;
+      }
+      
+      @media (min-width: 768px) and (max-width: 1024px) {
+        .contact-section {
+          padding: 6rem 2rem;
+        }
+      }
+      
+      .contact-content {
+        position: relative;
+        z-index: 2;
+      }
+      
+      .contact-title, 
+      .contact-subtitle,
+      .contact-trust,
+      .form-group label {
+        color: #ffffff !important;
+      }
+      
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+      }
+      
+      .form-group input::placeholder,
+      .form-group textarea::placeholder {
+        color: rgba(255, 255, 255, 0.6) !important;
+      }
+      
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        border-color: #0ea5e9 !important;
+        box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3) !important;
+      }
+      
+      .contact-form {
+        background: rgba(15, 23, 42, 0.8) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 2.5rem;
+      }
+    </style>
     <section id="contact" class="section contact-section">
         <div class="section-content contact-content">
             <div class="contact-info">
                 <h2 class="contact-title">Vamos Conversar?</h2>
                 <p class="contact-subtitle">Preencha o formulário e nossa equipe entrará em contato para entender sua demanda e apresentar a melhor solução com IA.</p>
-                <p class="contact-trust"><img src="images/patch-check-fill.svg" alt="Verificado" class="verified-icon" /> <em>Atendimento rápido e sem compromisso.</em></p>
+                <p class="contact-trust"><img src="images/patch-check-fill.svg" alt="Verificado" class="verified-icon"> <em>Atendimento rápido e sem compromisso.</em></p>
+                
+                <div class="whatsapp-contact-option" style="margin-top: 2.5rem; text-align: center; padding: 1.5rem; background: rgba(37, 211, 102, 0.1); border-radius: 12px; border: 1px solid rgba(37, 211, 102, 0.2);">
+                    <p style="margin-bottom: 1.2rem; color: rgba(255,255,255,0.9); font-size: 1.1rem; font-weight: 500;">Ou fale diretamente pelo WhatsApp</p>
+                    <a href="https://wa.me/+5531972661278" target="_blank" style="display: inline-flex; align-items: center; background: #25D366; color: white; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);">
+                        <img src="images/whatsapp-icon.svg" alt="WhatsApp" style="width: 20px; height: 20px; margin-right: 10px; filter: brightness(0) invert(1);">
+                        Iniciar conversa
+                    </a>
+                </div>
             </div>
             <div class="contact-form-container">
                 <form id="contactForm" class="contact-form" onsubmit="return sendEmail(event)">
@@ -909,6 +1264,13 @@
     </section>
 
     <!-- Seção Dúvidas Frequentes -->
+    <style>
+      .faq-section {
+        background-color: #000000 !important;
+        background-image: none !important;
+        padding: 5rem 0 !important;
+      }
+    </style>
     <section id="faq" class="section faq-section">
         <div class="section-content">
             <h2 class="section-title">Dúvidas Frequentes</h2>
@@ -1230,35 +1592,49 @@
           initialSlide: 1,
           loop: true,
           speed: 900,
+          spaceBetween: 30,
           loopAdditionalSlides: 3,
           observer: true,
           observeParents: true,
-          
-          
-          // Efeito 3D aprimorado
           coverflowEffect: {
-            rotate: 5,
+            rotate: 0,
             stretch: 0,
-            depth: 150,
-            modifier: 1.8,
-            slideShadows: false,
+            depth: 100,
+            modifier: 2.5,
+            slideShadows: false
           },
-          
-          // Autoplay
-          autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true
-          },
-          
-          // Paginação e navegação
           pagination: {
             el: '.swiper-pagination',
-            clickable: true
+            clickable: true,
+            dynamicBullets: true,
+            dynamicMainBullets: 3
           },
           navigation: {
             nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            prevEl: '.swiper-button-prev'
+          },
+          breakpoints: {
+            320: {
+              spaceBetween: 15
+            },
+            768: {
+              spaceBetween: 30
+            },
+            1024: {
+              spaceBetween: 40
+            }
+          }
+        });
+        
+        console.log('Swiper inicializado com sucesso!');
+      });
+    </script>
+</body>
+</html>
+            },
+            1024: {
+              spaceBetween: 40
+            }
           }
         });
         

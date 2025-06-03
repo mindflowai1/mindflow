@@ -1,0 +1,73 @@
+/* Estilo personalizado para o botão 'O Que Já Fizemos' */
+.hero-button.secondary {
+    /* Estilos base */
+    background: transparent !important;
+    color: #00BFFF !important;
+    border: 2px solid #00BFFF !important;
+    padding: 0.8rem 2rem !important;
+    border-radius: 10px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.2);
+    line-height: normal !important;
+    min-height: 45px !important;
+    z-index: 0 !important;
+}
+
+.hero-button.secondary span {
+    position: relative;
+    z-index: 2;
+}
+
+/* Efeito hover */
+.hero-button.secondary:hover {
+    background: rgba(0, 191, 255, 0.1) !important;
+    box-shadow: 0 0 15px rgba(0, 191, 255, 0.4) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Efeito ao clicar */
+.hero-button.secondary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.3) !important;
+}
+
+/* Efeito de brilho sutil ao passar o mouse */
+.hero-button.secondary::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(
+        to right,
+        rgba(0, 191, 255, 0) 0%,
+        rgba(0, 191, 255, 0.1) 50%,
+        rgba(0, 191, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+    transition: 0.6s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-button.secondary:hover::before {
+    left: 100%;
+}
+
+/* Removendo estilos de foco padrão */
+.hero-button.secondary:focus {
+    outline: none;
+}
