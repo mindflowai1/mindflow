@@ -445,6 +445,9 @@ const scopedCSS = `
 
   @media (max-width: 600px) {
     .rl-shell { padding: 0 24px !important; }
+    .rl-navbar { padding-top: 16px !important; padding-bottom: 16px !important; gap: 8px; }
+    .rl-navbar img { height: 32px !important; }
+    .rl-connect { padding: 8px 14px !important; font-size: 12px !important; border-radius: 8px !important; }
     .rl-hero { justify-content: flex-end !important; padding-bottom: 2vh !important; padding-top: 0 !important; }
     
     .rl-portal { align-items: flex-start !important; }

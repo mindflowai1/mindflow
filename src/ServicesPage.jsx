@@ -348,8 +348,6 @@ const scopedCSS = `
   @media (max-width: 1024px) {
     .rl-card-glow, .rl-shimmer, .rl-tag-dot { display: none !important; }
     .rl-desktop-desc { display: none !important; }
-  }
-  @media (max-width: 1024px) {
     .rl-container { padding: 20px 40px 80px !important; }
     .rl-nav { padding: 32px 40px !important; }
     .rl-grid { grid-template-columns: 1fr !important; }
@@ -357,27 +355,50 @@ const scopedCSS = `
   }
   @media (max-width: 768px) {
     .rl-page { overflow: hidden !important; height: 100svh !important; }
-    .rl-nav { padding: 20px 24px !important; }
-    
-    .rl-container { padding: 5vh 24px 20px !important; height: calc(100svh - 80px); display: flex; flex-direction: column; justify-content: flex-start; }
-    
-    .rl-header-segment { margin-bottom: 24px !important; width: 100%; }
-    .rl-h1 { font-size: 36px !important; margin-bottom: 12px !important; }
-    .rl-header-desc { font-size: 14px !important; line-height: 1.4 !important; }
-    .rl-eyebrow { margin-bottom: 12px !important; }
-    
-    .rl-grid { gap: 12px !important; }
-    
-    .rl-bento-glass { padding: 16px 20px !important; border-radius: 16px !important; }
-    .rl-glass-content { display: flex !important; flex-direction: column !important; gap: 4px !important; }
-    .rl-card-header { display: flex !important; align-items: center !important; gap: 16px !important; flex-direction: row-reverse !important; justify-content: space-between !important; width: 100%; }
-    
+
+    /* Nav: compact to fit back + lang + CTA */
+    .rl-nav { padding: 12px 16px !important; gap: 8px !important; }
+    .rl-nav .rl-back { font-size: 13px !important; gap: 4px !important; }
+    .rl-nav .rl-back svg { width: 14px !important; height: 14px !important; }
+    .rl-nav-right { gap: 6px !important; }
+    .rl-nav-cta { padding: 8px 12px !important; font-size: 11px !important; border-radius: 8px !important; }
+
+    .rl-container {
+      padding: 2vh 20px 12px !important;
+      height: calc(100svh - 56px) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      overflow: hidden !important;
+    }
+
+    /* Header: compact */
+    .rl-header-segment { margin-bottom: 16px !important; width: 100%; }
+    .rl-eyebrow { font-size: 11px !important; margin-bottom: 8px !important; }
+    .rl-h1 { font-size: 28px !important; margin-bottom: 8px !important; line-height: 1.1 !important; }
+    .rl-header-desc { font-size: 12px !important; line-height: 1.3 !important; }
+
+    /* Grid: compact, no stretch */
+    .rl-grid { gap: 8px !important; overflow-y: auto !important; }
+
+    /* Cards: minimal */
+    .rl-bento-glass { padding: 12px 16px !important; border-radius: 14px !important; }
+    .rl-glass-content { display: flex !important; flex-direction: column !important; gap: 0 !important; }
+    .rl-card-header { display: flex !important; align-items: center !important; gap: 12px !important; flex-direction: row-reverse !important; justify-content: space-between !important; width: 100%; }
+
     .rl-card-tag { margin: 0 !important; width: auto !important; }
     .rl-tag-text { display: none !important; }
-    .rl-card-desc { display: block !important; font-size: 13px !important; line-height: 1.4 !important; opacity: 0.8 !important; }
-    
-    .rl-icon-box { width: 44px !important; height: 44px !important; border-radius: 12px !important; }
-    .rl-card-title { font-size: 18px !important; margin: 0 !important; flex: 1; }
+    .rl-icon-box { width: 38px !important; height: 38px !important; border-radius: 10px !important; }
+    .rl-icon-box svg { width: 20px !important; height: 20px !important; }
+    .rl-card-title { font-size: 15px !important; margin: 0 !important; flex: 1; }
+
+    /* Hide ALL descriptions by default on mobile */
+    .rl-desktop-desc { display: none !important; }
+    .rl-card-desc { font-size: 12px !important; line-height: 1.3 !important; opacity: 0.7 !important; margin-top: 6px !important; }
+
+    /* Chevron smaller */
+    .rl-chevron { min-width: 20px !important; }
+    .rl-chevron svg { width: 18px !important; height: 18px !important; }
   }
 `;
 
@@ -428,11 +449,12 @@ export default function ServicesPage({ onOpenModal }) {
                         {t(translations.nav.back, lang)}
                     </button>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }} className="rl-nav-right">
                         <LanguageSwitcher />
                         <motion.button
                             whileHover={{ scale: 1.05, boxShadow: "0px 10px 25px rgba(255,255,255,0.2)" }}
                             whileTap={{ scale: 0.95 }}
+                            className="rl-nav-cta"
                             style={{
                                 background: '#fff', color: '#000', border: 'none',
                                 padding: '12px 24px', borderRadius: '10px',
