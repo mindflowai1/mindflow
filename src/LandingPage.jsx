@@ -2,6 +2,53 @@ import React, { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import LiquidSphere3D from './LiquidSphere3D';
+import { useLanguage, LanguageSwitcher, t } from './LanguageContext';
+
+// ─── Translations ────────────────────────────────────────────
+const translations = {
+    nav: {
+        connect: { pt: 'Conectar', en: 'Connect', es: 'Conectar' },
+    },
+    hero: {
+        eyebrow: {
+            pt: 'Integração Empresarial com IA',
+            en: 'Enterprise AI Integration',
+            es: 'Integración Empresarial con IA',
+        },
+        h1Line1: {
+            pt: 'Acelere o Crescimento',
+            en: 'Accelerate Growth',
+            es: 'Acelere el Crecimiento',
+        },
+        h1Line2: {
+            pt: 'Com IA Autônoma',
+            en: 'With Autonomous AI',
+            es: 'Con IA Autónoma',
+        },
+        body: {
+            pt: 'Soluções inteligentes para empresas modernas. Construímos agentes de IA personalizados, automatizamos fluxos complexos e extraímos insights acionáveis para elevar suas operações.',
+            en: 'Intelligent solutions for modern enterprises. We build custom AI agents, automate complex workflows, and extract actionable insights to elevate your operations.',
+            es: 'Soluciones inteligentes para empresas modernas. Creamos agentes de IA personalizados, automatizamos flujos complejos y extraemos insights accionables para elevar sus operaciones.',
+        },
+        ctaPrimary: {
+            pt: 'Explorar Serviços',
+            en: 'Explore Services',
+            es: 'Explorar Servicios',
+        },
+        ctaSecondary: {
+            pt: 'Agendar Consultoria',
+            en: 'Book a Consultation',
+            es: 'Agendar Consultoría',
+        },
+    },
+    footer: {
+        trusted: {
+            pt: 'Empresas que confiam em nós',
+            en: 'Trusted by forward-thinking teams',
+            es: 'Empresas que confían en nosotros',
+        },
+    },
+};
 
 const staggerContainer = {
     hidden: { opacity: 0 },
@@ -441,6 +488,7 @@ const scopedCSS = `
 
 const LandingPage = ({ onOpenModal }) => {
     const navigate = useNavigate();
+    const { lang } = useLanguage();
 
     return (
         <>
@@ -477,15 +525,18 @@ const LandingPage = ({ onOpenModal }) => {
                         <div style={styles.logoGroup}>
                             <img src="/images/logo mindflow.png" alt="Mindflow" style={styles.logoImg} />
                         </div>
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            style={styles.connectBtn}
-                            className="rl-connect"
-                            onClick={onOpenModal}
-                        >
-                            Connect
-                        </motion.button>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <LanguageSwitcher />
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                style={styles.connectBtn}
+                                className="rl-connect"
+                                onClick={onOpenModal}
+                            >
+                                {t(translations.nav.connect, lang)}
+                            </motion.button>
+                        </div>
                     </motion.header>
 
                     {/* Hero */}
@@ -496,15 +547,13 @@ const LandingPage = ({ onOpenModal }) => {
                             initial="hidden"
                             animate="visible"
                         >
-                            <motion.span variants={fadeUp} style={styles.eyebrow} className="rl-eyebrow">Enterprise AI Integration</motion.span>
+                            <motion.span variants={fadeUp} style={styles.eyebrow} className="rl-eyebrow">{t(translations.hero.eyebrow, lang)}</motion.span>
                             <motion.h1 variants={fadeUp} style={styles.h1} className="rl-h1">
-                                Accelerate Growth
-                                <span style={styles.h1Gradient} className="rl-h1-gradient">With Autonomous AI</span>
+                                {t(translations.hero.h1Line1, lang)}
+                                <span style={styles.h1Gradient} className="rl-h1-gradient">{t(translations.hero.h1Line2, lang)}</span>
                             </motion.h1>
                             <motion.p variants={fadeUp} style={styles.body} className="rl-body">
-                                Intelligent solutions for modern enterprises. We build custom AI
-                                agents, automate complex workflows, and extract actionable
-                                insights to elevate your operations.
+                                {t(translations.hero.body, lang)}
                             </motion.p>
                             <motion.div variants={fadeUp} style={styles.ctaRow} className="rl-cta-group">
                                 <motion.button
@@ -514,7 +563,7 @@ const LandingPage = ({ onOpenModal }) => {
                                     className="rl-cta-primary"
                                     onClick={() => navigate('/services')}
                                 >
-                                    Explore Services
+                                    {t(translations.hero.ctaPrimary, lang)}
                                 </motion.button>
                                 <motion.button
                                     whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.09)' }}
@@ -523,7 +572,7 @@ const LandingPage = ({ onOpenModal }) => {
                                     className="rl-cta-secondary"
                                     onClick={onOpenModal}
                                 >
-                                    Book a Consultation
+                                    {t(translations.hero.ctaSecondary, lang)}
                                 </motion.button>
                             </motion.div>
                         </motion.div>
@@ -537,7 +586,7 @@ const LandingPage = ({ onOpenModal }) => {
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1, duration: 1 }}
                     >
-                        <span style={styles.trustedLabel}>Trusted by forward-thinking teams</span>
+                        <span style={styles.trustedLabel}>{t(translations.footer.trusted, lang)}</span>
                         {/* Replace the placeholders below with real <img> logos */}
                         <motion.div
                             style={styles.logoRow}
