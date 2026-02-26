@@ -79,21 +79,23 @@ const styles = {
     // ── 3D portal (right side) ──
     portalWrapper: {
         position: 'absolute',
-        inset: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
         zIndex: 0,
         pointerEvents: 'none',
         display: 'flex',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        transform: 'translateX(22vw)', // Deslocando ainda mais o globo para a direita da tela
+        paddingRight: '2vw', // Impede que cole totalmente na borda e corte os anéis
     },
     // Abstract Liquid Motion 3D Object
     liquidContainer: {
         position: 'relative',
         width: '75vw', // Mais largo horizontalmente para caber o modelo
-        height: '60vw', // Altura mantida
-        maxWidth: '1000px', // Novo limite máximo de largura
-        maxHeight: '750px',
+        height: '65vw', // Ligeiramente mais alto para manter a proporção
+        maxWidth: '1200px', // Maior presença na tela (antes 1000px)
+        maxHeight: '900px', // Maior altura (antes 750px)
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -424,24 +426,24 @@ const scopedCSS = `
   .rl-cta-primary:hover { background: #33C6EA !important; box-shadow: 0 0 36px rgba(0,180,229,0.55) !important; }
   .rl-cta-secondary:hover { background: rgba(255,255,255,0.09) !important; border-color: rgba(255,255,255,0.22) !important; }
 
-  @media (max-width: 900px), (max-height: 800px) {
-    .rl-shell { padding: 0 40px !important; }
-    .rl-navbar { padding-top: 20px !important; padding-bottom: 20px !important; }
-    .rl-h1 { font-size: clamp(42px, 8vw, 64px) !important; margin-bottom: 16px !important; }
-    .rl-body { font-size: 16px !important; margin-bottom: 24px !important; line-height: 1.5 !important; }
-    .rl-eyebrow { margin-bottom: 12px !important; font-size: 14px !important; }
-    .rl-cta-primary, .rl-cta-secondary { padding: 14px 24px !important; font-size: 15px !important; border-radius: 12px !important; }
-    
-    .rl-portal { 
-      justify-content: center !important;
-      padding-right: 0 !important;
+    @media (max-width: 900px), (max-height: 800px) {
+      .rl-shell { padding: 0 40px !important; }
+      .rl-navbar { padding-top: 20px !important; padding-bottom: 20px !important; }
+      .rl-h1 { font-size: clamp(42px, 8vw, 64px) !important; margin-bottom: 16px !important; }
+      .rl-body { font-size: 16px !important; margin-bottom: 24px !important; line-height: 1.5 !important; }
+      .rl-eyebrow { margin-bottom: 12px !important; font-size: 14px !important; }
+      .rl-cta-primary, .rl-cta-secondary { padding: 14px 24px !important; font-size: 15px !important; border-radius: 12px !important; }
+      
+      .rl-portal { 
+        justify-content: flex-end !important;
+        padding-right: 0 !important;
+      }
+      .rl-portal > div {
+        width: 100vw !important;
+        height: 100vw !important;
+        transform: translateX(10%) translateY(-5vh) !important;
+      }
     }
-    .rl-portal > div {
-      width: 100vw !important;
-      height: 100vw !important;
-      transform: translateY(-8vh);
-    }
-  }
 
   @media (max-width: 600px) {
     .rl-shell { padding: 0 24px !important; }
