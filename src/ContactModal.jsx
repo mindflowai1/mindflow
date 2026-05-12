@@ -172,7 +172,7 @@ export default function ContactModal({ isOpen, onClose }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted (Preview Only)');
+        console.log('Formulário enviado (Apenas Visualização)');
         // Botão inerte por enquanto
     };
 
@@ -202,16 +202,16 @@ export default function ContactModal({ isOpen, onClose }) {
                         </button>
 
                         <div style={styles.header}>
-                            <h2 style={styles.h2}>Ready to Scale?</h2>
-                            <p style={styles.p}>Let's discuss how customized AI agents can eliminate your operational bottlenecks.</p>
+                            <h2 style={styles.h2}>Pronto para Escalar?</h2>
+                            <p style={styles.p}>Vamos discutir como agentes de IA personalizados podem eliminar seus gargalos operacionais.</p>
                         </div>
 
                         <form onSubmit={handleSubmit}>
                             <div style={styles.formGroup}>
-                                <label style={styles.label}>Name / Company</label>
+                                <label style={styles.label}>Nome / Empresa</label>
                                 <input
                                     type="text"
-                                    placeholder="Jane Doe @ Acme Corp"
+                                    placeholder="Nome da sua empresa"
                                     style={styles.input}
                                     className="rl-modal-input"
                                     required
@@ -219,10 +219,10 @@ export default function ContactModal({ isOpen, onClose }) {
                             </div>
 
                             <div style={styles.formGroup}>
-                                <label style={styles.label}>{channel === 'whatsapp' ? 'WhatsApp Number' : 'Email Address'}</label>
+                                <label style={styles.label}>{channel === 'whatsapp' ? 'Número do WhatsApp' : 'Endereço de E-mail'}</label>
                                 <input
                                     type={channel === 'whatsapp' ? 'tel' : 'email'}
-                                    placeholder={channel === 'whatsapp' ? '+55 11 99999-9999' : 'jane@acmecorp.com'}
+                                    placeholder={channel === 'whatsapp' ? '+55 11 99999-9999' : 'seu@email.com'}
                                     style={styles.input}
                                     className="rl-modal-input"
                                     required
@@ -230,7 +230,7 @@ export default function ContactModal({ isOpen, onClose }) {
                             </div>
 
                             <div style={styles.formGroup}>
-                                <label style={styles.label}>Service of Interest</label>
+                                <label style={styles.label}>Serviço de Interesse</label>
                                 <div style={{ position: 'relative' }}>
                                     <select
                                         style={{ ...styles.input, appearance: 'none', cursor: 'pointer' }}
@@ -238,11 +238,11 @@ export default function ContactModal({ isOpen, onClose }) {
                                         required
                                         defaultValue=""
                                     >
-                                        <option value="" disabled style={{ color: 'rgba(255,255,255,0.4)' }}>What do you need help with?</option>
-                                        <option value="Getting More Clients" style={{ background: '#111', color: '#fff' }}>Finding more clients and leads</option>
-                                        <option value="Automating Tasks" style={{ background: '#111', color: '#fff' }}>Automating repetitive daily tasks</option>
-                                        <option value="New Website" style={{ background: '#111', color: '#fff' }}>Building a high-converting website</option>
-                                        <option value="Custom AI Assistant" style={{ background: '#111', color: '#fff' }}>A custom AI assistant for my business</option>
+                                        <option value="" disabled style={{ color: 'rgba(255,255,255,0.4)' }}>Como podemos ajudar?</option>
+                                        <option value="Getting More Clients" style={{ background: '#111', color: '#fff' }}>Atrair mais clientes e leads</option>
+                                        <option value="Automating Tasks" style={{ background: '#111', color: '#fff' }}>Automatizar tarefas repetitivas</option>
+                                        <option value="New Website" style={{ background: '#111', color: '#fff' }}>Criar uma Landing Page de alta conversão</option>
+                                        <option value="Custom AI Assistant" style={{ background: '#111', color: '#fff' }}>Um assistente de IA customizado</option>
                                     </select>
                                     <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'rgba(255,255,255,0.5)' }}>
                                         <ChevronDown size={18} />
@@ -250,7 +250,7 @@ export default function ContactModal({ isOpen, onClose }) {
                                 </div>
                             </div>
 
-                            <label style={styles.label}>Preferred channel</label>
+                            <label style={styles.label}>Canal preferido</label>
                             <div style={styles.channelSelector}>
                                 <button
                                     type="button"
@@ -264,7 +264,7 @@ export default function ContactModal({ isOpen, onClose }) {
                                     style={styles.channelBtn(channel === 'email')}
                                     onClick={() => setChannel('email')}
                                 >
-                                    <Mail size={18} /> Email
+                                    <Mail size={18} /> E-mail
                                 </button>
                             </div>
 
@@ -274,7 +274,7 @@ export default function ContactModal({ isOpen, onClose }) {
                                 whileHover={{ scale: 1.02, boxShadow: '0 12px 32px rgba(255,255,255,0.25)' }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                Scale Now
+                                Escalar Agora
                             </motion.button>
                         </form>
 
