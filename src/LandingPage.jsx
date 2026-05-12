@@ -189,16 +189,16 @@ const LandingPage = ({ onOpenModal }) => {
       </div>
 
       {/* Hero Content */}
-      <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[calc(100vh-80px)] pt-28 md:pt-40 pb-28 transition-transform duration-100 ease-out">
+      <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[100dvh] pt-32 md:pt-40 pb-20 transition-transform duration-100 ease-out">
         {/* Headline */}
-        <h1 className="animate-on-scroll font-outfit text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[1.1] tracking-tight md:tracking-[-0.03em] font-light mb-5 md:mb-8">
+        <h1 className="animate-on-scroll font-outfit text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[1.1] tracking-tight md:tracking-[-0.03em] font-light mb-6 md:mb-8">
           <span className="block text-white">Tráfego que atrai.</span>
           <span className="block text-gray-200">Design que converte.</span>
           <span className="block text-gray-400">IA que vende.</span>
         </h1>
 
         {/* Subheading */}
-        <p className="animate-on-scroll text-gray-400 text-base md:text-lg max-w-[500px] md:max-w-[600px] mx-auto mb-8 md:mb-12 leading-relaxed font-light" style={{ transitionDelay: '100ms' }}>
+        <p className="animate-on-scroll text-gray-400 text-base md:text-lg max-w-[500px] md:max-w-[600px] mx-auto leading-relaxed font-light" style={{ transitionDelay: '100ms' }}>
           Sua agência 360º de marketing e IA. Assumimos sua operação comercial: anúncios, landing pages, automação e CRM. Você foca apenas em vender.
         </p>
 
