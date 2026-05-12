@@ -189,17 +189,17 @@ const LandingPage = ({ onOpenModal }) => {
       </div>
 
       {/* Hero Content */}
-      <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[calc(100vh-100px)] pt-32 md:pt-40 transition-transform duration-100 ease-out">
+      <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[calc(100vh-80px)] pt-28 md:pt-40 transition-transform duration-100 ease-out">
         {/* Headline */}
-        <h1 className="animate-on-scroll font-outfit text-6xl md:text-7xl lg:text-[6rem] leading-[1.05] tracking-tight md:tracking-[-0.03em] font-light mb-8">
-          <span className="block text-white">O tráfego que atrai.</span>
-          <span className="block text-gray-200">A página que converte.</span>
-          <span className="block text-gray-400">A IA que atende e vende.</span>
+        <h1 className="animate-on-scroll font-outfit text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[1.1] tracking-tight md:tracking-[-0.03em] font-light mb-5 md:mb-8">
+          <span className="block text-white">Tráfego que atrai.</span>
+          <span className="block text-gray-200">Design que converte.</span>
+          <span className="block text-gray-400">IA que vende.</span>
         </h1>
 
         {/* Subheading */}
-        <p className="animate-on-scroll text-gray-400 text-sm md:text-base max-w-[500px] mx-auto mb-10 leading-relaxed font-medium" style={{ transitionDelay: '100ms' }}>
-          Somos sua agência 360º de marketing e IA. Assumimos o controle de toda a sua operação comercial: tráfego, landing pages, atendimento com IA e CRM. Você foca apenas em vender.
+        <p className="animate-on-scroll text-gray-400 text-sm md:text-base max-w-[480px] mx-auto mb-8 md:mb-10 leading-relaxed font-medium" style={{ transitionDelay: '100ms' }}>
+          Sua agência 360º de marketing e IA. Assumimos sua operação comercial: anúncios, landing pages, automação e CRM. Você foca apenas em vender.
         </p>
 
         {/* Secondary CTA */}
