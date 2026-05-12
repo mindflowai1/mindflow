@@ -189,7 +189,7 @@ const LandingPage = ({ onOpenModal }) => {
       </div>
 
       {/* Hero Content */}
-      <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[calc(100vh-80px)] pt-28 md:pt-40 transition-transform duration-100 ease-out">
+      <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[calc(100vh-80px)] pt-28 md:pt-40 pb-28 transition-transform duration-100 ease-out">
         {/* Headline */}
         <h1 className="animate-on-scroll font-outfit text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[1.1] tracking-tight md:tracking-[-0.03em] font-light mb-5 md:mb-8">
           <span className="block text-white">Tráfego que atrai.</span>
@@ -198,19 +198,22 @@ const LandingPage = ({ onOpenModal }) => {
         </h1>
 
         {/* Subheading */}
-        <p className="animate-on-scroll text-gray-400 text-sm md:text-base max-w-[480px] mx-auto mb-8 md:mb-10 leading-relaxed font-medium" style={{ transitionDelay: '100ms' }}>
+        <p className="animate-on-scroll text-gray-400 text-base md:text-lg max-w-[500px] md:max-w-[600px] mx-auto mb-8 md:mb-12 leading-relaxed font-light" style={{ transitionDelay: '100ms' }}>
           Sua agência 360º de marketing e IA. Assumimos sua operação comercial: anúncios, landing pages, automação e CRM. Você foca apenas em vender.
         </p>
 
-        {/* Secondary CTA */}
-        <button onClick={onOpenModal} className="animate-on-scroll group flex items-center justify-between bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white pl-5 pr-1.5 py-1.5 rounded-full transition-all duration-300 hover:border-white/20 select-none cursor-pointer" style={{ transitionDelay: '200ms' }}>
-          <span className="text-sm font-medium mr-4">Quero uma operação completa</span>
-          <div className="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white transition-transform group-hover:scale-105">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="w-3.5 h-3.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        {/* Scroll Indicator */}
+        <a href="#experience" className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-all duration-300 group cursor-pointer animate-on-scroll hover:scale-110" style={{ transitionDelay: '400ms' }}>
+          <span className="text-[11px] uppercase tracking-[0.25em] text-gray-300 font-outfit font-medium group-hover:text-white transition-colors">Descubra</span>
+          <div className="flex flex-col items-center animate-bounce mt-1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" className="w-6 h-6 text-blue-500/50 -mb-3 group-hover:text-blue-400 transition-colors">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" className="w-6 h-6 text-blue-500 group-hover:text-blue-400 transition-colors drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
             </svg>
           </div>
-        </button>
+        </a>
       </main>
     </div>
   );
