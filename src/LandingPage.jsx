@@ -1,616 +1,219 @@
-import React, { Suspense } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import LiquidSphere3D from './LiquidSphere3D';
-import { useLanguage, LanguageSwitcher, t } from './LanguageContext';
-
-// ─── Translations ────────────────────────────────────────────
-const translations = {
-    nav: {
-        connect: { pt: 'Conectar', en: 'Connect', es: 'Conectar' },
-    },
-    hero: {
-        eyebrow: {
-            pt: 'Integração Empresarial com IA',
-            en: 'Enterprise AI Integration',
-            es: 'Integración Empresarial con IA',
-        },
-        h1Line1: {
-            pt: 'Acelere o Crescimento',
-            en: 'Accelerate Growth',
-            es: 'Acelere el Crecimiento',
-        },
-        h1Line2: {
-            pt: 'Com IA Autônoma',
-            en: 'With Autonomous AI',
-            es: 'Con IA Autónoma',
-        },
-        body: {
-            pt: 'Soluções inteligentes para empresas modernas. Construímos agentes de IA personalizados, automatizamos fluxos complexos e extraímos insights acionáveis para elevar suas operações.',
-            en: 'Intelligent solutions for modern enterprises. We build custom AI agents, automate complex workflows, and extract actionable insights to elevate your operations.',
-            es: 'Soluciones inteligentes para empresas modernas. Creamos agentes de IA personalizados, automatizamos flujos complejos y extraemos insights accionables para elevar sus operaciones.',
-        },
-        ctaPrimary: {
-            pt: 'Explorar Serviços',
-            en: 'Explore Services',
-            es: 'Explorar Servicios',
-        },
-        ctaSecondary: {
-            pt: 'Agendar Consultoria',
-            en: 'Book a Consultation',
-            es: 'Agendar Consultoría',
-        },
-    },
-    footer: {
-        trusted: {
-            pt: 'Empresas que confiam em nós',
-            en: 'Trusted by forward-thinking teams',
-            es: 'Empresas que confían en nosotros',
-        },
-    },
-};
-
-const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.2 } }
-};
-
-const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 20 } }
-};// ─── All styles are self-contained ─────────────────────────────────────────
-// This component intentionally uses ZERO Tailwind classes / external CSS.
-// Reason: the global index.css (AdminDashboard.css, body overrides, etc.)
-// conflicts with any Tailwind utility generated for this route.
-// Using inline styles + a scoped <style> tag makes the page immune to that.
-// ───────────────────────────────────────────────────────────────────────────
-
-const styles = {
-    page: {
-        position: 'relative',
-        minHeight: '100svh',  // uses dynamic viewport height for mobile browsers
-        backgroundColor: '#000',
-        color: '#fff',
-        fontFamily: "'Inter', 'Space Grotesk', system-ui, sans-serif",
-        display: 'flex',
-        flexDirection: 'column',
-        overflowX: 'hidden',
-    },
-    // ── 3D portal (right side) ──
-    portalWrapper: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 0,
-        pointerEvents: 'none',
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        paddingRight: '2vw', // Impede que cole totalmente na borda e corte os anéis
-    },
-    // Abstract Liquid Motion 3D Object
-    liquidContainer: {
-        position: 'relative',
-        width: '75vw', // Mais largo horizontalmente para caber o modelo
-        height: '65vw', // Ligeiramente mais alto para manter a proporção
-        maxWidth: '1200px', // Maior presença na tela (antes 1000px)
-        maxHeight: '900px', // Maior altura (antes 750px)
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    liquidBlobMain: {
-        position: 'absolute',
-        width: '85%',
-        height: '85%',
-        background: 'linear-gradient(135deg, #00B4E5 0%, #003A53 40%, #001119 100%)',
-        boxShadow: 'inset -20px -20px 40px rgba(0,0,0,0.8), inset 10px 10px 30px rgba(0,180,229,0.5)',
-        animation: 'rl-blobMorph 12s ease-in-out infinite, rl-liquidSpin 25s linear infinite',
-        opacity: 0.9,
-    },
-    liquidBlobOverlay: {
-        position: 'absolute',
-        width: '90%',
-        height: '90%',
-        background: 'linear-gradient(45deg, rgba(0,180,229,0.4) 0%, transparent 60%)',
-        boxShadow: 'inset 20px 0 50px rgba(0,180,229,0.3)',
-        animation: 'rl-blobMorph2 15s ease-in-out infinite alternate, rl-liquidSpinReverse 30s linear infinite',
-        mixBlendMode: 'screen',
-    },
-    liquidBlobCore: {
-        position: 'absolute',
-        width: '60%',
-        height: '60%',
-        background: 'radial-gradient(circle at 30% 30%, #fff 0%, #00B4E5 30%, transparent 70%)',
-        filter: 'blur(15px)',
-        animation: 'rl-float 5s ease-in-out infinite',
-        opacity: 0.6,
-    },
-    liquidGlow: {
-        position: 'absolute',
-        width: '120%',
-        height: '120%',
-        background: 'radial-gradient(circle, rgba(0,180,229,0.2) 0%, transparent 65%)',
-        filter: 'blur(50px)',
-        zIndex: -1,
-        animation: 'rl-pulse 6s ease-in-out infinite',
-    },
-    liquidDrop: {
-        position: 'absolute',
-        background: 'linear-gradient(135deg, #00B4E5 0%, #003A53 40%, #001119 100%)',
-        boxShadow: 'inset -5px -5px 10px rgba(0,0,0,0.8), inset 5px 5px 10px rgba(0,180,229,0.5)',
-        borderRadius: '50%',
-        opacity: 0.6,
-        filter: 'blur(1px)',
-    },
-    drop1: {
-        width: '12%',
-        height: '12%',
-        animation: 'rl-drop1 12s ease-in-out infinite',
-    },
-    drop2: {
-        width: '6%',
-        height: '6%',
-        animation: 'rl-drop2 9s ease-in-out infinite',
-    },
-    drop3: {
-        width: '15%',
-        height: '15%',
-        animation: 'rl-drop3 15s ease-in-out infinite',
-        animationDelay: '3s',
-    },
-    // ── Bottom Aurora Boreal Effect ──
-    auroraWrapper: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: '50vh',
-        zIndex: 0,
-        pointerEvents: 'none',
-        overflow: 'hidden',
-    },
-    auroraMist1: {
-        position: 'absolute',
-        bottom: '-20%',
-        left: '-20%',
-        width: '140%',
-        height: '100%',
-        background: 'radial-gradient(ellipse at bottom, rgba(0,180,229,0.3) 0%, transparent 60%)',
-        filter: 'blur(60px)',
-        animation: 'rl-auroraHover 14s ease-in-out infinite alternate',
-    },
-    auroraMist2: {
-        position: 'absolute',
-        bottom: '-30%',
-        right: '-20%',
-        width: '140%',
-        height: '120%',
-        background: 'radial-gradient(ellipse at bottom, rgba(0,58,83,0.8) 0%, transparent 60%)',
-        filter: 'blur(80px)',
-        animation: 'rl-auroraHover2 18s ease-in-out infinite alternate-reverse',
-        mixBlendMode: 'screen',
-    },
-    auroraLine: {
-        position: 'absolute',
-        bottom: '15%',
-        left: '-10%',
-        width: '120%',
-        height: '4px',
-        background: 'linear-gradient(90deg, transparent 0%, rgba(0,180,229,0.5) 50%, transparent 100%)',
-        filter: 'blur(4px)',
-        animation: 'rl-auroraLineMotion 10s ease-in-out infinite alternate',
-    },
-    // ── Content shell ──
-    shell: {
-        position: 'relative',
-        zIndex: 1,
-        maxWidth: '1400px',
-        width: '100%',
-        margin: '0 auto',
-        padding: '0 80px',
-        minHeight: '100svh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-    },
-    // ── Navbar ──
-    navbar: {
-        paddingTop: '36px',
-        paddingBottom: '36px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    logoGroup: {
-        display: 'flex',
-        alignItems: 'center',
-        cursor: 'pointer',
-    },
-    logoImg: {
-        height: '42px', // Altura inicial da nova logo da Mindflow
-        width: 'auto',
-    },
-    connectBtn: {
-        backgroundColor: '#fff',
-        color: '#000',
-        fontWeight: 600,
-        padding: '10px 24px',
-        borderRadius: '10px',
-        fontSize: '14px',
-        border: 'none',
-        cursor: 'pointer',
-        boxShadow: '0 0 15px rgba(255,255,255,0.12)',
-        transition: 'background 0.2s, box-shadow 0.2s',
-    },
-    // ── Hero ──
-    hero: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        paddingTop: '20px',
-        paddingBottom: '20px',
-    },
-    heroInner: {
-        maxWidth: '680px',
-    },
-    eyebrow: {
-        color: '#00B4E5',
-        fontWeight: 500,
-        fontSize: '17px',
-        letterSpacing: '0.04em',
-        marginBottom: '20px',
-        display: 'block',
-    },
-    h1: {
-        fontSize: 'clamp(52px, 7vw, 84px)',
-        fontWeight: 800,
-        letterSpacing: '-0.03em',
-        lineHeight: 1.04,
-        color: '#fff',
-        margin: '0 0 28px',
-    },
-    h1Gradient: {
-        display: 'block',
-        background: 'linear-gradient(90deg, #fff 30%, #666 100%)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        backgroundClip: 'text',
-    },
-    body: {
-        color: 'rgba(255,255,255,0.45)',
-        fontSize: '18px',
-        lineHeight: 1.7,
-        maxWidth: '520px',
-        margin: '0 0 40px',
-        fontWeight: 300,
-    },
-    ctaRow: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        gap: '16px',
-    },
-    ctaPrimary: {
-        backgroundColor: '#00B4E5',
-        color: '#000',
-        fontWeight: 700,
-        fontSize: '15px',
-        padding: '16px 32px',
-        borderRadius: '12px',
-        border: 'none',
-        cursor: 'pointer',
-        boxShadow: '0 0 24px rgba(0,180,229,0.35)',
-        transition: 'box-shadow 0.2s, background 0.2s',
-    },
-    ctaSecondary: {
-        backgroundColor: 'rgba(255,255,255,0.05)',
-        color: '#fff',
-        fontWeight: 600,
-        fontSize: '15px',
-        padding: '16px 32px',
-        borderRadius: '12px',
-        border: '1px solid rgba(255,255,255,0.12)',
-        cursor: 'pointer',
-        transition: 'background 0.2s, border 0.2s',
-    },
-    // ── Footer strip ──
-    footer: {
-        paddingTop: '24px',
-        paddingBottom: '32px',
-        borderTop: '1px solid rgba(255,255,255,0.08)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    trustedLabel: {
-        display: 'block',
-        color: 'rgba(255,255,255,0.3)',
-        fontSize: '11px',
-        fontWeight: 600,
-        letterSpacing: '0.18em',
-        textTransform: 'uppercase',
-        marginBottom: '16px',
-        textAlign: 'center',
-    },
-    logoRow: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '40px',
-        opacity: 0.25,
-        filter: 'grayscale(100%)',
-        flexWrap: 'wrap',
-    },
-    logoPlaceholder: {
-        fontSize: '18px',
-        fontWeight: 800,
-        letterSpacing: '-0.02em',
-        color: '#fff',
-        whiteSpace: 'nowrap',
-    },
-};
-
-// Hover helpers via CSS-in-JS style tag
-const scopedCSS = `
-  @keyframes rl-float {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(2deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-  }
-
-  @keyframes rl-blobMorph {
-    0%, 100% { border-radius: 40% 60% 70% 30% / 40% 40% 60% 50%; }
-    34% { border-radius: 70% 30% 50% 50% / 30% 30% 70% 70%; }
-    67% { border-radius: 100% 60% 60% 100% / 100% 100% 60% 60%; }
-  }
-
-  @keyframes rl-blobMorph2 {
-    0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-    50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-  }
-
-  @keyframes rl-liquidSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  @keyframes rl-liquidSpinReverse {
-    from { transform: rotate(360deg); }
-    to { transform: rotate(0deg); }
-  }
-
-  @keyframes rl-pulse {
-    0% { opacity: 0.6; transform: scale(0.9); }
-    50% { opacity: 1; transform: scale(1.1); }
-    100% { opacity: 0.6; transform: scale(0.9); }
-  }
-
-  @keyframes rl-drop1 {
-    0%, 100% { transform: translate(0, 0) scale(0.5); opacity: 0; }
-    20% { opacity: 0.7; }
-    70% { transform: translate(-10vw, -15vw) scale(1.5); opacity: 0; }
-  }
-
-  @keyframes rl-drop2 {
-    0%, 100% { transform: translate(0, 0) scale(0.5); opacity: 0; }
-    30% { opacity: 0.5; }
-    80% { transform: translate(12vw, 10vw) scale(1.2); opacity: 0; }
-  }
-
-  @keyframes rl-drop3 {
-    0%, 100% { transform: translate(0, 0) scale(0.5); opacity: 0; }
-    40% { opacity: 0.8; }
-    90% { transform: translate(-8vw, 15vw) scale(0.8); opacity: 0; }
-  }
-
-  @keyframes rl-auroraHover {
-    0% { transform: scale(1) translate(0, 0) rotate(-2deg); opacity: 0.6; }
-    100% { transform: scale(1.1) translate(5vw, -30px) rotate(3deg); opacity: 1; }
-  }
-
-  @keyframes rl-auroraHover2 {
-    0% { transform: scale(1) translate(0, 0) rotate(2deg); opacity: 0.5; }
-    100% { transform: scale(1.2) translate(-5vw, -40px) rotate(-3deg); opacity: 0.9; }
-  }
-
-  @keyframes rl-auroraLineMotion {
-    0% { transform: translateY(0px) rotate(-1deg); opacity: 0.3; }
-    100% { transform: translateY(-20px) rotate(1deg); opacity: 0.7; }
-  }
-
-  .rl-connect:hover { background: #e8e8e8 !important; }
-  .rl-cta-primary:hover { background: #33C6EA !important; box-shadow: 0 0 36px rgba(0,180,229,0.55) !important; }
-  .rl-cta-secondary:hover { background: rgba(255,255,255,0.09) !important; border-color: rgba(255,255,255,0.22) !important; }
-
-    @media (max-width: 900px), (max-height: 800px) {
-      .rl-shell { padding: 0 40px !important; }
-      .rl-navbar { padding-top: 20px !important; padding-bottom: 20px !important; }
-      .rl-h1 { font-size: clamp(42px, 8vw, 64px) !important; margin-bottom: 16px !important; }
-      .rl-body { font-size: 16px !important; margin-bottom: 24px !important; line-height: 1.5 !important; }
-      .rl-eyebrow { margin-bottom: 12px !important; font-size: 14px !important; }
-      .rl-cta-primary, .rl-cta-secondary { padding: 14px 24px !important; font-size: 15px !important; border-radius: 12px !important; }
-      
-      .rl-portal { 
-        justify-content: flex-end !important;
-        padding-right: 0 !important;
-      }
-      .rl-portal > div {
-        width: 100vw !important;
-        height: 100vw !important;
-        transform: translateX(10%) translateY(-5vh) !important;
-      }
-    }
-
-  @media (max-width: 600px) {
-    .rl-shell { padding: 0 24px !important; }
-    .rl-navbar { padding-top: 16px !important; padding-bottom: 16px !important; gap: 8px; }
-    .rl-navbar img { height: 32px !important; }
-    .rl-connect { padding: 8px 14px !important; font-size: 12px !important; border-radius: 8px !important; }
-    .rl-hero { justify-content: flex-end !important; padding-bottom: 2vh !important; padding-top: 0 !important; }
-    
-    .rl-portal { align-items: flex-start !important; }
-    .rl-portal > div { 
-      transform: translateY(12vh) scale(1.8) !important; 
-      opacity: 0.6; /* Esfera visível no topo da tela */
-      filter: blur(0px);
-    }
-    
-    .rl-h1 { 
-      font-size: 42px !important; 
-      margin-bottom: 16px !important;
-      text-shadow: 0 4px 30px rgba(0,0,0,1), 0 2px 10px rgba(0,0,0,0.8);
-    }
-    .rl-h1-gradient {
-      background: linear-gradient(90deg, #fff 0%, #D8F5FF 100%) !important;
-      -webkit-background-clip: text !important;
-      background-clip: text !important;
-      -webkit-text-fill-color: transparent !important;
-      filter: drop-shadow(0px 4px 15px rgba(0,0,0,0.9));
-    }
-    .rl-body { 
-      font-size: 16px !important;
-      margin-bottom: 24px !important;
-      color: rgba(255,255,255,0.9) !important;
-      font-weight: 400 !important;
-      text-shadow: 0 4px 20px rgba(0,0,0,1), 0 2px 5px rgba(0,0,0,0.9);
-    }
-    
-    .rl-cta-group { 
-      gap: 12px !important; 
-      margin-top: 15vh !important;
-      flex-direction: column;
-    }
-    .rl-cta-primary, .rl-cta-secondary { width: 100%; text-align: center; }
-    
-    .rl-logo-row { gap: 16px !important; flex-wrap: wrap; margin-bottom: 0px; }
-    .rl-footer { padding-top: 16px !important; padding-bottom: 24px !important; border-top: none !important; }
-  }
-`;
 
 const LandingPage = ({ onOpenModal }) => {
-    const navigate = useNavigate();
-    const { lang } = useLanguage();
+  const navigate = useNavigate();
+  const [isPreloaderVisible, setIsPreloaderVisible] = useState(true);
+  const [isPreloaderFading, setIsPreloaderFading] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const videoRef = useRef(null);
+  const heroRef = useRef(null);
 
-    return (
-        <>
-            <style>{scopedCSS}</style>
-            <div style={styles.page}>
+  // Preloader Logic
+  useEffect(() => {
+    const hidePreloader = () => {
+      setIsPreloaderFading(true);
+      setTimeout(() => {
+        setIsPreloaderVisible(false);
+      }, 1000);
+    };
 
-                {/* ── Bottom Aurora Boreal Effect ── */}
-                <div style={styles.auroraWrapper}>
-                    <div style={styles.auroraMist1} />
-                    <div style={styles.auroraMist2} />
-                    <div style={styles.auroraLine} />
-                </div>
+    const bgVideo = videoRef.current;
+    
+    // Simpler fallback since we might be on mobile where video is hidden
+    const isMobile = window.innerWidth < 768;
+    
+    if (bgVideo && !isMobile) {
+      const fallbackTimeout = setTimeout(hidePreloader, 4000);
+      if (bgVideo.readyState >= 3) {
+        clearTimeout(fallbackTimeout);
+        hidePreloader();
+      } else {
+        bgVideo.addEventListener('canplaythrough', () => {
+          clearTimeout(fallbackTimeout);
+          hidePreloader();
+        }, { once: true });
+        bgVideo.addEventListener('loadeddata', () => {
+          setTimeout(() => { clearTimeout(fallbackTimeout); hidePreloader(); }, 500);
+        }, { once: true });
+      }
+    } else {
+      setTimeout(hidePreloader, 800);
+    }
+  }, []);
 
-                {/* ── Abstract Liquid Motion Element ── */}
-                <div style={styles.portalWrapper} className="rl-portal">
-                    <div style={styles.liquidContainer}>
-                        <Suspense fallback={<div style={styles.liquidGlow} />}>
-                            <LiquidSphere3D />
-                        </Suspense>
-                    </div>
-                </div>
+  // Parallax and Scroll Animations
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const opacity = Math.max(0, 1 - scrollY / 350);
+      if (heroRef.current) {
+        heroRef.current.style.opacity = opacity;
+        heroRef.current.style.transform = `translateY(${scrollY * 0.4}px)`;
+      }
+    };
 
-                {/* ── Content shell ── */}
-                <div style={styles.shell} className="rl-shell">
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-                    {/* Navbar */}
-                    <motion.header
-                        style={styles.navbar}
-                        className="rl-navbar"
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                    >
-                        <div style={styles.logoGroup}>
-                            <img src="/images/logo mindflow.png" alt="Mindflow" style={styles.logoImg} />
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <LanguageSwitcher />
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                style={styles.connectBtn}
-                                className="rl-connect"
-                                onClick={onOpenModal}
-                            >
-                                {t(translations.nav.connect, lang)}
-                            </motion.button>
-                        </div>
-                    </motion.header>
+  // Intersection Observer for scroll reveal
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-12');
+        }
+      });
+    }, { threshold: 0.1 });
 
-                    {/* Hero */}
-                    <main style={styles.hero} className="rl-hero">
-                        <motion.div
-                            style={styles.heroInner}
-                            variants={staggerContainer}
-                            initial="hidden"
-                            animate="visible"
-                        >
-                            <motion.span variants={fadeUp} style={styles.eyebrow} className="rl-eyebrow">{t(translations.hero.eyebrow, lang)}</motion.span>
-                            <motion.h1 variants={fadeUp} style={styles.h1} className="rl-h1">
-                                {t(translations.hero.h1Line1, lang)}
-                                <span style={styles.h1Gradient} className="rl-h1-gradient">{t(translations.hero.h1Line2, lang)}</span>
-                            </motion.h1>
-                            <motion.p variants={fadeUp} style={styles.body} className="rl-body">
-                                {t(translations.hero.body, lang)}
-                            </motion.p>
-                            <motion.div variants={fadeUp} style={styles.ctaRow} className="rl-cta-group">
-                                <motion.button
-                                    whileHover={{ scale: 1.05, boxShadow: '0 0 36px rgba(0,180,229,0.55)' }}
-                                    whileTap={{ scale: 0.95 }}
-                                    style={{ ...styles.ctaPrimary, transition: 'none' }}
-                                    className="rl-cta-primary"
-                                    onClick={() => navigate('/services')}
-                                >
-                                    {t(translations.hero.ctaPrimary, lang)}
-                                </motion.button>
-                                <motion.button
-                                    whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,0.09)' }}
-                                    whileTap={{ scale: 0.95 }}
-                                    style={{ ...styles.ctaSecondary, transition: 'none' }}
-                                    className="rl-cta-secondary"
-                                    onClick={onOpenModal}
-                                >
-                                    {t(translations.hero.ctaSecondary, lang)}
-                                </motion.button>
-                            </motion.div>
-                        </motion.div>
-                    </main>
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach((el) => {
+      el.classList.add('opacity-0', 'translate-y-12', 'transition-all', 'duration-[800ms]', 'ease-out');
+      observer.observe(el);
+    });
 
-                    {/* Footer strip */}
-                    <motion.footer
-                        style={styles.footer}
-                        className="rl-footer"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1, duration: 1 }}
-                    >
-                        <span style={styles.trustedLabel}>{t(translations.footer.trusted, lang)}</span>
-                        {/* Replace the placeholders below with real <img> logos */}
-                        <motion.div
-                            style={styles.logoRow}
-                            className="rl-logo-row"
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 0.25, y: 0 }}
-                            transition={{ delay: 1.2, duration: 1 }}
-                        >
-                            <span style={styles.logoPlaceholder}>ACME CORP</span>
-                            <span style={styles.logoPlaceholder}>GLOBEX</span>
-                            <span style={styles.logoPlaceholder}>INNOVA</span>
-                            <span style={styles.logoPlaceholder}>NEXUS</span>
-                        </motion.div>
-                    </motion.footer>
+    return () => {
+      elements.forEach(el => observer.unobserve(el));
+    };
+  }, []);
 
-                </div>
-            </div>
-        </>
-    );
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    document.body.style.overflow = !isMobileMenuOpen ? 'hidden' : '';
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    document.body.style.overflow = '';
+  };
+
+  return (
+    <div className="w-full relative min-h-screen">
+      {/* Preloader */}
+      {isPreloaderVisible && (
+        <div 
+          className={`fixed inset-0 z-[100] bg-[#02040a] flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out ${isPreloaderFading ? 'opacity-0' : 'opacity-100'}`}
+        >
+          <img src="/logo-mindflow.png" alt="Mindflow" className="h-16 md:h-20 mb-8 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] drop-shadow-[0_0_25px_rgba(59,130,246,0.5)]" />
+          <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden relative">
+            <div className="absolute top-0 left-0 h-full bg-blue-500 rounded-full w-1/2 shadow-[0_0_10px_rgba(59,130,246,0.8)]" style={{ animation: 'loading-bar 1.5s ease-in-out infinite' }}></div>
+          </div>
+        </div>
+      )}
+
+      {/* Video Background */}
+      <video 
+        ref={videoRef}
+        autoPlay 
+        loop 
+        muted 
+        playsInline 
+        className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-40"
+      >
+        <source src="/background.mp4" type="video/mp4" />
+      </video>
+
+      {/* Mobile Animated Background — Nexus Geometry */}
+      <div className="md:hidden fixed inset-0 z-0 w-full h-full bg-black overflow-hidden pointer-events-none">
+        {/* Far Right Dark Blue */}
+        <div className="absolute top-0 bottom-0" style={{ left: '75vw', width: '60vw', background: 'linear-gradient(160deg, #000844 0%, #000011 50%, #000000 100%)', backgroundSize: '200% 200%', zIndex: 1, animation: 'nexus-right 12s ease-in-out infinite' }}></div>
+        {/* Middle Royal Blue */}
+        <div className="absolute top-0 bottom-0" style={{ left: '15vw', width: '60vw', background: 'linear-gradient(160deg, #001a99 0%, #00001a 50%, #000000 100%)', backgroundSize: '200% 200%', borderRight: '1px solid rgba(255,255,255,0.05)', zIndex: 2, animation: 'nexus-mid 10s ease-in-out infinite 1s' }}></div>
+        {/* Top Left Cyan (Now Darker Blue) */}
+        <div className="absolute top-0 bottom-0" style={{ left: '-50vw', width: '90vw', background: 'linear-gradient(150deg, #0033aa 0%, #001144 40%, #000000 80%)', backgroundSize: '200% 200%', borderRight: '1px solid rgba(255,255,255,0.15)', zIndex: 3, animation: 'nexus-left 8s ease-in-out infinite 0.5s' }}></div>
+        
+        {/* Noise Overlay for premium texture */}
+        <div className="absolute inset-0 z-10 opacity-[0.06] pointer-events-none mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}></div>
+        
+        {/* Floating particles for extra dynamism */}
+        <div className="absolute rounded-full bg-cyan-400/20 blur-xl pointer-events-none" style={{ width: '150px', height: '180px', left: '10%', top: '20%', zIndex: 4, animation: 'particle-drift-1 14s linear infinite' }}></div>
+        <div className="absolute rounded-full bg-cyan-400/20 blur-xl pointer-events-none" style={{ width: '250px', height: '150px', left: '60%', top: '70%', zIndex: 4, animation: 'particle-drift-2 18s linear infinite' }}></div>
+        <div className="absolute rounded-full bg-cyan-400/20 blur-xl pointer-events-none" style={{ width: '120px', height: '220px', left: '80%', top: '10%', zIndex: 4, animation: 'particle-drift-3 12s linear infinite' }}></div>
+      </div>
+
+      {/* Background Glows */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="animate-glow-outer absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[80%] h-[50%] blur-[120px] rounded-[100%]"></div>
+        <div class="animate-glow-inner absolute bottom-[-10%] left-1/2 -translate-x-1/2 w-[60%] h-[20%] blur-[80px] rounded-[100%]"></div>
+        <div className="absolute top-1/2 -translate-y-1/2 -left-32 w-64 h-[60%] bg-blue-700/20 blur-[100px] rounded-full"></div>
+        <div className="absolute top-1/2 -translate-y-1/2 -right-32 w-64 h-[60%] bg-blue-700/20 blur-[100px] rounded-full"></div>
+      </div>
+
+      {/* Floating Glass Navbar */}
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl px-6 py-4 rounded-full bg-[#080b14]/25 backdrop-blur-2xl border border-white/15 shadow-[0_20px_40px_rgba(0,0,0,0.4)] flex items-center justify-between transition-all duration-500 hover:bg-[#0a0f1c]/40 hover:border-white/25">
+        
+        {/* Logo (Left) */}
+        <div onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="flex items-center gap-3 group cursor-pointer">
+          <img src="/logo-mindflow.png" alt="Mindflow Logo" className="h-8 md:h-10 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.2)] group-hover:drop-shadow-[0_0_25px_rgba(59,130,246,0.5)] group-hover:scale-105 transition-all duration-300" />
+        </div>
+
+        {/* Navigation Links (Center) */}
+        <div className="hidden lg:flex items-center space-x-10 text-sm font-outfit font-medium text-gray-300">
+          <button onClick={() => navigate('/services')} className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300 cursor-pointer">Ecossistema</button>
+          <a href="#experience" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">Como Funciona</a>
+          <a href="#clients" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">Nossos Clientes</a>
+          <a href="#faq" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">Dúvidas</a>
+        </div>
+
+        {/* CTA Button (Right) */}
+        <div className="hidden md:flex items-center">
+          <button onClick={onOpenModal} className="bg-white/10 text-white border border-white/20 px-6 py-2.5 rounded-full font-outfit font-semibold hover:bg-white hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 cursor-pointer">
+            Falar com a Agência
+          </button>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button onClick={toggleMobileMenu} className="lg:hidden text-white p-2 relative z-50 cursor-pointer" aria-label="Open menu">
+          <svg className={`w-6 h-6 transition-all duration-300 ${isMobileMenuOpen ? 'hidden' : 'block'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg className={`w-6 h-6 transition-all duration-300 ${isMobileMenuOpen ? 'block' : 'hidden'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      <div className={`fixed inset-0 z-40 bg-[#020409]/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 transition-all duration-500 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}>
+        <button onClick={() => { closeMobileMenu(); navigate('/services'); }} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Ecossistema</button>
+        <a href="#experience" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Como Funciona</a>
+        <a href="#clients" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Nossos Clientes</a>
+        <a href="#faq" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Dúvidas</a>
+        <div className="mt-6">
+          <button onClick={() => { closeMobileMenu(); onOpenModal(); }} className="bg-white text-black px-8 py-3.5 rounded-full font-outfit font-semibold text-lg hover:bg-gray-200 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.15)] cursor-pointer">
+            Falar com a Agência
+          </button>
+        </div>
+      </div>
+
+      {/* Hero Content */}
+      <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[calc(100vh-100px)] pt-32 md:pt-40 transition-transform duration-100 ease-out">
+        {/* Headline */}
+        <h1 className="animate-on-scroll font-outfit text-6xl md:text-7xl lg:text-[6rem] leading-[1.05] tracking-tight md:tracking-[-0.03em] font-light mb-8">
+          <span className="block text-white">O tráfego que atrai.</span>
+          <span className="block text-gray-200">A página que converte.</span>
+          <span className="block text-gray-400">A IA que atende e vende.</span>
+        </h1>
+
+        {/* Subheading */}
+        <p className="animate-on-scroll text-gray-400 text-sm md:text-base max-w-[500px] mx-auto mb-10 leading-relaxed font-medium" style={{ transitionDelay: '100ms' }}>
+          Somos sua agência 360º de marketing e IA. Assumimos o controle de toda a sua operação comercial: tráfego, landing pages, atendimento com IA e CRM. Você foca apenas em vender.
+        </p>
+
+        {/* Secondary CTA */}
+        <button onClick={onOpenModal} className="animate-on-scroll group flex items-center justify-between bg-black/40 backdrop-blur-md border border-white/10 text-gray-300 hover:text-white pl-5 pr-1.5 py-1.5 rounded-full transition-all duration-300 hover:border-white/20 select-none cursor-pointer" style={{ transitionDelay: '200ms' }}>
+          <span className="text-sm font-medium mr-4">Quero uma operação completa</span>
+          <div className="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white transition-transform group-hover:scale-105">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="w-3.5 h-3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+          </div>
+        </button>
+      </main>
+    </div>
+  );
 };
 
 export default LandingPage;

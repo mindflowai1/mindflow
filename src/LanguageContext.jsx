@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 const LanguageContext = createContext();
 
 const LANGS = [
-    { code: 'pt', label: 'Português', short: 'PT', flag: '/images/flag-br.svg' },
-    { code: 'en', label: 'English', short: 'EN', flag: '/images/flag-us.svg' },
-    { code: 'es', label: 'Español', short: 'ES', flag: '/images/flag-es.svg' },
+    { code: 'pt', label: 'Português', short: 'PT' },
+    { code: 'en', label: 'English', short: 'EN' },
+    { code: 'es', label: 'Español', short: 'ES' },
 ];
 
 export function LanguageProvider({ children }) {
