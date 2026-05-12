@@ -134,11 +134,11 @@ const LandingPage = ({ onOpenModal }) => {
       </div>
 
       {/* Background Glows */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="animate-glow-outer absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-[80%] h-[50%] blur-[120px] rounded-[100%]"></div>
-        <div class="animate-glow-inner absolute bottom-[-10%] left-1/2 -translate-x-1/2 w-[60%] h-[20%] blur-[80px] rounded-[100%]"></div>
-        <div className="absolute top-1/2 -translate-y-1/2 -left-32 w-64 h-[60%] bg-blue-700/20 blur-[100px] rounded-full"></div>
-        <div className="absolute top-1/2 -translate-y-1/2 -right-32 w-64 h-[60%] bg-blue-700/20 blur-[100px] rounded-full"></div>
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="animate-glow-outer absolute bottom-[-10%] left-1/2 w-[150%] md:w-[80%] h-[60%] md:h-[50%]" style={{ background: 'radial-gradient(ellipse at center, rgba(29, 78, 216, 0.25) 0%, rgba(0, 0, 0, 0) 70%)' }}></div>
+        <div className="animate-glow-inner absolute bottom-[-5%] left-1/2 w-[120%] md:w-[60%] h-[40%] md:h-[30%]" style={{ background: 'radial-gradient(ellipse at center, rgba(59, 130, 246, 0.35) 0%, rgba(0, 0, 0, 0) 60%)' }}></div>
+        <div className="absolute top-1/2 -translate-y-1/2 -left-32 w-96 h-[80%]" style={{ background: 'radial-gradient(ellipse at center, rgba(29, 78, 216, 0.15) 0%, rgba(0, 0, 0, 0) 70%)' }}></div>
+        <div className="absolute top-1/2 -translate-y-1/2 -right-32 w-96 h-[80%]" style={{ background: 'radial-gradient(ellipse at center, rgba(29, 78, 216, 0.15) 0%, rgba(0, 0, 0, 0) 70%)' }}></div>
       </div>
 
       {/* Floating Glass Navbar */}

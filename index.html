@@ -32,13 +32,13 @@
         }
 
         @keyframes pulse-glow-outer {
-            0% { background-color: rgba(37, 99, 235, 0.3); }
-            100% { background-color: rgba(5, 5, 10, 0.9); }
+            0% { opacity: 0.8; transform: translateX(-50%) scale(1); }
+            100% { opacity: 0.4; transform: translateX(-50%) scale(1.1); }
         }
 
         @keyframes pulse-glow-inner {
-            0% { background-color: rgba(59, 130, 246, 0.5); }
-            100% { background-color: rgba(0, 0, 0, 0.8); }
+            0% { opacity: 1; transform: translateX(-50%) scale(1); }
+            100% { opacity: 0.6; transform: translateX(-50%) scale(1.05); }
         }
 
         @keyframes nexus-right {
