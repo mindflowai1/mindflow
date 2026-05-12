@@ -388,17 +388,18 @@ const LandingPage = ({ onOpenModal }) => {
 
       {/* Liquid Glass Agency Introduction Section */}
       <section id="about" className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-24 pb-16 md:pb-24 flex flex-col items-center overflow-hidden animate-on-scroll">
-        {/* Background Liquid Elements */}
+        {/* Background Liquid Elements - Enhanced for better glass visibility */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none z-0">
-          <div className="animate-liquid absolute top-[10%] left-[20%] w-[40vw] h-[40vw] bg-blue-600/10 blur-[100px] opacity-40"></div>
-          <div className="animate-liquid absolute bottom-[10%] right-[20%] w-[35vw] h-[35vw] bg-purple-600/10 blur-[100px] opacity-30" style={{ animationDirection: 'reverse', animationDuration: '25s' }}></div>
+          <div className="animate-liquid absolute top-[0%] left-[10%] w-[60vw] h-[60vw] bg-blue-600/20 blur-[120px] opacity-40"></div>
+          <div className="animate-liquid absolute bottom-[0%] right-[10%] w-[50vw] h-[50vw] bg-purple-600/15 blur-[120px] opacity-30" style={{ animationDirection: 'reverse', animationDuration: '30s' }}></div>
+          <div className="absolute top-[20%] right-[15%] w-[30vw] h-[30vw] bg-indigo-500/10 blur-[100px] rounded-full"></div>
         </div>
 
-        <div className="relative z-10 max-w-6xl mx-auto w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="relative z-10 max-w-4xl mx-auto w-full">
+          <div className="flex flex-col items-center text-center">
 
             {/* Content Side */}
-            <div className="animate-on-scroll text-left">
+            <div className="animate-on-scroll">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 mb-8 backdrop-blur-md">
                 <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
                 <span className="text-[11px] tracking-[0.3em] uppercase text-blue-300 font-outfit font-medium text-shadow-sm">A Agência Mindflow</span>
@@ -409,79 +410,41 @@ const LandingPage = ({ onOpenModal }) => {
                 <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 bg-[length:200%_auto] animate-[sheen_8s_linear_infinite]">Turbo-IA.</span>
               </h2>
 
-              <p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed mb-10 max-w-xl">
+              <p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-2xl mx-auto">
                 Somos uma agência de inteligência artificial que promove uma <span className="text-white font-medium">solução de marketing e comercial completa</span> para o seu negócio.
                 Do tráfego à conversão final, automatizamos cada etapa para sua escala ser inevitável.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
                 {[
                   { title: "Escalabilidade", desc: "Processos desenhados para crescer sem perder qualidade." },
                   { title: "Automação", desc: "Sua equipe focada no fechamento, nossa IA no resto." }
                 ].map((item, i) => (
-                  <div key={i} className="group p-8 rounded-[2rem] bg-white/[0.03] backdrop-blur-2xl border border-white/10 hover:border-blue-500/40 hover:bg-white/[0.06] transition-all duration-500 shadow-2xl hover:-translate-y-2">
-                    <h4 className="text-white font-outfit font-medium text-xl mb-3 group-hover:text-blue-400 transition-colors">{item.title}</h4>
-                    <p className="text-gray-400 font-light text-base leading-relaxed">{item.desc}</p>
+                  <div 
+                    key={i} 
+                    className="group p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-blue-500/40 hover:bg-white/[0.06] transition-all duration-500 shadow-2xl hover:-translate-y-2 text-left relative overflow-hidden"
+                    style={{ 
+                      backdropFilter: 'blur(30px)', 
+                      WebkitBackdropFilter: 'blur(30px)',
+                      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.05)'
+                    }}
+                  >
+                    {/* Glass highlight effect */}
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <h4 className="text-white font-outfit font-medium text-xl mb-3 group-hover:text-blue-400 transition-colors relative z-10">{item.title}</h4>
+                    <p className="text-gray-400 font-light text-base leading-relaxed relative z-10">{item.desc}</p>
                   </div>
                 ))}
               </div>
-            </div>
 
-            {/* Liquid Glass Card Side */}
-            <div className="animate-on-scroll relative group" style={{ transitionDelay: '200ms' }}>
-              {/* Refraction Elements */}
-              <div className="absolute -top-20 -left-20 w-64 h-64 bg-blue-600/10 rounded-full blur-[120px] mix-blend-screen animate-pulse"></div>
-              <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-purple-600/10 rounded-full blur-[120px] mix-blend-screen animate-pulse" style={{ animationDelay: '1s' }}></div>
-
-              {/* The "Liquid Glass" Container */}
-              <div 
-                className="relative p-12 md:p-16 rounded-[3.5rem] border border-white/20 shadow-[0_40px_100px_rgba(0,0,0,0.6)] overflow-hidden transition-transform duration-700 hover:scale-[1.02] group"
-                style={{ 
-                  background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 100%)',
-                  backdropFilter: 'blur(40px) saturate(180%)',
-                  WebkitBackdropFilter: 'blur(40px) saturate(180%)',
-                }}
+              <button
+                onClick={onOpenModal}
+                className="group relative px-12 py-5 rounded-2xl bg-white text-black font-outfit font-bold tracking-tight overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(59,130,246,0.3)] hover:-translate-y-1"
               >
-                {/* Refractive Inner Glow */}
-                <div className="absolute inset-0 rounded-[3.5rem] shadow-[inset_0_0_80px_rgba(255,255,255,0.05)] pointer-events-none"></div>
-                
-                {/* Glossy Reflection overlay */}
-                <div className="absolute top-0 left-0 w-full h-[150%] bg-gradient-to-b from-white/[0.12] via-transparent to-transparent -skew-y-12 transform -translate-y-[40%] pointer-events-none"></div>
-
-                <div className="relative z-10 flex flex-col items-center text-center">
-                  <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl flex items-center justify-center mb-10 shadow-[0_20px_50px_rgba(59,130,246,0.4)] relative">
-                    <div className="absolute inset-0 bg-white/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                    <img src="/logo-mindflow.png" alt="MF" className="w-14 h-14 object-contain brightness-0 invert relative z-10" />
-                  </div>
-
-                  <h3 className="text-3xl md:text-4xl font-outfit text-white mb-6 font-light tracking-tight">
-                    A Nova <span className="font-semibold text-blue-400">Era</span>
-                  </h3>
-
-                  <p className="text-gray-300 text-lg leading-relaxed mb-10 font-light max-w-sm">
-                    "Unimos o poder da IA generativa com estratégias comerciais validadas para criar um motor de vendas autônomo."
-                  </p>
-
-                  <button
-                    onClick={onOpenModal}
-                    className="group/btn relative w-full py-5 rounded-2xl bg-white text-black font-outfit font-bold tracking-tight overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(59,130,246,0.3)] hover:-translate-y-1"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-500"></div>
-                    <span className="relative z-10 group-hover/btn:text-white transition-colors">QUERO EVOLUIR AGORA</span>
-                  </button>
-
-                  <div className="mt-8 flex items-center gap-2">
-                    <div className="flex -space-x-3">
-                      {[1, 2, 3].map(i => (
-                        <div key={i} className="w-8 h-8 rounded-full border-2 border-black bg-gray-800 flex items-center justify-center overflow-hidden">
-                          <img src={`https://i.pravatar.cc/100?u=${i}`} alt="user" className="w-full h-full object-cover" />
-                        </div>
-                      ))}
-                    </div>
-                    <span className="text-gray-500 text-[10px] uppercase tracking-widest font-medium">+150 OPERAÇÕES ESCALADAS</span>
-                  </div>
-                </div>
-              </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                <span className="relative z-10 group-hover:text-white transition-colors">FALAR COM UM ESPECIALISTA</span>
+              </button>
             </div>
 
           </div>
