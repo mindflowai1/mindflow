@@ -114,40 +114,19 @@ const LandingPage = ({ onOpenModal }) => {
 
   // Scroll logic for Timeline and Parallax
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+    const runScroll = () => {
       const scrollY = window.scrollY;
 
-      // Hero parallax
+      // Hero parallax — only the hero uses inline opacity/transform because
+      // it doesn't contain backdrop-filter children. Other sections rely on
+      // the top fade overlay to create the "content fading near top" visual,
+      // which preserves the glass texture of all cards.
       const heroOpacity = Math.max(0, 1 - scrollY / 350);
       if (heroRef.current) {
         heroRef.current.style.opacity = heroOpacity;
         heroRef.current.style.transform = `translateY(${scrollY * 0.4}px)`;
       }
-
-      // Fade out effect for other sections
-      const applyFadeOut = (ref) => {
-        if (!ref.current) return;
-        const rect = ref.current.getBoundingClientRect();
-        
-        // Only trigger when the section is moving out of the top
-        if (rect.top < 0) {
-          const fadeRange = 400; // Distance to complete fade
-          const opacity = Math.max(0, 1 - (Math.abs(rect.top) / fadeRange));
-          const translateY = Math.abs(rect.top) * 0.15; // Subtle parallax
-          
-          ref.current.style.opacity = opacity;
-          ref.current.style.transform = `translateY(${translateY}px)`;
-        } else if (ref.current.style.opacity !== "") {
-          ref.current.style.opacity = "";
-          ref.current.style.transform = "";
-        }
-      };
-
-      applyFadeOut(timelineRef);
-      applyFadeOut(dnaRef);
-      applyFadeOut(clientsRef);
-      applyFadeOut(faqRef);
-      applyFadeOut(footerRef);
 
       if (timelineRef.current) {
         const rect = timelineRef.current.getBoundingClientRect();
@@ -160,9 +139,17 @@ const LandingPage = ({ onOpenModal }) => {
         const progress = Math.max(0, Math.min(1, currentPos / (totalDist - (startTrigger - endTrigger))));
         setTimelineProgress(progress);
       }
+
+      ticking = false;
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(runScroll);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -276,6 +263,18 @@ const LandingPage = ({ onOpenModal }) => {
           </svg>
         </button>
       </nav>
+
+      {/* Top fade overlay — creates the visual of content fading as it
+          approaches the top of the page. Sits behind the navbar (z-40 vs
+          navbar z-50) and lets backdrop-filter cards keep their glass since
+          we no longer need parent-opacity fades. */}
+      <div
+        aria-hidden="true"
+        className="fixed top-0 left-0 right-0 h-52 pointer-events-none z-40"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(2, 4, 10, 1) 0%, rgba(2, 4, 10, 1) 40%, rgba(2, 4, 10, 0) 100%)'
+        }}
+      />
 
       {/* Mobile Menu Overlay */}
       <div className={`fixed inset-0 z-40 bg-[#020409]/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 transition-all duration-500 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}>
@@ -415,7 +414,7 @@ const LandingPage = ({ onOpenModal }) => {
       </section>
 
       {/* Liquid Glass Agency Introduction Section */}
-      <section ref={dnaRef} id="about" className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-24 pb-16 md:pb-24 flex flex-col items-center overflow-hidden animate-on-scroll">
+      <section ref={dnaRef} id="about" className="relative z-10 w-full px-4 md:px-8 flex flex-col items-center justify-center overflow-hidden min-h-[100dvh]">
         {/* Background Liquid Elements - Enhanced for better glass visibility */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none z-0">
           <div className="animate-liquid absolute top-[0%] left-[10%] w-[60vw] h-[60vw] bg-blue-600/20 blur-[120px] opacity-40"></div>
@@ -428,29 +427,29 @@ const LandingPage = ({ onOpenModal }) => {
 
             {/* Content Side */}
             <div className="animate-on-scroll">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 mb-8 backdrop-blur-md">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 mb-6 backdrop-blur-md">
                 <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
                 <span className="text-[11px] tracking-[0.3em] uppercase text-blue-300 font-outfit font-medium text-shadow-sm">A Agência Mindflow</span>
               </div>
 
-              <h2 className="font-outfit text-5xl md:text-7xl font-light text-white mb-8 tracking-tight leading-[1.05]">
+              <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-5 tracking-tight leading-[1.05]">
                 Sua Operação <br />
                 <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 bg-[length:200%_auto] animate-[sheen_8s_linear_infinite]">Turbo-IA.</span>
               </h2>
 
-              <p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed mb-12 max-w-2xl mx-auto">
+              <p className="text-gray-300 text-base md:text-lg font-light leading-relaxed mb-8 max-w-2xl mx-auto">
                 Somos uma agência de inteligência artificial que promove uma <span className="text-white font-medium">solução de marketing e comercial completa</span> para o seu negócio.
                 Do tráfego à conversão final, automatizamos cada etapa para sua escala ser inevitável.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
                 {[
                   { title: "Escalabilidade", desc: "Processos desenhados para crescer sem perder qualidade." },
                   { title: "Automação", desc: "Sua equipe focada no fechamento, nossa IA no resto." }
                 ].map((item, i) => (
                   <div
                     key={i}
-                    className="group p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-blue-500/40 hover:bg-white/[0.06] transition-all duration-500 shadow-2xl hover:-translate-y-2 text-left relative overflow-hidden"
+                    className="group p-5 rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-blue-500/40 hover:bg-white/[0.06] transition-all duration-500 shadow-2xl hover:-translate-y-2 text-left relative overflow-hidden"
                     style={{
                       backdropFilter: 'blur(30px)',
                       WebkitBackdropFilter: 'blur(30px)',
@@ -460,15 +459,15 @@ const LandingPage = ({ onOpenModal }) => {
                     {/* Glass highlight effect */}
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                    <h4 className="text-white font-outfit font-medium text-xl mb-3 group-hover:text-blue-400 transition-colors relative z-10">{item.title}</h4>
-                    <p className="text-gray-400 font-light text-base leading-relaxed relative z-10">{item.desc}</p>
+                    <h4 className="text-white font-outfit font-medium text-lg mb-2 group-hover:text-blue-400 transition-colors relative z-10">{item.title}</h4>
+                    <p className="text-gray-400 font-light text-sm leading-relaxed relative z-10">{item.desc}</p>
                   </div>
                 ))}
               </div>
 
               <button
                 onClick={onOpenModal}
-                className="group relative px-12 py-5 rounded-2xl bg-white text-black font-outfit font-bold tracking-tight overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(59,130,246,0.3)] hover:-translate-y-1"
+                className="group relative px-10 py-4 rounded-2xl bg-white text-black font-outfit font-bold tracking-tight overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(59,130,246,0.3)] hover:-translate-y-1"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                 <span className="relative z-10 group-hover:text-white transition-colors">FALAR COM UM ESPECIALISTA</span>
@@ -480,7 +479,7 @@ const LandingPage = ({ onOpenModal }) => {
       </section>
 
       {/* Testimonials Section */}
-      <section ref={clientsRef} id="clients" className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-24 pb-24 md:pb-32 flex flex-col items-center animate-on-scroll">
+      <section ref={clientsRef} id="clients" className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-24 pb-24 md:pb-32 flex flex-col items-center">
         <div className="relative z-10 max-w-7xl mx-auto w-full animate-on-scroll">
           <div className="text-center mb-16 md:mb-24">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
@@ -526,7 +525,7 @@ const LandingPage = ({ onOpenModal }) => {
       </section>
 
       {/* FAQ Section */}
-      <section ref={faqRef} id="faq" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 bg-[#02040a] animate-on-scroll">
+      <section ref={faqRef} id="faq" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 bg-[#02040a]">
         <div className="max-w-4xl mx-auto w-full">
           <div className="text-center mb-16 animate-on-scroll">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
