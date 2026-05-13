@@ -56,6 +56,10 @@ const LandingPage = ({ onOpenModal }) => {
   ];
 
   const timelineRef = useRef(null);
+  const dnaRef = useRef(null);
+  const clientsRef = useRef(null);
+  const faqRef = useRef(null);
+  const footerRef = useRef(null);
   const [timelineProgress, setTimelineProgress] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
 
@@ -120,6 +124,30 @@ const LandingPage = ({ onOpenModal }) => {
         heroRef.current.style.transform = `translateY(${scrollY * 0.4}px)`;
       }
 
+      // Fade out effect for other sections
+      const applyFadeOut = (ref) => {
+        if (!ref.current) return;
+        const rect = ref.current.getBoundingClientRect();
+        
+        // Only trigger when the section is moving out of the top
+        if (rect.top < 0) {
+          const fadeRange = 400; // Distance to complete fade
+          const opacity = Math.max(0, 1 - (Math.abs(rect.top) / fadeRange));
+          const translateY = Math.abs(rect.top) * 0.15; // Subtle parallax
+          
+          ref.current.style.opacity = opacity;
+          ref.current.style.transform = `translateY(${translateY}px)`;
+        } else if (ref.current.style.opacity !== "") {
+          ref.current.style.opacity = "";
+          ref.current.style.transform = "";
+        }
+      };
+
+      applyFadeOut(timelineRef);
+      applyFadeOut(dnaRef);
+      applyFadeOut(clientsRef);
+      applyFadeOut(faqRef);
+      applyFadeOut(footerRef);
 
       if (timelineRef.current) {
         const rect = timelineRef.current.getBoundingClientRect();
@@ -305,8 +333,8 @@ const LandingPage = ({ onOpenModal }) => {
         {/* Timeline Container */}
         <div className="relative z-10 max-w-5xl mx-auto w-full px-4">
 
-          {/* Central Animated Line */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px] bg-white/5 overflow-hidden">
+          {/* Central Animated Line - Responsive position */}
+          <div className="absolute left-8 md:left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px] bg-white/5 overflow-hidden">
             <div
               className="absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent transition-all duration-300 ease-out"
               style={{ height: `${timelineProgress * 100}%` }}
@@ -324,10 +352,10 @@ const LandingPage = ({ onOpenModal }) => {
               const isActive = timelineProgress >= stepProgressThreshold;
 
               return (
-                <div key={step.id} className="relative flex items-center justify-center w-full">
+                <div key={step.id} className="relative flex items-start md:items-center justify-start md:justify-center w-full">
 
-                  {/* Central Node */}
-                  <div className="absolute left-1/2 -translate-x-1/2 z-30">
+                  {/* Central Node - Responsive position */}
+                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 z-30 mt-8 md:mt-0">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-700 ${isActive ? 'bg-blue-600 scale-110 shadow-[0_0_30px_rgba(59,130,246,0.6)]' : 'bg-[#080b14] border border-white/20'}`}>
                       <div className={`text-white transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
                         {step.icon}
@@ -335,10 +363,10 @@ const LandingPage = ({ onOpenModal }) => {
                     </div>
                   </div>
 
-                  {/* Content Card */}
-                  <div className={`w-full md:w-[45%] ${isEven ? 'md:mr-auto md:pr-12 text-center md:text-right' : 'md:ml-auto md:pl-12 text-center md:text-left'} mt-16 md:mt-0`}>
+                  {/* Content Card - Responsive Alignment */}
+                  <div className={`w-full md:w-[45%] ${isEven ? 'md:mr-auto md:pr-12 md:text-right' : 'md:ml-auto md:pl-12 md:text-left'} pl-20 md:pl-0`}>
                     <div
-                      className={`group relative p-8 rounded-[2rem] bg-white/[0.02] border transition-all duration-1000 transform animate-on-scroll ${isActive
+                      className={`group relative p-6 md:p-8 rounded-[2rem] bg-white/[0.02] border transition-all duration-1000 transform animate-on-scroll ${isActive
                         ? 'border-white/20 opacity-100 translate-y-0 scale-100 backdrop-blur-xl'
                         : 'border-white/5 opacity-40 translate-y-12 scale-95 pointer-events-none'
                         }`}
@@ -350,10 +378,10 @@ const LandingPage = ({ onOpenModal }) => {
                         <span className={`text-[10px] tracking-[0.4em] uppercase font-bold mb-2 block ${isActive ? 'text-blue-400' : 'text-gray-500'}`}>
                           0{index + 1} | {step.subtitle}
                         </span>
-                        <h3 className="text-2xl md:text-3xl font-outfit text-white mb-4 font-light tracking-tight">
+                        <h3 className="text-xl md:text-3xl font-outfit text-white mb-3 md:mb-4 font-light tracking-tight">
                           {step.title}
                         </h3>
-                        <p className="text-gray-400 text-sm md:text-base leading-relaxed font-light">
+                        <p className="text-gray-400 text-xs md:text-base leading-relaxed font-light">
                           {step.description}
                         </p>
                       </div>
@@ -387,7 +415,7 @@ const LandingPage = ({ onOpenModal }) => {
       </section>
 
       {/* Liquid Glass Agency Introduction Section */}
-      <section id="about" className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-24 pb-16 md:pb-24 flex flex-col items-center overflow-hidden animate-on-scroll">
+      <section ref={dnaRef} id="about" className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-24 pb-16 md:pb-24 flex flex-col items-center overflow-hidden animate-on-scroll">
         {/* Background Liquid Elements - Enhanced for better glass visibility */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none z-0">
           <div className="animate-liquid absolute top-[0%] left-[10%] w-[60vw] h-[60vw] bg-blue-600/20 blur-[120px] opacity-40"></div>
@@ -420,18 +448,18 @@ const LandingPage = ({ onOpenModal }) => {
                   { title: "Escalabilidade", desc: "Processos desenhados para crescer sem perder qualidade." },
                   { title: "Automação", desc: "Sua equipe focada no fechamento, nossa IA no resto." }
                 ].map((item, i) => (
-                  <div 
-                    key={i} 
+                  <div
+                    key={i}
                     className="group p-8 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-blue-500/40 hover:bg-white/[0.06] transition-all duration-500 shadow-2xl hover:-translate-y-2 text-left relative overflow-hidden"
-                    style={{ 
-                      backdropFilter: 'blur(30px)', 
+                    style={{
+                      backdropFilter: 'blur(30px)',
                       WebkitBackdropFilter: 'blur(30px)',
                       boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.05)'
                     }}
                   >
                     {/* Glass highlight effect */}
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
+
                     <h4 className="text-white font-outfit font-medium text-xl mb-3 group-hover:text-blue-400 transition-colors relative z-10">{item.title}</h4>
                     <p className="text-gray-400 font-light text-base leading-relaxed relative z-10">{item.desc}</p>
                   </div>
@@ -452,7 +480,7 @@ const LandingPage = ({ onOpenModal }) => {
       </section>
 
       {/* Testimonials Section */}
-      <section id="clients" className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-24 pb-24 md:pb-32 flex flex-col items-center animate-on-scroll">
+      <section ref={clientsRef} id="clients" className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-24 pb-24 md:pb-32 flex flex-col items-center animate-on-scroll">
         <div className="relative z-10 max-w-7xl mx-auto w-full animate-on-scroll">
           <div className="text-center mb-16 md:mb-24">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
@@ -498,7 +526,7 @@ const LandingPage = ({ onOpenModal }) => {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 bg-[#02040a] animate-on-scroll">
+      <section ref={faqRef} id="faq" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 bg-[#02040a] animate-on-scroll">
         <div className="max-w-4xl mx-auto w-full">
           <div className="text-center mb-16 animate-on-scroll">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
@@ -547,7 +575,7 @@ const LandingPage = ({ onOpenModal }) => {
       </section>
 
       {/* Footer / CTA Section */}
-      <footer className="relative z-10 w-full px-4 md:px-8 py-20 mt-20 border-t border-white/5 bg-[#02040a]/80 backdrop-blur-md">
+      <footer ref={footerRef} className="relative z-10 w-full px-4 md:px-8 py-20 mt-20 border-t border-white/5 bg-[#02040a]/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <img src="/logo-mindflow.png" alt="Mindflow" className="h-10 mb-6 opacity-80" />
