@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, ChevronDown } from 'lucide-react';
+import { X, Mail, ChevronDown, ArrowRight, ArrowLeft, Check, Loader2, AlertCircle } from 'lucide-react';
 
-const WhatsAppIcon = ({ size }) => (
+const WEBHOOK_URL = 'https://n8n-n8n-start.kof6cn.easypanel.host/webhook/56ee9837-3660-4283-b891-760ead8fa191';
+
+const WhatsAppIcon = ({ size = 18 }) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width={size} height={size}
@@ -12,272 +14,372 @@ const WhatsAppIcon = ({ size }) => (
     </svg>
 );
 
-const styles = {
-    overlay: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        zIndex: 999,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '20px',
-    },
-    modal: {
-        width: '100%',
-        maxWidth: '500px',
-        backgroundColor: 'rgba(10, 10, 10, 0.8)',
-        backdropFilter: 'blur(30px)',
-        WebkitBackdropFilter: 'blur(30px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        borderRadius: '24px',
-        padding: '40px',
-        position: 'relative',
-        boxShadow: '0 40px 80px rgba(0,0,0,0.8), inset 0 2px 0 rgba(255,255,255,0.05)',
-        color: '#fff',
-        fontFamily: "'Inter', sans-serif",
-    },
-    closeBtn: {
-        position: 'absolute',
-        top: '24px',
-        right: '24px',
-        background: 'none',
-        border: 'none',
-        color: 'rgba(255,255,255,0.5)',
-        cursor: 'pointer',
-        padding: '8px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: '50%',
-        transition: 'background 0.2s, color 0.2s',
-    },
-    header: {
-        marginBottom: '32px',
-    },
-    h2: {
-        fontSize: '32px',
-        fontWeight: 700,
-        letterSpacing: '-0.03em',
-        margin: '0 0 8px 0',
-    },
-    p: {
-        fontSize: '15px',
-        color: 'rgba(255,255,255,0.6)',
-        margin: 0,
-        lineHeight: 1.5,
-    },
-    formGroup: {
-        marginBottom: '24px',
-    },
-    label: {
-        display: 'block',
-        fontSize: '12px',
-        fontWeight: 600,
-        letterSpacing: '0.05em',
-        color: 'rgba(255,255,255,0.4)',
-        marginBottom: '8px',
-        textTransform: 'uppercase',
-    },
-    input: {
-        width: '100%',
-        backgroundColor: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        borderRadius: '12px',
-        padding: '16px',
-        color: '#fff',
-        fontSize: '16px',
-        fontFamily: "'Inter', sans-serif",
-        transition: 'border-color 0.2s, background 0.2s',
-        outline: 'none',
-    },
-    textarea: {
-        width: '100%',
-        backgroundColor: 'rgba(255,255,255,0.03)',
-        border: '1px solid rgba(255,255,255,0.1)',
-        borderRadius: '12px',
-        padding: '16px',
-        color: '#fff',
-        fontSize: '16px',
-        fontFamily: "'Inter', sans-serif",
-        minHeight: '120px',
-        resize: 'vertical',
-        transition: 'border-color 0.2s, background 0.2s',
-        outline: 'none',
-    },
-    channelSelector: {
-        display: 'flex',
-        gap: '12px',
-        marginBottom: '32px',
-    },
-    channelBtn: (isActive) => ({
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '8px',
-        padding: '14px',
-        borderRadius: '12px',
-        border: isActive ? '1px solid rgba(0, 180, 229, 0.5)' : '1px solid rgba(255,255,255,0.1)',
-        backgroundColor: isActive ? 'rgba(0, 180, 229, 0.1)' : 'rgba(255,255,255,0.03)',
-        color: isActive ? '#00B4E5' : 'rgba(255,255,255,0.6)',
-        fontSize: '14px',
-        fontWeight: 600,
-        cursor: 'pointer',
-        transition: 'all 0.2s',
-    }),
-    submitBtn: {
-        width: '100%',
-        padding: '18px',
-        borderRadius: '12px',
-        border: 'none',
-        backgroundColor: '#fff',
-        color: '#000',
-        fontSize: '16px',
-        fontWeight: 700,
-        cursor: 'pointer',
-        boxShadow: '0 8px 24px rgba(255,255,255,0.15)',
-        transition: 'transform 0.2s, box-shadow 0.2s',
-    }
-};
-
-const internalCSS = `
-  .rl-modal-input:focus {
-    border-color: rgba(255,255,255,0.3) !important;
-    background-color: rgba(255,255,255,0.06) !important;
-  }
-  .rl-close-btn:hover {
-    background: rgba(255,255,255,0.1) !important;
-    color: #fff !important;
-  }
-`;
-
 export default function ContactModal({ isOpen, onClose }) {
-    const [channel, setChannel] = useState('whatsapp'); // 'whatsapp' | 'email'
+    const [step, setStep] = useState(1);
+    const [status, setStatus] = useState('idle'); // 'idle' | 'sending' | 'success' | 'error'
+    const [errorMsg, setErrorMsg] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        company: '',
+        service: '',
+        channel: 'whatsapp',
+        contact: '',
+    });
 
-    // Prevent background scrolling when modal is open
+    // Block background scroll while open
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-        return () => { document.body.style.overflow = 'auto'; };
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
     }, [isOpen]);
 
-    const handleSubmit = (e) => {
+    // Reset when closing
+    useEffect(() => {
+        if (!isOpen) {
+            const t = setTimeout(() => {
+                setStep(1);
+                setStatus('idle');
+                setErrorMsg('');
+                setFormData({ name: '', company: '', service: '', channel: 'whatsapp', contact: '' });
+            }, 300);
+            return () => clearTimeout(t);
+        }
+    }, [isOpen]);
+
+    const update = (key, value) => setFormData((prev) => ({ ...prev, [key]: value }));
+
+    const canAdvance = formData.name.trim() && formData.company.trim();
+    const canSubmit = formData.service && formData.contact.trim() && status !== 'sending';
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Formulário enviado (Apenas Visualização)');
-        // Botão inerte por enquanto
+        if (!canSubmit) return;
+
+        setStatus('sending');
+        setErrorMsg('');
+
+        try {
+            const res = await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...formData,
+                    submittedAt: new Date().toISOString(),
+                    source: 'mindflowdigital.com.br',
+                }),
+            });
+            if (!res.ok) throw new Error(`Resposta ${res.status}`);
+            setStatus('success');
+        } catch (err) {
+            console.error('Erro ao enviar formulário:', err);
+            setErrorMsg('Não conseguimos enviar agora. Tenta de novo em alguns segundos.');
+            setStatus('error');
+        }
     };
+
+    const inputBase = "w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3.5 text-white text-base placeholder:text-white/30 outline-none transition-all duration-200 focus:border-blue-400/50 focus:bg-white/[0.06]";
+    const labelBase = "block text-[11px] font-semibold tracking-[0.1em] uppercase text-white/40 mb-2 font-outfit";
 
     return (
         <AnimatePresence>
             {isOpen && (
                 <motion.div
-                    style={styles.overlay}
+                    className="fixed inset-0 z-[999] flex items-center justify-center p-4 sm:p-6"
+                    style={{ backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
                     onClick={onClose}
                 >
-                    <style>{internalCSS}</style>
-
                     <motion.div
-                        style={styles.modal}
-                        initial={{ scale: 0.9, y: 20, opacity: 0 }}
+                        className="relative w-full max-w-[520px] rounded-3xl border border-white/10 p-8 md:p-10 text-white font-sans"
+                        style={{
+                            backgroundColor: 'rgba(10, 12, 20, 0.85)',
+                            backdropFilter: 'blur(40px)',
+                            WebkitBackdropFilter: 'blur(40px)',
+                            boxShadow: '0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)',
+                        }}
+                        initial={{ scale: 0.92, y: 24, opacity: 0 }}
                         animate={{ scale: 1, y: 0, opacity: 1 }}
-                        exit={{ scale: 0.95, y: -20, opacity: 0 }}
-                        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                        onClick={(e) => e.stopPropagation()} // Prevent bubbling to overlay
+                        exit={{ scale: 0.95, y: -16, opacity: 0 }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 280 }}
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        <button style={styles.closeBtn} className="rl-close-btn" onClick={onClose}>
-                            <X size={20} strokeWidth={2} />
+                        {/* Close button */}
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="absolute top-5 right-5 w-9 h-9 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all"
+                            aria-label="Fechar"
+                        >
+                            <X size={18} strokeWidth={2} />
                         </button>
 
-                        <div style={styles.header}>
-                            <h2 style={styles.h2}>Pronto para Escalar?</h2>
-                            <p style={styles.p}>Vamos discutir como agentes de IA personalizados podem eliminar seus gargalos operacionais.</p>
+                        <AnimatePresence mode="wait">
+                        {status === 'success' ? (
+                            <motion.div
+                                key="success"
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.3 }}
+                                className="py-6 text-center"
+                            >
+                                <motion.div
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{ type: 'spring', damping: 12, stiffness: 200, delay: 0.1 }}
+                                    className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center shadow-[0_12px_32px_rgba(59,130,246,0.4)]"
+                                >
+                                    <Check size={32} strokeWidth={3} className="text-white" />
+                                </motion.div>
+                                <h2 className="font-outfit text-3xl md:text-4xl font-light tracking-tight leading-[1.1] mb-3">
+                                    Recebemos sua <span className="font-medium text-blue-400">solicitação</span>
+                                </h2>
+                                <p className="text-sm md:text-base text-white/60 font-light leading-relaxed mb-8 max-w-sm mx-auto">
+                                    Em breve entraremos em contato pelo {formData.channel === 'whatsapp' ? 'WhatsApp' : 'e-mail'} informado. Obrigado!
+                                </p>
+                                <button
+                                    type="button"
+                                    onClick={onClose}
+                                    className="px-7 py-3 rounded-xl font-outfit font-medium text-sm text-white/70 hover:text-white border border-white/15 hover:border-white/30 bg-white/[0.03] hover:bg-white/[0.06] transition-all"
+                                >
+                                    Fechar
+                                </button>
+                            </motion.div>
+                        ) : (
+                        <motion.div
+                            key="form"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                        {/* Progress bar — right padding leaves room for the close button */}
+                        <div className="flex items-center gap-3 mb-8 pr-12">
+                            <div className="flex-1 h-1 rounded-full bg-white/10 overflow-hidden">
+                                <motion.div
+                                    className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+                                    initial={false}
+                                    animate={{ width: step === 1 ? '50%' : '100%' }}
+                                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                                />
+                            </div>
+                            <span className="text-[11px] font-outfit font-medium tracking-[0.15em] uppercase text-white/40 tabular-nums shrink-0">
+                                {step}/2
+                            </span>
                         </div>
 
+                        {/* Header */}
+                        <div className="mb-7">
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={`header-${step}`}
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -8 }}
+                                    transition={{ duration: 0.25 }}
+                                >
+                                    {step === 1 ? (
+                                        <>
+                                            <h2 className="font-outfit text-3xl md:text-4xl font-light tracking-tight leading-[1.1] mb-2">
+                                                Vamos nos <span className="font-medium text-blue-400">conhecer</span>
+                                            </h2>
+                                            <p className="text-sm md:text-base text-white/50 font-light leading-relaxed">
+                                                Conta um pouco sobre você e sua empresa.
+                                            </p>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <h2 className="font-outfit text-3xl md:text-4xl font-light tracking-tight leading-[1.1] mb-2">
+                                                Como podemos <span className="font-medium text-blue-400">ajudar</span>?
+                                            </h2>
+                                            <p className="text-sm md:text-base text-white/50 font-light leading-relaxed">
+                                                Conte o que precisa e por onde prefere o contato.
+                                            </p>
+                                        </>
+                                    )}
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Form */}
                         <form onSubmit={handleSubmit}>
-                            <div style={styles.formGroup}>
-                                <label style={styles.label}>Nome / Empresa</label>
-                                <input
-                                    type="text"
-                                    placeholder="Nome da sua empresa"
-                                    style={styles.input}
-                                    className="rl-modal-input"
-                                    required
-                                />
-                            </div>
-
-                            <div style={styles.formGroup}>
-                                <label style={styles.label}>{channel === 'whatsapp' ? 'Número do WhatsApp' : 'Endereço de E-mail'}</label>
-                                <input
-                                    type={channel === 'whatsapp' ? 'tel' : 'email'}
-                                    placeholder={channel === 'whatsapp' ? '+55 11 99999-9999' : 'seu@email.com'}
-                                    style={styles.input}
-                                    className="rl-modal-input"
-                                    required
-                                />
-                            </div>
-
-                            <div style={styles.formGroup}>
-                                <label style={styles.label}>Serviço de Interesse</label>
-                                <div style={{ position: 'relative' }}>
-                                    <select
-                                        style={{ ...styles.input, appearance: 'none', cursor: 'pointer' }}
-                                        className="rl-modal-input"
-                                        required
-                                        defaultValue=""
+                            <AnimatePresence mode="wait">
+                                {step === 1 ? (
+                                    <motion.div
+                                        key="step-1"
+                                        initial={{ opacity: 0, x: 24 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -24 }}
+                                        transition={{ duration: 0.25 }}
                                     >
-                                        <option value="" disabled style={{ color: 'rgba(255,255,255,0.4)' }}>Como podemos ajudar?</option>
-                                        <option value="Getting More Clients" style={{ background: '#111', color: '#fff' }}>Atrair mais clientes e leads</option>
-                                        <option value="Automating Tasks" style={{ background: '#111', color: '#fff' }}>Automatizar tarefas repetitivas</option>
-                                        <option value="New Website" style={{ background: '#111', color: '#fff' }}>Criar uma Landing Page de alta conversão</option>
-                                        <option value="Custom AI Assistant" style={{ background: '#111', color: '#fff' }}>Um assistente de IA customizado</option>
-                                    </select>
-                                    <div style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'rgba(255,255,255,0.5)' }}>
-                                        <ChevronDown size={18} />
-                                    </div>
-                                </div>
-                            </div>
+                                        <div className="mb-5">
+                                            <label className={labelBase}>Nome completo</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Como podemos te chamar?"
+                                                className={inputBase}
+                                                value={formData.name}
+                                                onChange={(e) => update('name', e.target.value)}
+                                                autoFocus
+                                            />
+                                        </div>
 
-                            <label style={styles.label}>Canal preferido</label>
-                            <div style={styles.channelSelector}>
-                                <button
-                                    type="button"
-                                    style={styles.channelBtn(channel === 'whatsapp')}
-                                    onClick={() => setChannel('whatsapp')}
-                                >
-                                    <WhatsAppIcon size={18} /> WhatsApp
-                                </button>
-                                <button
-                                    type="button"
-                                    style={styles.channelBtn(channel === 'email')}
-                                    onClick={() => setChannel('email')}
-                                >
-                                    <Mail size={18} /> E-mail
-                                </button>
-                            </div>
+                                        <div className="mb-8">
+                                            <label className={labelBase}>Empresa</label>
+                                            <input
+                                                type="text"
+                                                placeholder="Nome do seu negócio"
+                                                className={inputBase}
+                                                value={formData.company}
+                                                onChange={(e) => update('company', e.target.value)}
+                                            />
+                                        </div>
 
-                            <motion.button
-                                type="submit"
-                                style={styles.submitBtn}
-                                whileHover={{ scale: 1.02, boxShadow: '0 12px 32px rgba(255,255,255,0.25)' }}
-                                whileTap={{ scale: 0.98 }}
-                            >
-                                Escalar Agora
-                            </motion.button>
+                                        <div className="flex justify-end">
+                                            <motion.button
+                                                type="button"
+                                                onClick={() => canAdvance && setStep(2)}
+                                                disabled={!canAdvance}
+                                                whileHover={canAdvance ? { scale: 1.02 } : {}}
+                                                whileTap={canAdvance ? { scale: 0.98 } : {}}
+                                                className={`flex items-center gap-2 px-7 py-3.5 rounded-xl font-outfit font-semibold text-sm tracking-wide transition-all ${
+                                                    canAdvance
+                                                        ? 'bg-white text-black shadow-[0_8px_24px_rgba(255,255,255,0.15)] hover:shadow-[0_12px_32px_rgba(255,255,255,0.25)]'
+                                                        : 'bg-white/10 text-white/30 cursor-not-allowed'
+                                                }`}
+                                            >
+                                                Continuar
+                                                <ArrowRight size={16} strokeWidth={2.5} />
+                                            </motion.button>
+                                        </div>
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        key="step-2"
+                                        initial={{ opacity: 0, x: 24 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -24 }}
+                                        transition={{ duration: 0.25 }}
+                                    >
+                                        <div className="mb-5">
+                                            <label className={labelBase}>Serviço de interesse</label>
+                                            <div className="relative">
+                                                <select
+                                                    className={`${inputBase} appearance-none cursor-pointer pr-12`}
+                                                    value={formData.service}
+                                                    onChange={(e) => update('service', e.target.value)}
+                                                >
+                                                    <option value="" disabled style={{ background: '#111', color: 'rgba(255,255,255,0.4)' }}>
+                                                        Selecione uma opção
+                                                    </option>
+                                                    <option value="completa" style={{ background: '#1e3a8a', color: '#fff', fontWeight: 700 }}>
+                                                        ✨ Solução Completa (Recomendado)
+                                                    </option>
+                                                    <option value="leads" style={{ background: '#111', color: '#fff' }}>Atrair mais clientes e leads</option>
+                                                    <option value="automacao" style={{ background: '#111', color: '#fff' }}>Automatizar tarefas repetitivas</option>
+                                                    <option value="landing" style={{ background: '#111', color: '#fff' }}>Landing page de alta conversão</option>
+                                                    <option value="ia" style={{ background: '#111', color: '#fff' }}>Assistente de IA customizado</option>
+                                                    <option value="outro" style={{ background: '#111', color: '#fff' }}>Outro</option>
+                                                </select>
+                                                <ChevronDown
+                                                    size={18}
+                                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-5">
+                                            <label className={labelBase}>Canal preferido</label>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <button
+                                                    type="button"
+                                                    onClick={() => update('channel', 'whatsapp')}
+                                                    className={`flex items-center justify-center gap-2 py-3.5 rounded-xl border text-sm font-outfit font-semibold transition-all ${
+                                                        formData.channel === 'whatsapp'
+                                                            ? 'border-blue-400/50 bg-blue-500/10 text-blue-300'
+                                                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/20 hover:text-white/80'
+                                                    }`}
+                                                >
+                                                    <WhatsAppIcon size={16} /> WhatsApp
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => update('channel', 'email')}
+                                                    className={`flex items-center justify-center gap-2 py-3.5 rounded-xl border text-sm font-outfit font-semibold transition-all ${
+                                                        formData.channel === 'email'
+                                                            ? 'border-blue-400/50 bg-blue-500/10 text-blue-300'
+                                                            : 'border-white/10 bg-white/[0.03] text-white/60 hover:border-white/20 hover:text-white/80'
+                                                    }`}
+                                                >
+                                                    <Mail size={16} /> E-mail
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div className="mb-8">
+                                            <label className={labelBase}>
+                                                {formData.channel === 'whatsapp' ? 'Seu WhatsApp' : 'Seu e-mail'}
+                                            </label>
+                                            <input
+                                                type={formData.channel === 'whatsapp' ? 'tel' : 'email'}
+                                                placeholder={formData.channel === 'whatsapp' ? '+55 11 99999-9999' : 'voce@email.com'}
+                                                className={inputBase}
+                                                value={formData.contact}
+                                                onChange={(e) => update('contact', e.target.value)}
+                                            />
+                                        </div>
+
+                                        {status === 'error' && errorMsg && (
+                                            <div className="mb-4 flex items-start gap-2 px-4 py-3 rounded-xl border border-red-500/30 bg-red-500/10 text-red-300 text-sm">
+                                                <AlertCircle size={16} strokeWidth={2} className="mt-0.5 shrink-0" />
+                                                <span>{errorMsg}</span>
+                                            </div>
+                                        )}
+
+                                        <div className="flex items-center justify-between gap-3">
+                                            <button
+                                                type="button"
+                                                onClick={() => setStep(1)}
+                                                disabled={status === 'sending'}
+                                                className="flex items-center gap-2 px-5 py-3.5 rounded-xl font-outfit font-medium text-sm text-white/60 hover:text-white hover:bg-white/5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                            >
+                                                <ArrowLeft size={16} strokeWidth={2.5} />
+                                                Voltar
+                                            </button>
+
+                                            <motion.button
+                                                type="submit"
+                                                disabled={!canSubmit}
+                                                whileHover={canSubmit ? { scale: 1.02 } : {}}
+                                                whileTap={canSubmit ? { scale: 0.98 } : {}}
+                                                className={`flex items-center gap-2 px-7 py-3.5 rounded-xl font-outfit font-semibold text-sm tracking-wide transition-all ${
+                                                    canSubmit
+                                                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-[0_8px_24px_rgba(59,130,246,0.3)] hover:shadow-[0_12px_32px_rgba(59,130,246,0.4)]'
+                                                        : 'bg-white/10 text-white/30 cursor-not-allowed'
+                                                }`}
+                                            >
+                                                {status === 'sending' ? (
+                                                    <>
+                                                        Enviando
+                                                        <Loader2 size={16} strokeWidth={2.5} className="animate-spin" />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        Enviar
+                                                        <Check size={16} strokeWidth={2.5} />
+                                                    </>
+                                                )}
+                                            </motion.button>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </form>
-
+                        </motion.div>
+                        )}
+                        </AnimatePresence>
                     </motion.div>
                 </motion.div>
             )}
