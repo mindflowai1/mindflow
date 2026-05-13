@@ -3,6 +3,9 @@
 Thumbs.db
 desktop.ini
 
+# Claude Code worktrees / internal working dirs
+.claude/
+
 # Arquivos de ambiente
 .env
 .env.local
