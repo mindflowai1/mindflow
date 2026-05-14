@@ -85,30 +85,27 @@ const LandingPage = ({ onOpenModal }) => {
   const testimonials = [
     {
       id: 1,
-      name: "Rodrigo Alencar",
-      role: "Diretor de Operações",
-      company: "Grupo Vanguarda",
-      content: "A operação da Mindflow eliminou o gap entre marketing e vendas. A IA qualificando leads no WhatsApp mudou o jogo para o nosso comercial.",
+      company: "Thees Engenharia",
+      letter: "T",
+      segment: "Engenharia Civil",
+      content: "A automação no WhatsApp deixou o atendimento mais organizado. Os leads chegam pra equipe já com contexto e a gente consegue priorizar quem está pronto pra fechar.",
       rating: 5,
-      avatar: "https://i.pravatar.cc/150?u=rodrigo"
     },
     {
       id: 2,
-      name: "Beatriz Soares",
-      role: "Fundadora",
-      company: "Lumina Estética",
-      content: "Design impecável e tráfego cirúrgico. Minha agenda está lotada há 4 meses seguidos. A melhor decisão que tomamos para a marca.",
+      company: "Depósito do Paulo",
+      letter: "D",
+      segment: "Materiais de Construção",
+      content: "Os anúncios começaram a trazer um volume bom de orçamentos novos. A landing também ficou enxuta, sem enrolação, e isso ajudou na conversão.",
       rating: 5,
-      avatar: "https://i.pravatar.cc/150?u=beatriz"
     },
     {
       id: 3,
-      name: "Henrique Mendes",
-      role: "CMO",
-      company: "Nexum SaaS",
-      content: "A integração com o CRM e a transparência nos dados é o que nos dá segurança para investir cada vez mais. Resultados reais, sem desculpas.",
+      company: "Check Mkt",
+      letter: "C",
+      segment: "Marketing Digital",
+      content: "Trabalho técnico e direto. Os ajustes nas campanhas saem com critério e os relatórios mostram exatamente onde a gente está no funil em cada momento.",
       rating: 5,
-      avatar: "https://i.pravatar.cc/150?u=henrique"
     }
   ];
 
@@ -502,14 +499,6 @@ const LandingPage = ({ onOpenModal }) => {
                   </div>
                 ))}
               </div>
-
-              <button
-                onClick={onOpenModal}
-                className="group relative px-10 py-4 rounded-2xl bg-white text-black font-outfit font-bold tracking-tight overflow-hidden transition-all duration-500 hover:shadow-[0_20px_40px_rgba(59,130,246,0.3)] hover:-translate-y-1"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
-                <span className="relative z-10 group-hover:text-white transition-colors">FALAR COM UM ESPECIALISTA</span>
-              </button>
             </div>
 
           </div>
@@ -547,12 +536,12 @@ const LandingPage = ({ onOpenModal }) => {
                     "{t.content}"
                   </p>
                   <div className="flex items-center gap-4 pt-6 border-t border-white/5">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border border-white/20 bg-gray-800">
-                      <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-500/25 to-purple-500/25 border border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                      <span className="font-outfit font-semibold text-lg text-white">{t.letter}</span>
                     </div>
                     <div className="text-left">
-                      <h4 className="text-white font-outfit font-medium text-sm">{t.name}</h4>
-                      <p className="text-gray-500 text-[10px] uppercase tracking-wider">{t.role} • {t.company}</p>
+                      <h4 className="text-white font-outfit font-medium text-sm">{t.company}</h4>
+                      <p className="text-gray-500 text-[10px] uppercase tracking-wider">{t.segment}</p>
                     </div>
                   </div>
                 </div>
