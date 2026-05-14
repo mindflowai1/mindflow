@@ -98,6 +98,12 @@ export default function ContactModal({ isOpen, onClose }) {
 
     const update = (key, value) => setFormData((prev) => ({ ...prev, [key]: value }));
 
+    // Title case: "joão da silva" → "João Da Silva". Aplica em cada keystroke.
+    const titleCase = (str) =>
+        str
+            .toLowerCase()
+            .replace(/(^|\s)(\S)/g, (_, sp, ch) => sp + ch.toUpperCase());
+
     // Compose contact when phone country/digits change (whatsapp channel only).
     // Output is digits-only, concatenated: "5531999766846" (no +, no spaces, no hyphens).
     const composePhoneContact = (countryObj, digits) => {
@@ -309,7 +315,7 @@ export default function ContactModal({ isOpen, onClose }) {
                                                 placeholder="Como podemos te chamar?"
                                                 className={inputBase}
                                                 value={formData.name}
-                                                onChange={(e) => update('name', e.target.value)}
+                                                onChange={(e) => update('name', titleCase(e.target.value))}
                                                 autoFocus
                                             />
                                         </div>
@@ -321,7 +327,7 @@ export default function ContactModal({ isOpen, onClose }) {
                                                 placeholder="Nome do seu negócio"
                                                 className={inputBase}
                                                 value={formData.company}
-                                                onChange={(e) => update('company', e.target.value)}
+                                                onChange={(e) => update('company', titleCase(e.target.value))}
                                             />
                                         </div>
 
