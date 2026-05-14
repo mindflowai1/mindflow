@@ -290,7 +290,7 @@ const LandingPage = ({ onOpenModal }) => {
       </div>
 
       {/* Hero Content */}
-      <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[100dvh] pt-32 md:pt-40 pb-20 transition-transform duration-100 ease-out">
+      <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[100dvh] pt-32 md:pt-40 pb-32 md:pb-44 transition-transform duration-100 ease-out">
         <h1 className="animate-on-scroll font-outfit text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[1.1] tracking-tight md:tracking-[-0.03em] font-light mb-6 md:mb-8 [text-shadow:0_4px_30px_rgba(0,0,0,0.8)]">
           <span className="block text-white">Tráfego que atrai.</span>
           <span className="block text-gray-200">Design que converte.</span>
@@ -311,6 +311,44 @@ const LandingPage = ({ onOpenModal }) => {
           </div>
         </button>
       </main>
+
+      {/* Client logos marquee — between hero and timeline */}
+      <section className="relative z-10 w-full py-10 md:py-14 border-y border-white/5 bg-[#02040a]/60 overflow-hidden">
+        <div className="text-center mb-8 md:mb-10">
+          <span className="text-[10px] tracking-[0.4em] uppercase text-gray-500 font-outfit font-medium">
+            Marcas que confiam na MindFlow
+          </span>
+        </div>
+
+        <div
+          className="relative"
+          style={{
+            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+            maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
+          }}
+        >
+          <div className="flex w-max items-center gap-14 md:gap-24 animate-marquee">
+            {(() => {
+              const logos = [
+                { name: 'Thees Engenharia', cls: 'font-medium tracking-tight' },
+                { name: 'STI Engenharia', cls: 'font-bold uppercase tracking-[0.15em] text-base md:text-lg' },
+                { name: 'Trans Obra', cls: 'font-semibold italic tracking-tight' },
+                { name: 'DVE Marketing', cls: 'font-light uppercase tracking-[0.25em] text-base md:text-lg' },
+                { name: 'Check Mkt', cls: 'font-medium italic tracking-tight' },
+                { name: 'Depósito do Paulo', cls: 'font-light tracking-tight' },
+              ];
+              return [...logos, ...logos].map((logo, i) => (
+                <span
+                  key={i}
+                  className={`text-xl md:text-2xl font-outfit text-white/35 hover:text-white/90 transition-colors duration-300 whitespace-nowrap ${logo.cls}`}
+                >
+                  {logo.name}
+                </span>
+              ));
+            })()}
+          </div>
+        </div>
+      </section>
 
       <section ref={timelineRef} id="experience" className="relative z-10 w-full px-4 md:px-8 pt-32 md:pt-48 pb-16 md:pb-24 flex flex-col items-center overflow-hidden">
         {/* Decorative background glows */}
