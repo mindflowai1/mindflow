@@ -1,8 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, ChevronDown, ArrowRight, ArrowLeft, Check, Loader2, AlertCircle } from 'lucide-react';
+import { X, Mail, ChevronDown, ArrowRight, ArrowLeft, Check, Loader2, AlertCircle, Search } from 'lucide-react';
 
 const WEBHOOK_URL = 'https://n8n-n8n-start.kof6cn.easypanel.host/webhook/56ee9837-3660-4283-b891-760ead8fa191';
+
+// Lista de países priorizando BR + LATAM + principais. code é o prefixo internacional.
+const COUNTRIES = [
+    { code: '+55', flag: '🇧🇷', name: 'Brasil' },
+    { code: '+1', flag: '🇺🇸', name: 'Estados Unidos' },
+    { code: '+351', flag: '🇵🇹', name: 'Portugal' },
+    { code: '+54', flag: '🇦🇷', name: 'Argentina' },
+    { code: '+52', flag: '🇲🇽', name: 'México' },
+    { code: '+56', flag: '🇨🇱', name: 'Chile' },
+    { code: '+57', flag: '🇨🇴', name: 'Colômbia' },
+    { code: '+598', flag: '🇺🇾', name: 'Uruguai' },
+    { code: '+595', flag: '🇵🇾', name: 'Paraguai' },
+    { code: '+51', flag: '🇵🇪', name: 'Peru' },
+    { code: '+58', flag: '🇻🇪', name: 'Venezuela' },
+    { code: '+593', flag: '🇪🇨', name: 'Equador' },
+    { code: '+591', flag: '🇧🇴', name: 'Bolívia' },
+    { code: '+34', flag: '🇪🇸', name: 'Espanha' },
+    { code: '+44', flag: '🇬🇧', name: 'Reino Unido' },
+    { code: '+33', flag: '🇫🇷', name: 'França' },
+    { code: '+49', flag: '🇩🇪', name: 'Alemanha' },
+    { code: '+39', flag: '🇮🇹', name: 'Itália' },
+    { code: '+1', flag: '🇨🇦', name: 'Canadá' },
+    { code: '+61', flag: '🇦🇺', name: 'Austrália' },
+    { code: '+81', flag: '🇯🇵', name: 'Japão' },
+    { code: '+86', flag: '🇨🇳', name: 'China' },
+    { code: '+91', flag: '🇮🇳', name: 'Índia' },
+];
 
 const WhatsAppIcon = ({ size = 18 }) => (
     <svg
@@ -26,6 +53,14 @@ export default function ContactModal({ isOpen, onClose }) {
         contact: '',
     });
 
+    // Phone-specific state — only used when channel === 'whatsapp'.
+    // contact is composed as `${phoneCountry.code} ${phoneDigits}` for output.
+    const [phoneCountry, setPhoneCountry] = useState(COUNTRIES[0]);
+    const [phoneDigits, setPhoneDigits] = useState('');
+    const [countryOpen, setCountryOpen] = useState(false);
+    const [countrySearch, setCountrySearch] = useState('');
+    const countryDropdownRef = useRef(null);
+
     // Block background scroll while open
     useEffect(() => {
         document.body.style.overflow = isOpen ? 'hidden' : '';
@@ -40,12 +75,63 @@ export default function ContactModal({ isOpen, onClose }) {
                 setStatus('idle');
                 setErrorMsg('');
                 setFormData({ name: '', company: '', service: '', channel: 'whatsapp', contact: '' });
+                setPhoneCountry(COUNTRIES[0]);
+                setPhoneDigits('');
+                setCountryOpen(false);
+                setCountrySearch('');
             }, 300);
             return () => clearTimeout(t);
         }
     }, [isOpen]);
 
+    // Close country dropdown on outside click
+    useEffect(() => {
+        if (!countryOpen) return;
+        const handler = (e) => {
+            if (countryDropdownRef.current && !countryDropdownRef.current.contains(e.target)) {
+                setCountryOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, [countryOpen]);
+
     const update = (key, value) => setFormData((prev) => ({ ...prev, [key]: value }));
+
+    // Compose contact when phone country/digits change (whatsapp channel only)
+    const composePhoneContact = (countryObj, digits) => {
+        const cleaned = digits.trim();
+        return cleaned ? `${countryObj.code} ${cleaned}` : '';
+    };
+
+    const handleCountrySelect = (country) => {
+        setPhoneCountry(country);
+        setCountryOpen(false);
+        setCountrySearch('');
+        update('contact', composePhoneContact(country, phoneDigits));
+    };
+
+    const handlePhoneDigitsChange = (e) => {
+        const val = e.target.value;
+        setPhoneDigits(val);
+        update('contact', composePhoneContact(phoneCountry, val));
+    };
+
+    const handleChannelSwitch = (newChannel) => {
+        if (formData.channel === newChannel) return;
+        // Reset contact + phone digits when toggling channel
+        setPhoneDigits('');
+        update('contact', '');
+        update('channel', newChannel);
+    };
+
+    const filteredCountries = useMemo(() => {
+        const q = countrySearch.trim().toLowerCase();
+        if (!q) return COUNTRIES;
+        return COUNTRIES.filter(
+            (c) => c.name.toLowerCase().includes(q) || c.code.includes(q)
+        );
+    }, [countrySearch]);
 
     const canAdvance = formData.name.trim() && formData.company.trim();
     const canSubmit = formData.service && formData.contact.trim() && status !== 'sending';
@@ -295,7 +381,7 @@ export default function ContactModal({ isOpen, onClose }) {
                                             <div className="grid grid-cols-2 gap-3">
                                                 <button
                                                     type="button"
-                                                    onClick={() => update('channel', 'whatsapp')}
+                                                    onClick={() => handleChannelSwitch('whatsapp')}
                                                     className={`flex items-center justify-center gap-2 py-3.5 rounded-xl border text-sm font-outfit font-semibold transition-all ${
                                                         formData.channel === 'whatsapp'
                                                             ? 'border-blue-400/50 bg-blue-500/10 text-blue-300'
@@ -306,7 +392,7 @@ export default function ContactModal({ isOpen, onClose }) {
                                                 </button>
                                                 <button
                                                     type="button"
-                                                    onClick={() => update('channel', 'email')}
+                                                    onClick={() => handleChannelSwitch('email')}
                                                     className={`flex items-center justify-center gap-2 py-3.5 rounded-xl border text-sm font-outfit font-semibold transition-all ${
                                                         formData.channel === 'email'
                                                             ? 'border-blue-400/50 bg-blue-500/10 text-blue-300'
@@ -322,13 +408,110 @@ export default function ContactModal({ isOpen, onClose }) {
                                             <label className={labelBase}>
                                                 {formData.channel === 'whatsapp' ? 'Seu WhatsApp' : 'Seu e-mail'}
                                             </label>
-                                            <input
-                                                type={formData.channel === 'whatsapp' ? 'tel' : 'email'}
-                                                placeholder={formData.channel === 'whatsapp' ? '+55 11 99999-9999' : 'voce@email.com'}
-                                                className={inputBase}
-                                                value={formData.contact}
-                                                onChange={(e) => update('contact', e.target.value)}
-                                            />
+
+                                            {formData.channel === 'whatsapp' ? (
+                                                <div className="relative" ref={countryDropdownRef}>
+                                                    <div className="flex items-stretch gap-2">
+                                                        {/* Country selector trigger */}
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setCountryOpen((o) => !o)}
+                                                            className={`flex items-center gap-2 px-3 rounded-xl border transition-all shrink-0 ${
+                                                                countryOpen
+                                                                    ? 'border-blue-400/50 bg-white/[0.06]'
+                                                                    : 'border-white/10 bg-white/[0.03] hover:border-white/20'
+                                                            }`}
+                                                            aria-label="Selecionar país"
+                                                        >
+                                                            <span className="text-xl leading-none">{phoneCountry.flag}</span>
+                                                            <span className="text-sm font-medium text-white/80 tabular-nums">{phoneCountry.code}</span>
+                                                            <ChevronDown
+                                                                size={14}
+                                                                className={`text-white/40 transition-transform ${countryOpen ? 'rotate-180' : ''}`}
+                                                            />
+                                                        </button>
+
+                                                        {/* Phone digits input */}
+                                                        <input
+                                                            type="tel"
+                                                            inputMode="tel"
+                                                            placeholder="11 99999-9999"
+                                                            className={`${inputBase} flex-1`}
+                                                            value={phoneDigits}
+                                                            onChange={handlePhoneDigitsChange}
+                                                        />
+                                                    </div>
+
+                                                    {/* Country dropdown */}
+                                                    <AnimatePresence>
+                                                        {countryOpen && (
+                                                            <motion.div
+                                                                initial={{ opacity: 0, y: -8 }}
+                                                                animate={{ opacity: 1, y: 0 }}
+                                                                exit={{ opacity: 0, y: -8 }}
+                                                                transition={{ duration: 0.15 }}
+                                                                className="absolute left-0 right-0 top-full mt-2 z-20 rounded-xl border border-white/10 overflow-hidden shadow-[0_24px_48px_rgba(0,0,0,0.5)]"
+                                                                style={{
+                                                                    backgroundColor: 'rgba(15, 17, 25, 0.98)',
+                                                                    backdropFilter: 'blur(24px)',
+                                                                    WebkitBackdropFilter: 'blur(24px)',
+                                                                }}
+                                                            >
+                                                                {/* Search */}
+                                                                <div className="flex items-center gap-2 px-3 py-2.5 border-b border-white/10">
+                                                                    <Search size={14} className="text-white/40 shrink-0" />
+                                                                    <input
+                                                                        type="text"
+                                                                        placeholder="Buscar país..."
+                                                                        className="flex-1 bg-transparent text-sm text-white placeholder:text-white/30 outline-none"
+                                                                        value={countrySearch}
+                                                                        onChange={(e) => setCountrySearch(e.target.value)}
+                                                                        autoFocus
+                                                                    />
+                                                                </div>
+
+                                                                {/* List */}
+                                                                <div className="max-h-60 overflow-y-auto py-1">
+                                                                    {filteredCountries.length === 0 ? (
+                                                                        <div className="px-4 py-3 text-sm text-white/40 text-center">
+                                                                            Nenhum país encontrado
+                                                                        </div>
+                                                                    ) : (
+                                                                        filteredCountries.map((c) => {
+                                                                            const isSelected =
+                                                                                c.code === phoneCountry.code && c.name === phoneCountry.name;
+                                                                            return (
+                                                                                <button
+                                                                                    key={`${c.code}-${c.name}`}
+                                                                                    type="button"
+                                                                                    onClick={() => handleCountrySelect(c)}
+                                                                                    className={`w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors ${
+                                                                                        isSelected
+                                                                                            ? 'bg-blue-500/10 text-blue-300'
+                                                                                            : 'text-white/80 hover:bg-white/5'
+                                                                                    }`}
+                                                                                >
+                                                                                    <span className="text-xl leading-none">{c.flag}</span>
+                                                                                    <span className="flex-1 text-sm">{c.name}</span>
+                                                                                    <span className="text-xs text-white/40 tabular-nums">{c.code}</span>
+                                                                                </button>
+                                                                            );
+                                                                        })
+                                                                    )}
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </div>
+                                            ) : (
+                                                <input
+                                                    type="email"
+                                                    placeholder="voce@email.com"
+                                                    className={inputBase}
+                                                    value={formData.contact}
+                                                    onChange={(e) => update('contact', e.target.value)}
+                                                />
+                                            )}
                                         </div>
 
                                         {status === 'error' && errorMsg && (
