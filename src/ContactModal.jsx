@@ -98,10 +98,12 @@ export default function ContactModal({ isOpen, onClose }) {
 
     const update = (key, value) => setFormData((prev) => ({ ...prev, [key]: value }));
 
-    // Compose contact when phone country/digits change (whatsapp channel only)
+    // Compose contact when phone country/digits change (whatsapp channel only).
+    // Output is digits-only, concatenated: "5531999766846" (no +, no spaces, no hyphens).
     const composePhoneContact = (countryObj, digits) => {
-        const cleaned = digits.trim();
-        return cleaned ? `${countryObj.code} ${cleaned}` : '';
+        const countryDigits = countryObj.code.replace(/\D/g, '');
+        const numberDigits = digits.replace(/\D/g, '');
+        return numberDigits ? `${countryDigits}${numberDigits}` : '';
     };
 
     const handleCountrySelect = (country) => {
