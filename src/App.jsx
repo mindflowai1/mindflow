@@ -4,6 +4,7 @@ import { LanguageProvider } from './LanguageContext';
 import LandingPage from './LandingPage';
 import ContactModal from './ContactModal';
 import FloatingCTA from './FloatingCTA';
+import WhatsAppButton from './WhatsAppButton';
 
 function App() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +17,7 @@ function App() {
                     <Route path="/" element={<LandingPage onOpenModal={openModal} />} />
                 </Routes>
                 <FloatingCTA onClick={openModal} />
+                <WhatsAppButton />
                 <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
             </BrowserRouter>
         </LanguageProvider>
