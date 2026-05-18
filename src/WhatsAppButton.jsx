@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -31,7 +31,7 @@ export default function WhatsAppButton() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed bottom-5 left-5 md:bottom-8 md:left-8 z-40 flex flex-col items-start gap-3"
+                    className="fixed bottom-5 right-5 md:bottom-8 md:right-8 z-40 flex flex-col items-end gap-3"
                 >
                     {/* Popup card */}
                     <AnimatePresence>

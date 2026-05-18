@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './LanguageContext';
 import LandingPage from './LandingPage';
 import ContactModal from './ContactModal';
-import FloatingCTA from './FloatingCTA';
 import WhatsAppButton from './WhatsAppButton';
 
 function App() {
@@ -16,7 +15,6 @@ function App() {
                 <Routes>
                     <Route path="/" element={<LandingPage onOpenModal={openModal} />} />
                 </Routes>
-                <FloatingCTA onClick={openModal} />
                 <WhatsAppButton />
                 <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
             </BrowserRouter>
