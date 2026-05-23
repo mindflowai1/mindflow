@@ -11,20 +11,20 @@ const LandingPage = ({ onOpenModal }) => {
   const timelineSteps = [
     {
       id: 'step1',
-      title: 'Tráfego Estratégico',
-      subtitle: 'Atração',
-      description: 'Atração de leads qualificados através de campanhas cirúrgicas em Meta Ads e Google Ads.',
+      title: 'Estratégia',
+      subtitle: 'Diagnóstico',
+      description: 'A gente mergulha no seu negócio: oferta, público, ticket, diferenciais. Esse é o passo que decide se sua campanha vai gerar venda ou só clique.',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
         </svg>
       )
     },
     {
       id: 'step2',
-      title: 'Presença Digital',
-      subtitle: 'Conversão',
-      description: 'Landing pages de alta conversão desenhadas com neurodesign para maximizar seus resultados.',
+      title: 'Landing Page Premium',
+      subtitle: 'Construção',
+      description: 'Página feita do zero, com copy estratégica e design de alto padrão. Cada bloco, cor e botão é decidido com base em conversão. Nada de template.',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -33,23 +33,24 @@ const LandingPage = ({ onOpenModal }) => {
     },
     {
       id: 'step3',
-      title: 'Atendimento IA',
-      subtitle: 'Qualificação',
-      description: 'Nossa IA qualifica seus leads em tempo real, garantindo resposta imediata e agendamento automático.',
+      title: 'Tráfego Pago',
+      subtitle: 'Captura',
+      description: 'Campanhas no Meta Ads e Google Ads estruturadas com critério. Foco em lead qualificado, não em volume vazio — quem clica já tem perfil pra comprar.',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
         </svg>
       )
     },
     {
       id: 'step4',
-      title: 'CRM & Gestão',
-      subtitle: 'Venda',
-      description: 'Controle total do seu funil de vendas. Dashboard inteligente para acompanhamento de ROI e conversão.',
+      title: 'Otimização Contínua',
+      subtitle: 'Escala',
+      description: 'Acompanhamento semanal, ajustes baseados em dados reais e refino do que está funcionando. A operação amadurece e o custo por venda cai mês a mês.',
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" transform="rotate(45 12 12)" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />
         </svg>
       )
     }
@@ -65,20 +66,24 @@ const LandingPage = ({ onOpenModal }) => {
 
   const faqs = [
     {
-      question: "Como a Mindflow escala meu negócio?",
-      answer: "Através de uma operação 360º. Nós não apenas rodamos anúncios; nós construímos a estrutura de conversão (Landing Pages), qualificamos o lead com IA em tempo real e entregamos o cliente pronto para fechar no seu CRM."
+      question: "Por que vocês fazem só tráfego pago e landing page?",
+      answer: "Porque é onde está a maior alavancagem do marketing digital. Uma landing bem feita pode dobrar sua conversão sem aumentar um centavo de investimento. E tráfego mal estruturado queima orçamento mesmo com a melhor página do mundo. A gente faz os dois funcionarem juntos, com foco total — sem tentar resolver tudo e acabar entregando nada bem feito."
     },
     {
-      question: "Eu preciso contratar ferramentas por fora?",
-      answer: "Não. A Mindflow é uma solução completa. Nós fornecemos a tecnologia de IA, as automações e as ferramentas de gestão. Você só precisa focar em atender os leads qualificados que geramos."
+      question: "Preciso contratar os dois serviços ou posso pegar separado?",
+      answer: "O ideal é contratar os dois — eles se potencializam. Mas atendemos cada um isoladamente também. Se você já tem uma landing que converte, fazemos só o tráfego. Se já tem campanhas rodando mas perde gente no site, fazemos só a landing premium."
     },
     {
-      question: "Quanto tempo para ver os primeiros resultados?",
-      answer: "Nossas estratégias de tráfego começam a gerar leads em até 48h após a ativação. O amadurecimento da operação e a otimização da IA geralmente atingem o pico entre 30 e 60 dias."
+      question: "Em quanto tempo vejo resultado?",
+      answer: "A landing page premium fica pronta em 7 a 14 dias úteis. As campanhas de tráfego começam a gerar leads nas primeiras 48 horas após publicação. A operação amadurece e atinge o melhor desempenho entre 30 e 60 dias — quando temos dados suficientes pra otimizar com precisão."
     },
     {
-      question: "A Mindflow atende qualquer tipo de empresa?",
-      answer: "Focamos em negócios que buscam escala previsível: empresas de serviços, consultorias, B2B e operações locais de alto ticket que precisam de um processo comercial profissional e automatizado."
+      question: "Qual o investimento?",
+      answer: "Depende do seu mercado, ticket e meta de crescimento. Trabalhamos com valor fixo de projeto + verba de mídia separada, sempre transparente. Em uma conversa de 15 minutos a gente entende seu cenário e te passa uma faixa realista. Sem compromisso."
+    },
+    {
+      question: "Vocês atendem qualquer tipo de empresa?",
+      answer: "Focamos em negócios que querem previsibilidade na aquisição de clientes: empresas de serviço, ticket médio/alto, B2B, operações locais que dependem de leads qualificados. Se você precisa de venda direta, com método e não na sorte, é com a gente."
     }
   ];
 
@@ -88,7 +93,7 @@ const LandingPage = ({ onOpenModal }) => {
       company: "Thees Engenharia",
       letter: "T",
       segment: "Engenharia Civil",
-      content: "A automação no WhatsApp deixou o atendimento mais organizado. Os leads chegam pra equipe já com contexto e a gente consegue priorizar quem está pronto pra fechar.",
+      content: "A landing nova ficou muito mais clara, e o tráfego pago trouxe orçamentos qualificados desde o primeiro mês. Hoje nossa equipe comercial fala com gente que já chegou aquecida — não perdemos mais tempo com curioso.",
       rating: 5,
     },
     {
@@ -96,7 +101,7 @@ const LandingPage = ({ onOpenModal }) => {
       company: "Depósito do Paulo",
       letter: "D",
       segment: "Materiais de Construção",
-      content: "Os anúncios começaram a trazer um volume bom de orçamentos novos. A landing também ficou enxuta, sem enrolação, e isso ajudou na conversão.",
+      content: "A página antiga não convertia. A nova é simples, direta, e o pessoal deixa contato pra valer. Combinado com os anúncios bem feitos, o volume de orçamento novo subiu bastante nas primeiras semanas.",
       rating: 5,
     },
     {
@@ -104,7 +109,7 @@ const LandingPage = ({ onOpenModal }) => {
       company: "Check Mkt",
       letter: "C",
       segment: "Marketing Digital",
-      content: "Trabalho técnico e direto. Os ajustes nas campanhas saem com critério e os relatórios mostram exatamente onde a gente está no funil em cada momento.",
+      content: "Como agência, a gente percebe quando uma campanha foi planejada com método. Custo por lead, criativos testados, página alinhada com o anúncio. Trabalho técnico do começo ao fim.",
       rating: 5,
     }
   ];
@@ -290,11 +295,11 @@ const LandingPage = ({ onOpenModal }) => {
       <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[100dvh] pt-32 md:pt-40 pb-32 md:pb-44 transition-transform duration-100 ease-out">
         <h1 className="animate-on-scroll font-outfit text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[1.1] tracking-tight md:tracking-[-0.03em] font-light mb-6 md:mb-8 [text-shadow:0_4px_30px_rgba(0,0,0,0.8)]">
           <span className="block text-white">Tráfego que atrai.</span>
-          <span className="block text-gray-200">Design que converte.</span>
-          <span className="block text-gray-400">IA que vende.</span>
+          <span className="block text-gray-200">Landing que vende.</span>
+          <span className="block text-gray-400">Resultado que escala.</span>
         </h1>
         <p className="animate-on-scroll text-gray-300 text-base md:text-lg max-w-[500px] md:max-w-[600px] mx-auto leading-relaxed font-light [text-shadow:0_2px_15px_rgba(0,0,0,1)]" style={{ transitionDelay: '100ms' }}>
-          Sua agência 360º de marketing e IA. Assumimos sua operação comercial: anúncios, landing pages, automação e CRM. Você foca apenas em vender.
+          Especialistas em <span className="text-white">tráfego pago</span> e <span className="text-white">landing pages premium</span>. Duas frentes, um único objetivo: levar o cliente certo até você e fazer ele comprar.
         </p>
         <button onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })} className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-all duration-300 group cursor-pointer animate-on-scroll hover:scale-110" style={{ transitionDelay: '400ms' }}>
           <span className="text-[11px] uppercase tracking-[0.25em] text-gray-300 font-outfit font-medium group-hover:text-white transition-colors">Descubra</span>
@@ -354,13 +359,13 @@ const LandingPage = ({ onOpenModal }) => {
         {/* Section Header */}
         <div className="relative z-10 max-w-4xl mx-auto w-full mb-24 md:mb-32 text-center animate-on-scroll">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
-            <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">A Jornada Mindflow</span>
+            <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Nosso Método</span>
           </div>
           <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-8 tracking-tight leading-tight">
-            Do primeiro clique ao <span className="font-medium text-blue-400">lucro real</span>
+            Do clique à <span className="font-medium text-blue-400">venda</span>, sem ruído
           </h2>
           <p className="text-gray-400 text-base md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-            Uma linha do tempo estratégica desenhada para escalar sua operação sem que você precise tocar em uma única ferramenta.
+            Um processo enxuto, focado nos dois pilares que mais movem o ponteiro: tráfego pago bem estruturado e uma landing page que dá orgulho de mostrar.
           </p>
         </div>
 
@@ -464,23 +469,22 @@ const LandingPage = ({ onOpenModal }) => {
             <div className="animate-on-scroll">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 mb-6 backdrop-blur-md">
                 <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
-                <span className="text-[11px] tracking-[0.3em] uppercase text-blue-300 font-outfit font-medium text-shadow-sm">A Agência Mindflow</span>
+                <span className="text-[11px] tracking-[0.3em] uppercase text-blue-300 font-outfit font-medium text-shadow-sm">Sobre a Mindflow</span>
               </div>
 
               <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-5 tracking-tight leading-[1.05]">
-                Sua Operação <br />
-                <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 bg-[length:200%_auto] animate-[sheen_8s_linear_infinite]">Turbo-IA.</span>
+                Dois serviços. <br />
+                <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 bg-[length:200%_auto] animate-[sheen_8s_linear_infinite]">Zero distração.</span>
               </h2>
 
               <p className="text-gray-300 text-base md:text-lg font-light leading-relaxed mb-8 max-w-2xl mx-auto">
-                Somos uma agência de inteligência artificial que promove uma <span className="text-white font-medium">solução de marketing e comercial completa</span> para o seu negócio.
-                Do tráfego à conversão final, automatizamos cada etapa para sua escala ser inevitável.
+                A gente não tenta fazer tudo. Faz <span className="text-white font-medium">duas coisas, muito bem feitas</span>: tráfego pago que traz lead qualificado, e landing page premium que converte. Quem precisa de "tudo e mais um pouco" contrata 5 fornecedores. Quem precisa <span className="text-white font-medium">vender mais agora</span>, contrata a gente.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
                 {[
-                  { title: "Escalabilidade", desc: "Processos desenhados para crescer sem perder qualidade." },
-                  { title: "Automação", desc: "Sua equipe focada no fechamento, nossa IA no resto." }
+                  { title: "Foco Absoluto", desc: "Não dispersamos esforço. Tráfego e landing trabalham juntos, planejados pelo mesmo time com a mesma estratégia." },
+                  { title: "Padrão Premium", desc: "Cada landing é feita do zero, cada campanha é estruturada com critério. Nada de template, nada de fórmula pronta." }
                 ].map((item, i) => (
                   <div
                     key={i}
@@ -510,13 +514,13 @@ const LandingPage = ({ onOpenModal }) => {
         <div className="relative z-10 max-w-7xl mx-auto w-full animate-on-scroll">
           <div className="text-center mb-16 md:mb-24">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
-              <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Prova Social</span>
+              <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Resultados Reais</span>
             </div>
             <h2 className="font-outfit text-4xl md:text-5xl font-light text-white mb-6 tracking-tight">
-              Resultados que <span className="font-medium text-blue-400">falam por si</span>
+              Negócios que entenderam <span className="font-medium text-blue-400">o jogo</span>
             </h2>
             <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto font-light leading-relaxed">
-              Escalabilidade comprovada por quem vive o dia a dia da operação e já transformou seus resultados com a Mindflow.
+              Tráfego sem landing boa é dinheiro jogado fora. Landing sem tráfego é página parada. Junto, vira máquina de venda. Quem entendeu isso, parou de improvisar.
             </p>
           </div>
 
@@ -556,10 +560,10 @@ const LandingPage = ({ onOpenModal }) => {
         <div className="max-w-4xl mx-auto w-full">
           <div className="text-center mb-16 animate-on-scroll">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
-              <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Dúvidas Frequentes</span>
+              <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Antes de Falar com a Gente</span>
             </div>
             <h2 className="font-outfit text-4xl md:text-5xl font-light text-white mb-6 tracking-tight">
-              Tire suas <span className="font-medium text-blue-400">dúvidas</span>
+              O que <span className="font-medium text-blue-400">todo mundo</span> pergunta
             </h2>
           </div>
 
@@ -606,7 +610,7 @@ const LandingPage = ({ onOpenModal }) => {
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <img src="/logo-mindflow.png" alt="Mindflow" className="h-10 mb-6 opacity-80" />
             <p className="text-gray-500 text-sm max-w-xs leading-relaxed font-light">
-              Escalando negócios com o poder da Inteligência Artificial e design de alto padrão. Sua operação comercial no próximo nível.
+              Especialistas em tráfego pago e landing pages premium. Foco no que importa: levar o cliente certo até você, e fazer ele comprar.
             </p>
           </div>
 

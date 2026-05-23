@@ -369,12 +369,10 @@ export default function ContactModal({ isOpen, onClose }) {
                                                         Selecione uma opção
                                                     </option>
                                                     <option value="completa" style={{ background: '#1e3a8a', color: '#fff', fontWeight: 700 }}>
-                                                        ✨ Solução Completa (Recomendado)
+                                                        ✨ Solução Completa: Tráfego + Landing (Recomendado)
                                                     </option>
-                                                    <option value="leads" style={{ background: '#111', color: '#fff' }}>Atrair mais clientes e leads</option>
-                                                    <option value="automacao" style={{ background: '#111', color: '#fff' }}>Automatizar tarefas repetitivas</option>
-                                                    <option value="landing" style={{ background: '#111', color: '#fff' }}>Landing page de alta conversão</option>
-                                                    <option value="ia" style={{ background: '#111', color: '#fff' }}>Assistente de IA customizado</option>
+                                                    <option value="leads" style={{ background: '#111', color: '#fff' }}>Só Tráfego Pago</option>
+                                                    <option value="landing" style={{ background: '#111', color: '#fff' }}>Só Landing Page Premium</option>
                                                     <option value="outro" style={{ background: '#111', color: '#fff' }}>Outro</option>
                                                 </select>
                                                 <ChevronDown
