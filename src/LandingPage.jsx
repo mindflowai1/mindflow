@@ -61,8 +61,11 @@ const LandingPage = ({ onOpenModal }) => {
   const clientsRef = useRef(null);
   const faqRef = useRef(null);
   const footerRef = useRef(null);
+  const portfolioRef = useRef(null);
+  const carouselRef = useRef(null);
   const [timelineProgress, setTimelineProgress] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
+  const [carouselProgress, setCarouselProgress] = useState(0);
 
   const faqs = [
     {
@@ -113,6 +116,184 @@ const LandingPage = ({ onOpenModal }) => {
       rating: 5,
     }
   ];
+
+  const portfolioProjects = [
+    {
+      id: 1,
+      title: "CheckMkt",
+      domain: "checkmktus.com",
+      url: "https://www.checkmktus.com/",
+      category: "PERFORMANCE MARKETING FUNNEL",
+      description: "Funil de vendas avançado e tracking de conversão focado em captação acelerada de leads qualificados.",
+      logoText: "C",
+      logoImg: "/logos-clientes/check mkt.png",
+      mockup: {
+        bg: "bg-[#0b0e17]",
+        accent: "text-emerald-400 border-emerald-500/20",
+        headerBg: "bg-[#101524]",
+        previewElement: (
+          <img 
+            src="/images/checkmkt-landing.png" 
+            alt="CheckMkt US Landing Page" 
+            className="w-full h-full object-cover object-top" 
+          />
+        )
+      }
+    },
+    {
+      id: 2,
+      title: "Depósito do Paulo",
+      domain: "depositodopaulo.com.br",
+      url: "https://www.depositodopaulo.com.br/",
+      category: "CATÁLOGO WHATSAPP + LEADS",
+      description: "Transformação digital para loja física de materiais de construção. Landing page estruturada para captação ágil de orçamentos e conversão pelo WhatsApp.",
+      logoText: "DP",
+      logoImg: "/logos-clientes/Deposito do paulo.png",
+      mockup: {
+        bg: "bg-[#0a0705]",
+        accent: "text-amber-500 border-amber-500/20",
+        headerBg: "bg-[#18110b]",
+        previewElement: (
+          <img 
+            src="/images/depositodopaulo-landing.png" 
+            alt="Depósito do Paulo Landing Page" 
+            className="w-full h-full object-cover object-top" 
+          />
+        )
+      }
+    },
+    {
+      id: 3,
+      title: "MHL Integrada",
+      domain: "mhlintegrada.com.br",
+      url: "https://www.mhlintegrada.com.br/",
+      category: "LANDING PAGE DE CONSULTORIA",
+      description: "Landing page corporativa premium unindo engenharia e assessoria de riscos operacionais com visual altamente sóbrio e profissional.",
+      logoText: "MHL",
+      logoImg: null,
+      mockup: {
+        bg: "bg-[#050e18]",
+        accent: "text-blue-400 border-blue-500/20",
+        headerBg: "bg-[#0a1525]",
+        previewElement: (
+          <img 
+            src="/images/mhl-landing.png" 
+            alt="MHL Integrada Landing Page" 
+            className="w-full h-full object-cover object-top" 
+          />
+        )
+      }
+    },
+    {
+      id: 4,
+      title: "STI Eng",
+      domain: "stieng.com.br",
+      url: "https://www.stieng.com.br/",
+      category: "PORTAL CORPORATIVO INDUSTRIAL",
+      description: "Plataforma premium para engenharia e automação mecânica de grande porte, transmitindo robustez e profissionalismo.",
+      logoText: "S",
+      logoImg: "/logos-clientes/sti.png",
+      mockup: {
+        bg: "bg-[#0b0e17]",
+        accent: "text-emerald-400 border-emerald-500/20",
+        headerBg: "bg-[#101524]",
+        previewElement: (
+          <img 
+            src="/images/sti-landing.png" 
+            alt="STI Engenharia Landing Page" 
+            className="w-full h-full object-cover object-top" 
+          />
+        )
+      }
+    },
+    {
+      id: 5,
+      title: "CoreAuto",
+      domain: "coreauto-six.vercel.app",
+      url: "https://coreauto-six.vercel.app/",
+      category: "CATÁLOGO DE PEÇAS + LEAD FUNNEL",
+      description: "Landing page e catálogo inteligente focado em cotações rápidas e vendas de peças automotivas exclusivas para veículos Hyundai & Kia.",
+      logoText: "CA",
+      logoImg: null,
+      mockup: {
+        bg: "bg-[#080d15]",
+        accent: "text-blue-400 border-blue-500/20",
+        headerBg: "bg-[#101925]",
+        previewElement: (
+          <img 
+            src="/images/coreauto-landing.png" 
+            alt="CoreAuto Landing Page" 
+            className="w-full h-full object-cover object-top" 
+          />
+        )
+      }
+    },
+    {
+      id: 6,
+      title: "Thees Engenharia",
+      domain: "theesengenharia.com.br",
+      url: "https://www.theesengenharia.com.br/",
+      category: "SITE INSTITUCIONAL DE ENGENHARIA",
+      description: "Portal premium e de engenharia civil de alto padrão, focado em engenharia de precisão e modelagem BIM 3D com design sofisticado.",
+      logoText: "T",
+      logoImg: "/logos-clientes/thees.png",
+      mockup: {
+        bg: "bg-[#0b0e17]",
+        accent: "text-amber-400 border-amber-500/20",
+        headerBg: "bg-[#101524]",
+        previewElement: (
+          <img 
+            src="/images/thees-landing.png" 
+            alt="Thees Engenharia Landing Page" 
+            className="w-full h-full object-cover object-top" 
+          />
+        )
+      }
+    },
+    {
+      id: 7,
+      title: "BFS Advogados",
+      domain: "bfsadvogados.com.br",
+      url: "https://www.bfsadvogados.com.br/",
+      category: "LANDING PAGE ADVOCACIA",
+      description: "Estrutura sóbria e corporativa para escritório de advocacia empresarial. Foco em autoridade e captação de clientes B2B.",
+      logoText: "BFS",
+      logoImg: null,
+      mockup: {
+        bg: "bg-[#050715]",
+        accent: "text-amber-500 border-amber-500/20",
+        headerBg: "bg-[#0b0e25]",
+        previewElement: (
+          <img 
+            src="/images/bfs-landing.png" 
+            alt="BFS Advogados Landing Page" 
+            className="w-full h-full object-cover object-top" 
+          />
+        )
+      }
+    }
+  ];
+
+  const handleCarouselScroll = () => {
+    if (carouselRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+      const totalScroll = scrollWidth - clientWidth;
+      const progress = totalScroll > 0 ? (scrollLeft / totalScroll) * 100 : 0;
+      setCarouselProgress(progress);
+    }
+  };
+
+  const scrollCarousel = (direction) => {
+    if (carouselRef.current) {
+      const { scrollLeft, clientWidth } = carouselRef.current;
+      const scrollAmount = clientWidth * 0.75;
+      const newScrollLeft = direction === 'next' ? scrollLeft + scrollAmount : scrollLeft - scrollAmount;
+      carouselRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   // Scroll logic for Timeline and Parallax
   useEffect(() => {
@@ -248,6 +429,7 @@ const LandingPage = ({ onOpenModal }) => {
         <div className="hidden lg:flex items-center space-x-10 text-sm font-outfit font-medium text-gray-300">
           <a href="#experience" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">A Jornada</a>
           <a href="#about" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300"> DNA</a>
+          <a href="#portfolio" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">Portfólio</a>
           <a href="#clients" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">Nossos Clientes</a>
           <a href="#faq" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">Dúvidas</a>
         </div>
@@ -282,6 +464,7 @@ const LandingPage = ({ onOpenModal }) => {
       <div className={`fixed inset-0 z-40 bg-[#020409]/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 transition-all duration-500 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}>
         <a href="#experience" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">A Jornada</a>
         <a href="#about" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Sobre</a>
+        <a href="#portfolio" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Portfólio</a>
         <a href="#clients" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Nossos Clientes</a>
         <a href="#faq" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Dúvidas</a>
         <div className="mt-6">
@@ -505,6 +688,125 @@ const LandingPage = ({ onOpenModal }) => {
               </div>
             </div>
 
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio Section */}
+      <section ref={portfolioRef} id="portfolio" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 flex flex-col items-center overflow-hidden">
+        {/* Decorative background glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-blue-600/5 rounded-full blur-[160px] pointer-events-none z-0"></div>
+
+        {/* Section Header */}
+        <div className="relative z-10 max-w-4xl mx-auto w-full mb-16 md:mb-20 text-center animate-on-scroll">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
+            <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Nosso Portfólio</span>
+          </div>
+          <h2 className="font-outfit text-4xl md:text-5xl font-light text-white mb-6 tracking-tight leading-tight">
+            Experiências digitais que <span className="font-medium text-blue-400">geram lucro</span>
+          </h2>
+          <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto font-light leading-relaxed">
+            Desenvolvemos landing pages premium e estruturas de alta performance projetadas especificamente para reter atenção, transmitir autoridade e converter cliques em vendas reais.
+          </p>
+        </div>
+
+        {/* Carousel Outer Frame */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8">
+          {/* Controls Header (Arrow controllers for desktop) */}
+          <div className="flex justify-end gap-3 mb-6">
+            <button
+              onClick={() => scrollCarousel('prev')}
+              className="w-12 h-12 rounded-full bg-[#080b14]/40 hover:bg-[#0c0f1d]/85 backdrop-blur-md border border-white/10 hover:border-white/20 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 transform active:scale-95 cursor-pointer shadow-lg hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] animate-on-scroll"
+              aria-label="Anterior"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button
+              onClick={() => scrollCarousel('next')}
+              className="w-12 h-12 rounded-full bg-[#080b14]/40 hover:bg-[#0c0f1d]/85 backdrop-blur-md border border-white/10 hover:border-white/20 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 transform active:scale-95 cursor-pointer shadow-lg hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] animate-on-scroll"
+              aria-label="Próximo"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          {/* Carousel Slider Container */}
+          <div
+            ref={carouselRef}
+            onScroll={handleCarouselScroll}
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth select-none pb-8 pt-4 no-scrollbar -mx-4 px-4 md:-mx-8 md:px-8"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            {portfolioProjects.map((project) => (
+              <a
+                key={project.id}
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-w-[290px] sm:min-w-[360px] md:min-w-[400px] max-w-[400px] snap-start snap-always animate-on-scroll block cursor-pointer group"
+              >
+                <div
+                  className="relative p-5 rounded-[2.5rem] bg-[#080b14]/30 backdrop-blur-3xl border border-white/10 hover:border-blue-500/30 hover:bg-[#0a0f1d]/40 transition-all duration-500 h-full flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_60px_rgba(59,130,246,0.08)] hover:-translate-y-1.5"
+                  style={{
+                    boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.05)'
+                  }}
+                >
+                  {/* Subtle top light inside the card */}
+                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
+
+                  {/* Browser Mockup Header */}
+                  <div className="w-full rounded-2xl overflow-hidden mb-5 aspect-[16/10] relative shadow-2xl border border-white/10 flex flex-col bg-[#0b0e17]">
+                    {/* Browser Address Bar */}
+                    <div className="w-full h-7 px-4 flex items-center gap-1.5 border-b border-white/5" style={{ backgroundColor: project.mockup.headerBg }}>
+                      <div className="w-2 h-2 rounded-full bg-red-500/80"></div>
+                      <div className="w-2 h-2 rounded-full bg-yellow-500/80"></div>
+                      <div className="w-2 h-2 rounded-full bg-green-500/80"></div>
+                      <div className="h-4 flex-1 max-w-[200px] mx-auto rounded-full bg-white/5 border border-white/5 flex items-center justify-center px-3 gap-1">
+                        <svg className="w-1.5 h-1.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                        <span className="text-[7px] text-gray-400/80 truncate font-light tracking-wide">{project.domain || `${project.title.toLowerCase().replace(/\s+/g, '')}.com.br`}</span>
+                      </div>
+                    </div>
+                    {/* Browser Viewport */}
+                    <div className={`flex-1 w-full overflow-hidden relative ${project.mockup.bg} transition-all duration-750 group-hover:scale-[1.03]`}>
+                      {project.mockup.previewElement}
+                    </div>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="flex-grow flex flex-col justify-between pt-2">
+                    <div>
+                      {/* Brand Info & Tag */}
+                      <div className="mb-3">
+                        <span className={`text-[9px] tracking-[0.25em] uppercase font-bold px-2.5 py-1 rounded-full bg-white/[0.03] border ${project.mockup.accent}`}>
+                          {project.category}
+                        </span>
+                      </div>
+
+                      {/* Title */}
+                      <h3 className="text-xl font-outfit font-medium text-white mb-2 tracking-tight group-hover:text-blue-400 transition-colors">
+                        {project.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p className="text-gray-400 font-light text-xs md:text-sm leading-relaxed">
+                        {project.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+
+          {/* Carousel Progress Tracking Line */}
+          <div className="w-full max-w-xs mx-auto h-[2px] bg-white/5 rounded-full overflow-hidden mt-6 relative">
+            <div
+              className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-150"
+              style={{ width: `${carouselProgress}%` }}
+            ></div>
           </div>
         </div>
       </section>
