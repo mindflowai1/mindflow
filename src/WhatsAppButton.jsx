@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
 const WHATSAPP_NUMBER = '553171072131';
-const WHATSAPP_MESSAGE = 'Olá! Vi o site da MindFlow e gostaria de saber mais sobre os serviços. 🚀';
+const WHATSAPP_MESSAGE = 'Olá! Vi o site da MindFlow e quero saber mais sobre a Mindflow. 🚀';
 
 function WhatsAppIcon({ className }) {
     return (

@@ -358,7 +358,7 @@ export default function ContactModal({ isOpen, onClose }) {
                                         transition={{ duration: 0.25 }}
                                     >
                                         <div className="mb-5">
-                                            <label className={labelBase}>Serviço de interesse</label>
+                                            <label className={labelBase}>O que você mais quer resolver?</label>
                                             <div className="relative">
                                                 <select
                                                     className={`${inputBase} appearance-none cursor-pointer pr-12`}
@@ -368,12 +368,11 @@ export default function ContactModal({ isOpen, onClose }) {
                                                     <option value="" disabled style={{ background: '#111', color: 'rgba(255,255,255,0.4)' }}>
                                                         Selecione uma opção
                                                     </option>
-                                                    <option value="completa" style={{ background: '#1e3a8a', color: '#fff', fontWeight: 700 }}>
-                                                        ✨ Solução Completa: Tráfego + Landing (Recomendado)
-                                                    </option>
-                                                    <option value="leads" style={{ background: '#111', color: '#fff' }}>Só Tráfego Pago</option>
-                                                    <option value="landing" style={{ background: '#111', color: '#fff' }}>Só Landing Page Premium</option>
-                                                    <option value="outro" style={{ background: '#111', color: '#fff' }}>Outro</option>
+                                                    <option value="prospeccao" style={{ background: '#111', color: '#fff' }}>Conseguir clientes novos (prospecção)</option>
+                                                    <option value="atendimento" style={{ background: '#111', color: '#fff' }}>Responder todo cliente na hora, 24h</option>
+                                                    <option value="funil" style={{ background: '#111', color: '#fff' }}>Não perder negociação no meio do caminho</option>
+                                                    <option value="anuncios" style={{ background: '#111', color: '#fff' }}>Saber qual anúncio traz venda</option>
+                                                    <option value="tudo" style={{ background: '#1e3a8a', color: '#fff', fontWeight: 700 }}>✨ Tudo isso</option>
                                                 </select>
                                                 <ChevronDown
                                                     size={18}

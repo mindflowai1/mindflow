@@ -1,310 +1,245 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Search, MapPin, Star, Check, X, Zap, Clock, Repeat, Target,
+  BarChart3, QrCode, ShieldCheck, MessagesSquare, CalendarCheck, FileText,
+  Megaphone, Users, BookOpen, Lock, Bot, UserCheck, Sparkles, ArrowRight,
+  Globe, Phone, Moon, Hourglass, TrendingUp, BadgeCheck, Kanban,
+} from 'lucide-react';
+import { BrandLogo, BRANDS } from './BrandLogos';
+
+/* ──────────────────────────────────────────────────────────────
+   Conteúdo
+   ────────────────────────────────────────────────────────────── */
+
+const navLinks = [
+  { href: '#jornada', label: 'Como funciona' },
+  { href: '#prospeccao', label: 'Prospecção' },
+  { href: '#funil', label: 'IA no funil' },
+  { href: '#conexao', label: 'Conexão' },
+  { href: '#faq', label: 'Dúvidas' },
+];
+
+const pains = [
+  { icon: Moon, text: 'O cliente mandou mensagem às 22h. Às 9h, já tinha fechado com o concorrente.' },
+  { icon: Hourglass, text: '“Vou pensar.” E ninguém nunca mais falou com ele.' },
+  { icon: Kanban, text: 'Seu funil está desatualizado, porque ninguém tem tempo de mover card.' },
+  { icon: Megaphone, text: 'Você paga anúncio todo mês sem saber qual deles traz venda.' },
+  { icon: Target, text: 'Sua agenda depende de indicação. Quando ela para, tudo para.' },
+];
+
+const timelineSteps = [
+  {
+    id: 'encontra',
+    title: 'Encontra o cliente',
+    subtitle: 'Prospecção ativa',
+    description: 'Você diz quem é o seu cliente ideal e onde ele está. A Mindflow encontra as empresas, escreve uma abordagem personalizada para cada uma e inicia a conversa no WhatsApp.',
+    icon: Search,
+    brands: ['googleMaps'],
+  },
+  {
+    id: 'atende',
+    title: 'Atende na hora',
+    subtitle: 'IA 24 horas',
+    description: 'Cada mensagem respondida em segundos, de dia, de noite e no fim de semana. A IA conhece seus serviços, preços e regras, e conversa como gente, sem menu de “digite 1”.',
+    icon: Zap,
+    brands: ['whatsapp', 'instagram', 'facebook'],
+  },
+  {
+    id: 'conduz',
+    title: 'Conduz até a venda',
+    subtitle: 'Funil no automático',
+    description: 'A IA qualifica, move o cliente de etapa, marca horário e retoma quem sumiu. Seu vendedor só entra quando o cliente está pronto, já com todo o histórico.',
+    icon: Repeat,
+    brands: ['googleCalendar'],
+  },
+  {
+    id: 'mostra',
+    title: 'Mostra o que vende',
+    subtitle: 'Do anúncio à venda',
+    description: 'Saiba qual campanha e qual anúncio trouxe cada cliente, quanto cada atendente vendeu e quanto falta para a meta do mês.',
+    icon: BarChart3,
+    brands: ['meta', 'googleAds'],
+  },
+];
+
+const integrations = ['whatsapp', 'meta', 'instagram', 'facebook', 'googleAds', 'googleCalendar', 'googleMaps'];
+
+const prospectSteps = [
+  { title: 'Diga quem você quer atender', desc: 'Segmento e cidade. Ou suba a sua própria planilha.' },
+  { title: 'A Mindflow encontra as empresas', desc: 'Telefone, site, avaliações e redes, direto do Google Maps.' },
+  { title: 'A IA escreve, você aprova', desc: 'Uma abordagem personalizada para cada empresa. Nada sai sem o seu ok.' },
+  { title: 'Quem responde vira oportunidade', desc: 'A IA conversa, qualifica e coloca o interessado no seu funil.' },
+];
+
+const prospectCompanies = [
+  { name: 'Odonto Prime', rating: '4,9', reviews: 312, site: true },
+  { name: 'Clínica Sorrir Mais', rating: '4,7', reviews: 188, site: false },
+  { name: 'Dental Center Savassi', rating: '4,8', reviews: 254, site: true },
+  { name: 'Instituto Oral Pampulha', rating: '4,6', reviews: 97, site: false },
+];
+
+const kanbanColumns = ['Novo lead', 'Qualificado', 'Agendado', 'Fechado'];
+
+const kanbanEvents = [
+  { col: 0, who: 'ia', text: 'Ana chegou pelo anúncio “Clareamento”. A IA respondeu em 4 segundos.' },
+  { col: 1, who: 'ia', text: 'A IA confirmou interesse e orçamento, e moveu Ana para Qualificado.' },
+  { col: 2, who: 'ia', text: 'A IA marcou a avaliação para quinta, 14h, e avisou a recepção.' },
+  { col: 3, who: 'time', text: 'Seu time assumiu com todo o histórico e fechou: R$ 2.400.' },
+];
+
+const connections = [
+  {
+    icon: QrCode,
+    brand: 'whatsapp',
+    badge: 'Comece hoje',
+    title: 'Pelo QR Code',
+    lead: 'Use o número que você já tem. Sem burocracia, conectado em um minuto.',
+    points: [
+      'Vários números numa tela só',
+      'Envio em ritmo humano e só em horário comercial',
+      'Aquecimento automático de números novos',
+    ],
+  },
+  {
+    icon: BadgeCheck,
+    brand: 'meta',
+    badge: 'Escale com segurança',
+    title: 'Pela API oficial da Meta',
+    lead: 'O canal oficial do WhatsApp, feito para volume e para quem não pode correr risco.',
+    points: [
+      'Disparos em escala sem risco de bloqueio',
+      'Mensagens modelo aprovadas e sincronizadas',
+      'Rastreio automático de quem vem dos anúncios',
+    ],
+  },
+];
+
+const comparison = [
+  { label: 'Responde o cliente na hora, 24h', crm: false, bot: 'Com menu de opções', mf: 'Conversando como gente' },
+  { label: 'Vai atrás de clientes novos', crm: false, bot: false, mf: true },
+  { label: 'Move o funil sozinho', crm: 'Manual', bot: false, mf: true },
+  { label: 'Retoma quem sumiu', crm: 'Se alguém lembrar', bot: false, mf: true },
+  { label: 'Passa para o vendedor na hora certa', crm: false, bot: 'Sem contexto', mf: 'Com todo o histórico' },
+  { label: 'Mostra qual anúncio vendeu', crm: false, bot: false, mf: true },
+];
+
+const features = [
+  { icon: MessagesSquare, brands: ['whatsapp', 'instagram', 'facebook'], title: 'Uma caixa de entrada', desc: 'WhatsApp, Instagram e Facebook numa tela só, com toda a equipe.' },
+  { icon: CalendarCheck, brands: ['googleCalendar'], title: 'Agenda', desc: 'Horários marcados pela IA e sincronizados com o Google Agenda, com aviso para o time e para o cliente.' },
+  { icon: FileText, title: 'Propostas', desc: 'Do orçamento ao aceite, com modelos prontos da sua empresa.' },
+  { icon: Megaphone, title: 'Campanhas', desc: 'Fale com uma lista de contatos no ritmo seguro do seu número.' },
+  { icon: Users, title: 'Equipe', desc: 'Distribuição automática de atendimento e permissões por função.' },
+  { icon: BookOpen, title: 'Conhecimento da IA', desc: 'Ensine seus serviços, preços e regras. Ela consulta antes de responder.' },
+  { icon: TrendingUp, brands: ['meta', 'googleAds'], title: 'Desempenho e metas', desc: 'Resultado do Meta Ads e do Google Ads, vendas por atendente e progresso da meta do mês.' },
+  { icon: Lock, title: 'Segurança e LGPD', desc: 'Dados protegidos, histórico de ações e pedidos de titulares.' },
+];
+
+const faqs = [
+  {
+    question: 'A IA vai falar besteira com meu cliente?',
+    answer: 'Ela responde com base no que você ensina: seus serviços, preços, horários e regras. Quando não sabe a resposta, ou quando o cliente pede para falar com uma pessoa, ela passa a conversa para o seu time com todo o histórico. Você acompanha tudo em tempo real e pode assumir a qualquer momento.',
+  },
+  {
+    question: 'Preciso trocar o meu número de WhatsApp?',
+    answer: 'Não. Pelo QR Code você conecta o número que já usa, em um minuto. Se preferir a API oficial da Meta, a gente acompanha a migração com você. Dá para começar de um jeito e mudar depois.',
+  },
+  {
+    question: 'Corro risco de ter o número bloqueado?',
+    answer: 'A API oficial da Meta é o caminho mais seguro, porque é o canal do próprio WhatsApp. Pelo QR Code, a Mindflow envia em ritmo humano, respeita o horário comercial e aquece números novos, o que reduz muito o risco, mas nenhuma conexão não oficial elimina 100%. Para disparos e prospecção em volume, recomendamos a API oficial.',
+  },
+  {
+    question: 'Como funciona a prospecção ativa?',
+    answer: 'Você informa o segmento e a cidade (por exemplo, “clínicas odontológicas em Belo Horizonte”) ou sobe a sua própria lista. A Mindflow encontra as empresas, a IA escreve uma abordagem personalizada para cada uma e você aprova antes de qualquer envio. Quem responde vira oportunidade no seu funil. Quem já é seu cliente nunca é abordado, e a origem de cada contato fica registrada.',
+  },
+  {
+    question: 'Serve para o meu negócio?',
+    answer: 'Se você vende pelo WhatsApp, serve. O funil se adapta ao seu vocabulário: o lead pode ser cliente, paciente, aluno ou comprador, e a venda pode ser “fechado”, “agendado” ou “pago”. Clínicas, imobiliárias, escritórios, lojas, prestadores de serviço e infoprodutores já vendem assim.',
+  },
+  {
+    question: 'Preciso entender de tecnologia para começar?',
+    answer: 'Não. Você não configura nada sozinho: a gente conecta o seu WhatsApp, ensina a IA sobre o seu negócio e monta o seu funil junto com você. Depois disso, é só acompanhar.',
+  },
+  {
+    question: 'Meus dados e os dos meus clientes ficam seguros?',
+    answer: 'Sim. Os dados da sua empresa ficam isolados, todo acesso exige login com verificação em duas etapas disponível, e cada ação fica registrada num histórico que não se apaga. A Mindflow também tem ferramentas prontas para atender pedidos de exportação e exclusão de dados previstos na LGPD.',
+  },
+];
+
+/* ──────────────────────────────────────────────────────────────
+   Peças reutilizáveis
+   ────────────────────────────────────────────────────────────── */
+
+const SectionBadge = ({ children, live = false }) => (
+  <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-6 backdrop-blur-md ${live ? 'border-blue-500/20 bg-blue-500/5' : 'border-white/10 bg-white/[0.03]'}`}>
+    {live && <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>}
+    <span className={`text-[11px] tracking-[0.3em] uppercase font-outfit font-medium ${live ? 'text-blue-300' : 'text-gray-400'}`}>{children}</span>
+  </div>
+);
+
+const PrimaryButton = ({ onClick, children, className = '' }) => (
+  <button
+    onClick={onClick}
+    className={`group relative px-8 md:px-10 py-4 md:py-5 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 cursor-pointer ${className}`}
+  >
+    <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-90 group-hover:opacity-100 transition-opacity"></div>
+    <div className="relative flex items-center gap-3">
+      <span className="text-white font-outfit font-semibold tracking-wider">{children}</span>
+      <ArrowRight className="w-5 h-5 text-white animate-bounce-x" />
+    </div>
+  </button>
+);
+
+const glassStyle = {
+  backdropFilter: 'blur(30px)',
+  WebkitBackdropFilter: 'blur(30px)',
+  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.05)',
+};
+
+const ComparisonCell = ({ value, highlight = false }) => {
+  if (value === true) {
+    return <Check className={`w-5 h-5 mx-auto ${highlight ? 'text-blue-400' : 'text-gray-400'}`} strokeWidth={2.5} />;
+  }
+  if (value === false) {
+    return <X className="w-4 h-4 mx-auto text-gray-600" strokeWidth={2.5} />;
+  }
+  return (
+    <span className={`block text-[10px] md:text-xs leading-snug ${highlight ? 'text-blue-300 font-medium' : 'text-gray-500'}`}>
+      {highlight && <Check className="w-4 h-4 mx-auto mb-1 text-blue-400" strokeWidth={2.5} />}
+      {value}
+    </span>
+  );
+};
+
+/* ──────────────────────────────────────────────────────────────
+   Página
+   ────────────────────────────────────────────────────────────── */
 
 const LandingPage = ({ onOpenModal }) => {
-  const navigate = useNavigate();
   const [isPreloaderVisible, setIsPreloaderVisible] = useState(true);
   const [isPreloaderFading, setIsPreloaderFading] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const videoRef = useRef(null);
-  const heroRef = useRef(null);
-  const timelineSteps = [
-    {
-      id: 'step1',
-      title: 'Estratégia',
-      subtitle: 'Diagnóstico',
-      description: 'A gente mergulha no seu negócio: oferta, público, ticket, diferenciais. Esse é o passo que decide se sua campanha vai gerar venda ou só clique.',
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-      )
-    },
-    {
-      id: 'step2',
-      title: 'Landing Page Premium',
-      subtitle: 'Construção',
-      description: 'Página feita do zero, com copy estratégica e design de alto padrão. Cada bloco, cor e botão é decidido com base em conversão. Nada de template.',
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      )
-    },
-    {
-      id: 'step3',
-      title: 'Tráfego Pago',
-      subtitle: 'Captura',
-      description: 'Campanhas no Meta Ads e Google Ads estruturadas com critério. Foco em lead qualificado, não em volume vazio — quem clica já tem perfil pra comprar.',
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        </svg>
-      )
-    },
-    {
-      id: 'step4',
-      title: 'Otimização Contínua',
-      subtitle: 'Escala',
-      description: 'Acompanhamento semanal, ajustes baseados em dados reais e refino do que está funcionando. A operação amadurece e o custo por venda cai mês a mês.',
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" transform="rotate(45 12 12)" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12a9 9 0 1018 0 9 9 0 00-18 0z" />
-        </svg>
-      )
-    }
-  ];
-
-  const timelineRef = useRef(null);
-  const dnaRef = useRef(null);
-  const clientsRef = useRef(null);
-  const faqRef = useRef(null);
-  const footerRef = useRef(null);
-  const portfolioRef = useRef(null);
-  const carouselRef = useRef(null);
   const [timelineProgress, setTimelineProgress] = useState(0);
   const [activeFaq, setActiveFaq] = useState(null);
-  const [carouselProgress, setCarouselProgress] = useState(0);
+  const [prospectStep, setProspectStep] = useState(0);
+  const [kanbanStep, setKanbanStep] = useState(0);
 
-  const faqs = [
-    {
-      question: "Por que vocês fazem só tráfego pago e landing page?",
-      answer: "Porque é onde está a maior alavancagem do marketing digital. Uma landing bem feita pode dobrar sua conversão sem aumentar um centavo de investimento. E tráfego mal estruturado queima orçamento mesmo com a melhor página do mundo. A gente faz os dois funcionarem juntos, com foco total — sem tentar resolver tudo e acabar entregando nada bem feito."
-    },
-    {
-      question: "Preciso contratar os dois serviços ou posso pegar separado?",
-      answer: "O ideal é contratar os dois — eles se potencializam. Mas atendemos cada um isoladamente também. Se você já tem uma landing que converte, fazemos só o tráfego. Se já tem campanhas rodando mas perde gente no site, fazemos só a landing premium."
-    },
-    {
-      question: "Em quanto tempo vejo resultado?",
-      answer: "A landing page premium fica pronta em 7 a 14 dias úteis. As campanhas de tráfego começam a gerar leads nas primeiras 48 horas após publicação. A operação amadurece e atinge o melhor desempenho entre 30 e 60 dias — quando temos dados suficientes pra otimizar com precisão."
-    },
-    {
-      question: "Qual o investimento?",
-      answer: "Depende do seu mercado, ticket e meta de crescimento. Trabalhamos com valor fixo de projeto + verba de mídia separada, sempre transparente. Em uma conversa de 15 minutos a gente entende seu cenário e te passa uma faixa realista. Sem compromisso."
-    },
-    {
-      question: "Vocês atendem qualquer tipo de empresa?",
-      answer: "Focamos em negócios que querem previsibilidade na aquisição de clientes: empresas de serviço, ticket médio/alto, B2B, operações locais que dependem de leads qualificados. Se você precisa de venda direta, com método e não na sorte, é com a gente."
-    }
-  ];
+  const videoRef = useRef(null);
+  const heroRef = useRef(null);
+  const timelineRef = useRef(null);
 
-  const testimonials = [
-    {
-      id: 1,
-      company: "Thees Engenharia",
-      letter: "T",
-      segment: "Engenharia Civil",
-      content: "A landing nova ficou muito mais clara, e o tráfego pago trouxe orçamentos qualificados desde o primeiro mês. Hoje nossa equipe comercial fala com gente que já chegou aquecida — não perdemos mais tempo com curioso.",
-      rating: 5,
-    },
-    {
-      id: 2,
-      company: "Depósito do Paulo",
-      letter: "D",
-      segment: "Materiais de Construção",
-      content: "A página antiga não convertia. A nova é simples, direta, e o pessoal deixa contato pra valer. Combinado com os anúncios bem feitos, o volume de orçamento novo subiu bastante nas primeiras semanas.",
-      rating: 5,
-    },
-    {
-      id: 3,
-      company: "Check Mkt",
-      letter: "C",
-      segment: "Marketing Digital",
-      content: "Como agência, a gente percebe quando uma campanha foi planejada com método. Custo por lead, criativos testados, página alinhada com o anúncio. Trabalho técnico do começo ao fim.",
-      rating: 5,
-    }
-  ];
+  // Demonstrações animadas (prospecção e funil) avançam sozinhas
+  useEffect(() => {
+    const p = setInterval(() => setProspectStep((s) => (s + 1) % prospectSteps.length), 3200);
+    const k = setInterval(() => setKanbanStep((s) => (s + 1) % kanbanEvents.length), 2600);
+    return () => { clearInterval(p); clearInterval(k); };
+  }, []);
 
-  const portfolioProjects = [
-    {
-      id: 1,
-      title: "CheckMkt",
-      domain: "checkmktus.com",
-      url: "https://www.checkmktus.com/",
-      category: "PERFORMANCE MARKETING FUNNEL",
-      description: "Funil de vendas avançado e tracking de conversão focado em captação acelerada de leads qualificados.",
-      logoText: "C",
-      logoImg: "/logos-clientes/check mkt.png",
-      mockup: {
-        bg: "bg-[#0b0e17]",
-        accent: "text-emerald-400 border-emerald-500/20",
-        headerBg: "bg-[#101524]",
-        previewElement: (
-          <img 
-            src="/images/checkmkt-landing.png" 
-            alt="CheckMkt US Landing Page" 
-            className="w-full h-full object-cover object-top" 
-          />
-        )
-      }
-    },
-    {
-      id: 2,
-      title: "Depósito do Paulo",
-      domain: "depositodopaulo.com.br",
-      url: "https://www.depositodopaulo.com.br/",
-      category: "CATÁLOGO WHATSAPP + LEADS",
-      description: "Transformação digital para loja física de materiais de construção. Landing page estruturada para captação ágil de orçamentos e conversão pelo WhatsApp.",
-      logoText: "DP",
-      logoImg: "/logos-clientes/Deposito do paulo.png",
-      mockup: {
-        bg: "bg-[#0a0705]",
-        accent: "text-amber-500 border-amber-500/20",
-        headerBg: "bg-[#18110b]",
-        previewElement: (
-          <img 
-            src="/images/depositodopaulo-landing.png" 
-            alt="Depósito do Paulo Landing Page" 
-            className="w-full h-full object-cover object-top" 
-          />
-        )
-      }
-    },
-    {
-      id: 3,
-      title: "MHL Integrada",
-      domain: "mhlintegrada.com.br",
-      url: "https://www.mhlintegrada.com.br/",
-      category: "LANDING PAGE DE CONSULTORIA",
-      description: "Landing page corporativa premium unindo engenharia e assessoria de riscos operacionais com visual altamente sóbrio e profissional.",
-      logoText: "MHL",
-      logoImg: null,
-      mockup: {
-        bg: "bg-[#050e18]",
-        accent: "text-blue-400 border-blue-500/20",
-        headerBg: "bg-[#0a1525]",
-        previewElement: (
-          <img 
-            src="/images/mhl-landing.png" 
-            alt="MHL Integrada Landing Page" 
-            className="w-full h-full object-cover object-top" 
-          />
-        )
-      }
-    },
-    {
-      id: 4,
-      title: "STI Eng",
-      domain: "stieng.com.br",
-      url: "https://www.stieng.com.br/",
-      category: "PORTAL CORPORATIVO INDUSTRIAL",
-      description: "Plataforma premium para engenharia e automação mecânica de grande porte, transmitindo robustez e profissionalismo.",
-      logoText: "S",
-      logoImg: "/logos-clientes/sti.png",
-      mockup: {
-        bg: "bg-[#0b0e17]",
-        accent: "text-emerald-400 border-emerald-500/20",
-        headerBg: "bg-[#101524]",
-        previewElement: (
-          <img 
-            src="/images/sti-landing.png" 
-            alt="STI Engenharia Landing Page" 
-            className="w-full h-full object-cover object-top" 
-          />
-        )
-      }
-    },
-    {
-      id: 5,
-      title: "CoreAuto",
-      domain: "coreauto-six.vercel.app",
-      url: "https://coreauto-six.vercel.app/",
-      category: "CATÁLOGO DE PEÇAS + LEAD FUNNEL",
-      description: "Landing page e catálogo inteligente focado em cotações rápidas e vendas de peças automotivas exclusivas para veículos Hyundai & Kia.",
-      logoText: "CA",
-      logoImg: null,
-      mockup: {
-        bg: "bg-[#080d15]",
-        accent: "text-blue-400 border-blue-500/20",
-        headerBg: "bg-[#101925]",
-        previewElement: (
-          <img 
-            src="/images/coreauto-landing.png" 
-            alt="CoreAuto Landing Page" 
-            className="w-full h-full object-cover object-top" 
-          />
-        )
-      }
-    },
-    {
-      id: 6,
-      title: "Thees Engenharia",
-      domain: "theesengenharia.com.br",
-      url: "https://www.theesengenharia.com.br/",
-      category: "SITE INSTITUCIONAL DE ENGENHARIA",
-      description: "Portal premium e de engenharia civil de alto padrão, focado em engenharia de precisão e modelagem BIM 3D com design sofisticado.",
-      logoText: "T",
-      logoImg: "/logos-clientes/thees.png",
-      mockup: {
-        bg: "bg-[#0b0e17]",
-        accent: "text-amber-400 border-amber-500/20",
-        headerBg: "bg-[#101524]",
-        previewElement: (
-          <img 
-            src="/images/thees-landing.png" 
-            alt="Thees Engenharia Landing Page" 
-            className="w-full h-full object-cover object-top" 
-          />
-        )
-      }
-    },
-    {
-      id: 7,
-      title: "BFS Advogados",
-      domain: "bfsadvogados.com.br",
-      url: "https://www.bfsadvogados.com.br/",
-      category: "LANDING PAGE ADVOCACIA",
-      description: "Estrutura sóbria e corporativa para escritório de advocacia empresarial. Foco em autoridade e captação de clientes B2B.",
-      logoText: "BFS",
-      logoImg: null,
-      mockup: {
-        bg: "bg-[#050715]",
-        accent: "text-amber-500 border-amber-500/20",
-        headerBg: "bg-[#0b0e25]",
-        previewElement: (
-          <img 
-            src="/images/bfs-landing.png" 
-            alt="BFS Advogados Landing Page" 
-            className="w-full h-full object-cover object-top" 
-          />
-        )
-      }
-    }
-  ];
-
-  const handleCarouselScroll = () => {
-    if (carouselRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-      const totalScroll = scrollWidth - clientWidth;
-      const progress = totalScroll > 0 ? (scrollLeft / totalScroll) * 100 : 0;
-      setCarouselProgress(progress);
-    }
-  };
-
-  const scrollCarousel = (direction) => {
-    if (carouselRef.current) {
-      const { scrollLeft, clientWidth } = carouselRef.current;
-      const scrollAmount = clientWidth * 0.75;
-      const newScrollLeft = direction === 'next' ? scrollLeft + scrollAmount : scrollLeft - scrollAmount;
-      carouselRef.current.scrollTo({
-        left: newScrollLeft,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  // Scroll logic for Timeline and Parallax
+  // Parallax do hero + progresso da timeline
   useEffect(() => {
     let ticking = false;
     const runScroll = () => {
       const scrollY = window.scrollY;
-
-      // Hero parallax — only the hero uses inline opacity/transform because
-      // it doesn't contain backdrop-filter children. Other sections rely on
-      // the top fade overlay to create the "content fading near top" visual,
-      // which preserves the glass texture of all cards.
       const heroOpacity = Math.max(0, 1 - scrollY / 350);
       if (heroRef.current) {
         heroRef.current.style.opacity = heroOpacity;
@@ -316,13 +251,11 @@ const LandingPage = ({ onOpenModal }) => {
         const windowHeight = window.innerHeight;
         const startTrigger = windowHeight * 0.8;
         const endTrigger = windowHeight * 0.2;
-
         const totalDist = rect.height;
         const currentPos = startTrigger - rect.top;
         const progress = Math.max(0, Math.min(1, currentPos / (totalDist - (startTrigger - endTrigger))));
         setTimelineProgress(progress);
       }
-
       ticking = false;
     };
 
@@ -336,7 +269,7 @@ const LandingPage = ({ onOpenModal }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Preloader and reveal logic
+  // Preloader e revelação ao rolar
   useEffect(() => {
     const hidePreloader = () => {
       setIsPreloaderFading(true);
@@ -381,13 +314,14 @@ const LandingPage = ({ onOpenModal }) => {
     document.body.style.overflow = '';
   };
 
+  const navLinkClass = "hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300";
+  const currentKanban = kanbanEvents[kanbanStep];
+
   return (
     <div className="w-full relative min-h-screen">
       {/* Preloader */}
       {isPreloaderVisible && (
-        <div
-          className={`fixed inset-0 z-[100] bg-[#02040a] flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out ${isPreloaderFading ? 'opacity-0' : 'opacity-100'}`}
-        >
+        <div className={`fixed inset-0 z-[100] bg-[#02040a] flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out ${isPreloaderFading ? 'opacity-0' : 'opacity-100'}`}>
           <img src="/logo-mindflow.png" alt="Mindflow" className="h-16 md:h-20 mb-8 animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite] drop-shadow-[0_0_25px_rgba(59,130,246,0.5)]" />
           <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden relative">
             <div className="absolute top-0 left-0 h-full bg-blue-500 rounded-full w-1/2 shadow-[0_0_10px_rgba(59,130,246,0.8)]" style={{ animation: 'loading-bar 1.5s ease-in-out infinite' }}></div>
@@ -395,19 +329,12 @@ const LandingPage = ({ onOpenModal }) => {
         </div>
       )}
 
-      {/* Video Background */}
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-40"
-      >
+      {/* Vídeo de fundo (desktop) */}
+      <video ref={videoRef} autoPlay loop muted playsInline className="hidden md:block fixed inset-0 w-full h-full object-cover z-0 opacity-40">
         <source src="/background.mp4" type="video/mp4" />
       </video>
 
-      {/* Mobile Animated Background */}
+      {/* Fundo animado (mobile) */}
       <div className="md:hidden fixed inset-0 z-0 w-full h-full bg-black overflow-hidden pointer-events-none">
         <div className="absolute top-0 bottom-0" style={{ left: '75vw', width: '60vw', background: 'linear-gradient(160deg, #000844 0%, #000011 50%, #000000 100%)', backgroundSize: '200% 200%', zIndex: 1, animation: 'nexus-right 12s ease-in-out infinite' }}></div>
         <div className="absolute top-0 bottom-0" style={{ left: '15vw', width: '60vw', background: 'linear-gradient(160deg, #001a99 0%, #00001a 50%, #000000 100%)', backgroundSize: '200% 200%', borderRight: '1px solid rgba(255,255,255,0.05)', zIndex: 2, animation: 'nexus-mid 10s ease-in-out infinite 1s' }}></div>
@@ -415,30 +342,28 @@ const LandingPage = ({ onOpenModal }) => {
         <div className="absolute inset-0 z-10 opacity-[0.06] pointer-events-none mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}></div>
       </div>
 
-      {/* Background Glows */}
+      {/* Brilhos de fundo */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="animate-glow-outer absolute bottom-[-10%] left-1/2 w-[150%] md:w-[80%] h-[60%] md:h-[50%]" style={{ background: 'radial-gradient(ellipse at center, rgba(29, 78, 216, 0.25) 0%, rgba(0, 0, 0, 0) 70%)' }}></div>
         <div className="animate-glow-inner absolute bottom-[-5%] left-1/2 w-[120%] md:w-[60%] h-[40%] md:h-[30%]" style={{ background: 'radial-gradient(ellipse at center, rgba(59, 130, 246, 0.35) 0%, rgba(0, 0, 0, 0) 60%)' }}></div>
       </div>
 
-      {/* Floating Glass Navbar */}
+      {/* Navbar */}
       <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-6xl px-6 py-4 rounded-full bg-[#080b14]/25 backdrop-blur-2xl border border-white/15 shadow-[0_20px_40px_rgba(0,0,0,0.4)] flex items-center justify-between transition-all duration-500 hover:bg-[#0a0f1c]/40 hover:border-white/25">
         <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-3 group cursor-pointer">
-          <img src="/logo-mindflow.png" alt="Mindflow Logo" className="h-8 md:h-10 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.2)] group-hover:drop-shadow-[0_0_25px_rgba(59,130,246,0.5)] group-hover:scale-105 transition-all duration-300" />
+          <img src="/logo-mindflow.png" alt="Mindflow" className="h-8 md:h-10 object-contain drop-shadow-[0_0_15px_rgba(59,130,246,0.2)] group-hover:drop-shadow-[0_0_25px_rgba(59,130,246,0.5)] group-hover:scale-105 transition-all duration-300" />
         </div>
         <div className="hidden lg:flex items-center space-x-10 text-sm font-outfit font-medium text-gray-300">
-          <a href="#experience" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">A Jornada</a>
-          <a href="#about" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300"> DNA</a>
-          <a href="#portfolio" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">Portfólio</a>
-          <a href="#clients" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">Nossos Clientes</a>
-          <a href="#faq" className="hover:text-white hover:drop-shadow-[0_0_10px_white] transition-all duration-300 relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-blue-400 hover:after:w-full after:transition-all after:duration-300">Dúvidas</a>
+          {navLinks.map((l) => (
+            <a key={l.href} href={l.href} className={navLinkClass}>{l.label}</a>
+          ))}
         </div>
         <div className="hidden md:flex items-center">
           <button onClick={onOpenModal} className="bg-white/10 text-white border border-white/20 px-6 py-2.5 rounded-full font-outfit font-semibold hover:bg-white hover:text-black transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transform hover:-translate-y-0.5 cursor-pointer">
-            Falar com a Agência
+            Quero a Mindflow
           </button>
         </div>
-        <button onClick={toggleMobileMenu} className="lg:hidden text-white p-2 relative z-50 cursor-pointer" aria-label="Open menu">
+        <button onClick={toggleMobileMenu} className="lg:hidden text-white p-2 relative z-50 cursor-pointer" aria-label="Abrir menu">
           <svg className={`w-6 h-6 transition-all duration-300 ${isMobileMenuOpen ? 'hidden' : 'block'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
@@ -448,422 +373,477 @@ const LandingPage = ({ onOpenModal }) => {
         </button>
       </nav>
 
-      {/* Top fade overlay — creates the visual of content fading as it
-          approaches the top of the page. Sits behind the navbar (z-40 vs
-          navbar z-50) and lets backdrop-filter cards keep their glass since
-          we no longer need parent-opacity fades. */}
-      <div
-        aria-hidden="true"
-        className="fixed top-0 left-0 right-0 h-52 pointer-events-none z-40"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(2, 4, 10, 1) 0%, rgba(2, 4, 10, 1) 40%, rgba(2, 4, 10, 0) 100%)'
-        }}
-      />
+      {/* Fade do topo (atrás da navbar) */}
+      <div aria-hidden="true" className="fixed top-0 left-0 right-0 h-52 pointer-events-none z-40" style={{ background: 'linear-gradient(to bottom, rgba(2, 4, 10, 1) 0%, rgba(2, 4, 10, 1) 40%, rgba(2, 4, 10, 0) 100%)' }} />
 
-      {/* Mobile Menu Overlay */}
+      {/* Menu mobile */}
       <div className={`fixed inset-0 z-40 bg-[#020409]/95 backdrop-blur-2xl flex flex-col items-center justify-center gap-8 transition-all duration-500 ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}>
-        <a href="#experience" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">A Jornada</a>
-        <a href="#about" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Sobre</a>
-        <a href="#portfolio" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Portfólio</a>
-        <a href="#clients" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Nossos Clientes</a>
-        <a href="#faq" onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">Dúvidas</a>
+        {navLinks.map((l) => (
+          <a key={l.href} href={l.href} onClick={closeMobileMenu} className="text-3xl font-outfit font-light text-gray-200 hover:text-white transition-all duration-300 hover:tracking-wider">{l.label}</a>
+        ))}
         <div className="mt-6">
           <button onClick={() => { closeMobileMenu(); onOpenModal(); }} className="bg-white text-black px-8 py-3.5 rounded-full font-outfit font-semibold text-lg hover:bg-gray-200 transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.15)] cursor-pointer">
-            Falar com a Agência
+            Quero a Mindflow
           </button>
         </div>
       </div>
 
-      {/* Hero Content */}
+      {/* ── Hero ── */}
       <main ref={heroRef} className="relative z-10 flex flex-col items-center justify-center text-center px-4 w-full min-h-[100dvh] pt-32 md:pt-40 pb-32 md:pb-44 transition-transform duration-100 ease-out">
+        <div className="animate-on-scroll">
+          <SectionBadge live>Máquina de vendas com IA no WhatsApp</SectionBadge>
+        </div>
         <h1 className="animate-on-scroll font-outfit text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] leading-[1.1] tracking-tight md:tracking-[-0.03em] font-light mb-6 md:mb-8 [text-shadow:0_4px_30px_rgba(0,0,0,0.8)]">
-          <span className="block text-white">Tráfego que atrai.</span>
-          <span className="block text-gray-200">Landing que vende.</span>
-          <span className="block text-gray-400">Resultado que escala.</span>
+          <span className="block text-white">Encontra o cliente.</span>
+          <span className="block text-gray-200">Atende na hora.</span>
+          <span className="block text-gray-400">Conduz até a venda.</span>
         </h1>
-        <p className="animate-on-scroll text-gray-300 text-base md:text-lg max-w-[500px] md:max-w-[600px] mx-auto leading-relaxed font-light [text-shadow:0_2px_15px_rgba(0,0,0,1)]" style={{ transitionDelay: '100ms' }}>
-          Especialistas em <span className="text-white">tráfego pago</span> e <span className="text-white">landing pages premium</span>. Duas frentes, um único objetivo: levar o cliente certo até você e fazer ele comprar.
+        <p className="animate-on-scroll text-gray-300 text-base md:text-lg max-w-[500px] md:max-w-[640px] mx-auto leading-relaxed font-light mb-10 [text-shadow:0_2px_15px_rgba(0,0,0,1)]" style={{ transitionDelay: '100ms' }}>
+          A <span className="text-white">Mindflow</span> vai atrás de clientes novos, responde cada um em segundos e leva cada negociação até o fechamento. <span className="text-white">Sozinha, 24 horas por dia.</span>
         </p>
-        <button onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })} className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70 hover:opacity-100 transition-all duration-300 group cursor-pointer animate-on-scroll hover:scale-110" style={{ transitionDelay: '400ms' }}>
-          <span className="text-[11px] uppercase tracking-[0.25em] text-gray-300 font-outfit font-medium group-hover:text-white transition-colors">Descubra</span>
-          <div className="flex flex-col items-center animate-bounce mt-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" className="w-6 h-6 text-blue-500/50 -mb-3 group-hover:text-blue-400 transition-colors">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="currentColor" className="w-6 h-6 text-blue-500 group-hover:text-blue-400 transition-colors drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]">
-              <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-            </svg>
-          </div>
-        </button>
+        <div className="animate-on-scroll flex flex-col sm:flex-row items-center gap-4" style={{ transitionDelay: '200ms' }}>
+          <PrimaryButton onClick={onOpenModal}>QUERO A MINDFLOW</PrimaryButton>
+          <button onClick={() => document.getElementById('jornada')?.scrollIntoView({ behavior: 'smooth' })} className="px-8 py-4 md:py-5 rounded-full border border-white/20 bg-white/[0.04] backdrop-blur-md text-white font-outfit font-medium hover:bg-white/10 hover:border-white/40 transition-all duration-300 cursor-pointer">
+            Ver como funciona
+          </button>
+        </div>
+        <div className="animate-on-scroll mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-gray-400 font-outfit" style={{ transitionDelay: '300ms' }}>
+          <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-blue-400" /> API oficial ou QR Code</span>
+          <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-blue-400" /> Instagram e Facebook juntos</span>
+          <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-blue-400" /> Implantação com a nossa equipe</span>
+        </div>
       </main>
 
-      {/* Client logos marquee — between hero and timeline */}
-      <section className="relative z-10 w-full py-10 md:py-14 border-y border-white/5 bg-[#02040a]/60 overflow-hidden">
-        <div className="text-center mb-8 md:mb-10">
-          <span className="text-[10px] tracking-[0.4em] uppercase text-gray-500 font-outfit font-medium">
-            Marcas que confiam na MindFlow
-          </span>
+      {/* ── Integrações ── */}
+      <section className="relative z-10 w-full px-4 md:px-8 py-10 md:py-14 border-t border-white/5 bg-[#02040a]/60">
+        <div className="text-center mb-7 md:mb-9">
+          <span className="text-[10px] tracking-[0.4em] uppercase text-gray-500 font-outfit font-medium">Conectada às ferramentas que você já usa</span>
         </div>
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-x-8 gap-y-5 md:gap-x-10">
+          {integrations.map((name) => (
+            <div key={name} className="flex items-center gap-2.5">
+              <BrandLogo name={name} className="w-8 h-8 md:w-9 md:h-9" rounded="rounded-lg" />
+              <span className="font-outfit text-sm md:text-base text-gray-300 whitespace-nowrap">{BRANDS[name].label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        <div
-          className="relative"
-          style={{
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
-            maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)',
-          }}
-        >
-          <div className="flex w-max items-center gap-14 md:gap-24 animate-marquee">
-            {(() => {
-              const logos = [
-                { name: 'Thees Engenharia', cls: 'font-medium tracking-tight' },
-                { name: 'STI Engenharia', cls: 'font-bold uppercase tracking-[0.15em] text-base md:text-lg' },
-                { name: 'Trans Obra', cls: 'font-semibold italic tracking-tight' },
-                { name: 'DVE Marketing', cls: 'font-light uppercase tracking-[0.25em] text-base md:text-lg' },
-                { name: 'Check Mkt', cls: 'font-medium italic tracking-tight' },
-                { name: 'Depósito do Paulo', cls: 'font-light tracking-tight' },
-              ];
-              return [...logos, ...logos].map((logo, i) => (
-                <span
-                  key={i}
-                  className={`text-xl md:text-2xl font-outfit text-white/35 hover:text-white/90 transition-colors duration-300 whitespace-nowrap ${logo.cls}`}
-                >
-                  {logo.name}
-                </span>
-              ));
-            })()}
+      {/* ── Dores ── */}
+      <section id="dores" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 border-y border-white/5 bg-[#02040a]/60">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14 md:mb-20 animate-on-scroll">
+            <SectionBadge>Soa familiar?</SectionBadge>
+            <h2 className="font-outfit text-4xl md:text-6xl font-light text-white tracking-tight leading-tight">
+              A venda não se perde no preço.<br className="hidden md:block" /> Ela se perde <span className="font-medium text-blue-400">no silêncio</span>.
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {pains.map(({ icon: Icon, text }, i) => (
+              <div key={i} className="animate-on-scroll p-6 md:p-7 rounded-[2rem] bg-white/[0.03] border border-white/10" style={{ ...glassStyle, transitionDelay: `${i * 80}ms` }}>
+                <Icon className="w-6 h-6 text-gray-500 mb-5" strokeWidth={1.75} />
+                <p className="text-gray-200 font-light text-base md:text-lg leading-relaxed">{text}</p>
+              </div>
+            ))}
+            <div className="animate-on-scroll p-6 md:p-7 rounded-[2rem] border border-blue-500/30 bg-gradient-to-br from-blue-600/20 to-purple-600/20 flex flex-col justify-between" style={{ ...glassStyle, transitionDelay: '400ms' }}>
+              <Sparkles className="w-6 h-6 text-blue-300 mb-5" strokeWidth={1.75} />
+              <div>
+                <p className="text-white font-outfit text-xl md:text-2xl font-light leading-snug mb-4">A Mindflow resolve <span className="font-medium">as cinco</span>.</p>
+                <a href="#jornada" className="inline-flex items-center gap-2 text-sm text-blue-300 hover:text-white transition-colors font-outfit font-medium">
+                  Veja como <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section ref={timelineRef} id="experience" className="relative z-10 w-full px-4 md:px-8 pt-32 md:pt-48 pb-16 md:pb-24 flex flex-col items-center overflow-hidden">
-        {/* Decorative background glows */}
+      {/* ── Jornada (timeline) ── */}
+      <section ref={timelineRef} id="jornada" className="relative z-10 w-full px-4 md:px-8 pt-32 md:pt-48 pb-16 md:pb-24 flex flex-col items-center overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-blue-600/5 rounded-full blur-[160px] pointer-events-none z-0"></div>
 
-        {/* Section Header */}
         <div className="relative z-10 max-w-4xl mx-auto w-full mb-24 md:mb-32 text-center animate-on-scroll">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
-            <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Nosso Método</span>
-          </div>
+          <SectionBadge>Como funciona</SectionBadge>
           <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-8 tracking-tight leading-tight">
-            Do clique à <span className="font-medium text-blue-400">venda</span>, sem ruído
+            Do primeiro contato à <span className="font-medium text-blue-400">venda fechada</span>
           </h2>
           <p className="text-gray-400 text-base md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-            Um processo enxuto, focado nos dois pilares que mais movem o ponteiro: tráfego pago bem estruturado e uma landing page que dá orgulho de mostrar.
+            A maioria das ferramentas só responde quem chega. A Mindflow cuida da venda inteira: gera a demanda, converte e mostra o resultado.
           </p>
         </div>
 
-        {/* Timeline Container */}
         <div className="relative z-10 max-w-5xl mx-auto w-full px-4">
-
-          {/* Central Animated Line - Responsive position */}
           <div className="absolute left-8 md:left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px] bg-white/5 overflow-hidden">
-            <div
-              className="absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent transition-all duration-300 ease-out"
-              style={{ height: `${timelineProgress * 100}%` }}
-            >
-              {/* Animated Glow at the tip of the line */}
+            <div className="absolute top-0 left-0 w-full bg-gradient-to-b from-blue-500 via-purple-500 to-transparent transition-all duration-300 ease-out" style={{ height: `${timelineProgress * 100}%` }}>
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-blue-400 rounded-full blur-md animate-pulse"></div>
             </div>
           </div>
 
-          {/* Timeline Steps */}
           <div className="space-y-32 md:space-y-64 relative">
             {timelineSteps.map((step, index) => {
               const isEven = index % 2 === 0;
-              const stepProgressThreshold = (index + 0.5) / timelineSteps.length;
-              const isActive = timelineProgress >= stepProgressThreshold;
+              const isActive = timelineProgress >= (index + 0.5) / timelineSteps.length;
+              const Icon = step.icon;
 
               return (
                 <div key={step.id} className="relative flex items-start md:items-center justify-start md:justify-center w-full">
-
-                  {/* Central Node - Responsive position */}
                   <div className="absolute left-8 md:left-1/2 -translate-x-1/2 z-30 mt-8 md:mt-0">
                     <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-700 ${isActive ? 'bg-blue-600 scale-110 shadow-[0_0_30px_rgba(59,130,246,0.6)]' : 'bg-[#080b14] border border-white/20'}`}>
-                      <div className={`text-white transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-40'}`}>
-                        {step.icon}
-                      </div>
+                      <Icon className={`w-6 h-6 text-white transition-opacity duration-500 ${isActive ? 'opacity-100' : 'opacity-40'}`} strokeWidth={2} />
                     </div>
                   </div>
 
-                  {/* Content Card - Responsive Alignment */}
                   <div className={`w-full md:w-[45%] ${isEven ? 'md:mr-auto md:pr-12 md:text-right' : 'md:ml-auto md:pl-12 md:text-left'} pl-20 md:pl-0`}>
-                    <div
-                      className={`group relative p-6 md:p-8 rounded-[2rem] bg-white/[0.02] border transition-all duration-1000 transform animate-on-scroll ${isActive
-                        ? 'border-white/20 opacity-100 translate-y-0 scale-100 backdrop-blur-xl'
-                        : 'border-white/5 opacity-40 translate-y-12 scale-95 pointer-events-none'
-                        }`}
-                    >
-                      {/* Subtle card glow */}
+                    <div className={`group relative p-6 md:p-8 rounded-[2rem] bg-white/[0.02] border transition-all duration-1000 transform animate-on-scroll ${isActive ? 'border-white/20 opacity-100 translate-y-0 scale-100 backdrop-blur-xl' : 'border-white/5 opacity-40 translate-y-12 scale-95 pointer-events-none'}`}>
                       <div className={`absolute -inset-1 rounded-[2rem] bg-gradient-to-br from-blue-500/10 to-purple-500/10 blur-xl opacity-0 transition-opacity duration-700 ${isActive ? 'group-hover:opacity-100' : ''}`}></div>
-
                       <div className="relative z-10">
                         <span className={`text-[10px] tracking-[0.4em] uppercase font-bold mb-2 block ${isActive ? 'text-blue-400' : 'text-gray-500'}`}>
                           0{index + 1} | {step.subtitle}
                         </span>
-                        <h3 className="text-xl md:text-3xl font-outfit text-white mb-3 md:mb-4 font-light tracking-tight">
-                          {step.title}
-                        </h3>
-                        <p className="text-gray-400 text-xs md:text-base leading-relaxed font-light">
-                          {step.description}
-                        </p>
+                        <h3 className="text-xl md:text-3xl font-outfit text-white mb-3 md:mb-4 font-light tracking-tight">{step.title}</h3>
+                        <p className="text-gray-400 text-xs md:text-base leading-relaxed font-light">{step.description}</p>
+                        <div className={`mt-5 flex items-center gap-2.5 ${isEven ? 'md:justify-end' : ''}`}>
+                          <span className="text-[10px] uppercase tracking-[0.2em] text-gray-500 font-outfit">Com</span>
+                          {step.brands.map((b) => <BrandLogo key={b} name={b} className="w-7 h-7" />)}
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Desktop Connecting Line Decoration */}
                   <div className={`hidden md:block absolute top-1/2 w-16 h-[1px] bg-gradient-to-r from-white/20 to-transparent ${isEven ? 'right-[50%] mr-6' : 'left-[50%] ml-6'} ${isActive ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}></div>
                 </div>
               );
             })}
           </div>
         </div>
-
-        {/* Final CTA in Timeline */}
-        <div className="relative z-10 mt-20 md:mt-32 animate-on-scroll text-center">
-          <button
-            onClick={onOpenModal}
-            className="group relative px-10 py-5 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 opacity-90 group-hover:opacity-100 transition-opacity"></div>
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay"></div>
-            <div className="relative flex items-center gap-3">
-              <span className="text-white font-outfit font-semibold tracking-wider">INICIAR MINHA JORNADA</span>
-              <svg className="w-5 h-5 text-white animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </div>
-          </button>
-        </div>
       </section>
 
-      {/* Liquid Glass Agency Introduction Section */}
-      <section ref={dnaRef} id="about" className="relative z-10 w-full px-4 md:px-8 flex flex-col items-center justify-center overflow-hidden min-h-[100dvh]">
-        {/* Background Liquid Elements - Enhanced for better glass visibility */}
+      {/* ── Prospecção ativa ── */}
+      <section id="prospeccao" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-36 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none z-0">
-          <div className="animate-liquid absolute top-[0%] left-[10%] w-[60vw] h-[60vw] bg-blue-600/20 blur-[120px] opacity-40"></div>
-          <div className="animate-liquid absolute bottom-[0%] right-[10%] w-[50vw] h-[50vw] bg-purple-600/15 blur-[120px] opacity-30" style={{ animationDirection: 'reverse', animationDuration: '30s' }}></div>
-          <div className="absolute top-[20%] right-[15%] w-[30vw] h-[30vw] bg-indigo-500/10 blur-[100px] rounded-full"></div>
+          <div className="animate-liquid absolute top-[10%] left-[5%] w-[50vw] h-[50vw] bg-blue-600/15 blur-[120px] opacity-40"></div>
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto w-full">
-          <div className="flex flex-col items-center text-center">
-
-            {/* Content Side */}
-            <div className="animate-on-scroll">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/5 mb-6 backdrop-blur-md">
-                <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></div>
-                <span className="text-[11px] tracking-[0.3em] uppercase text-blue-300 font-outfit font-medium text-shadow-sm">Sobre a Mindflow</span>
-              </div>
-
-              <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-5 tracking-tight leading-[1.05]">
-                Dois serviços. <br />
-                <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 bg-[length:200%_auto] animate-[sheen_8s_linear_infinite]">Zero distração.</span>
-              </h2>
-
-              <p className="text-gray-300 text-base md:text-lg font-light leading-relaxed mb-8 max-w-2xl mx-auto">
-                A gente não tenta fazer tudo. Faz <span className="text-white font-medium">duas coisas, muito bem feitas</span>: tráfego pago que traz lead qualificado, e landing page premium que converte. Quem precisa de "tudo e mais um pouco" contrata 5 fornecedores. Quem precisa <span className="text-white font-medium">vender mais agora</span>, contrata a gente.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
-                {[
-                  { title: "Foco Absoluto", desc: "Não dispersamos esforço. Tráfego e landing trabalham juntos, planejados pelo mesmo time com a mesma estratégia." },
-                  { title: "Padrão Premium", desc: "Cada landing é feita do zero, cada campanha é estruturada com critério. Nada de template, nada de fórmula pronta." }
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className="group p-5 rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-blue-500/40 hover:bg-white/[0.06] transition-all duration-500 shadow-2xl hover:-translate-y-2 text-left relative overflow-hidden"
-                    style={{
-                      backdropFilter: 'blur(30px)',
-                      WebkitBackdropFilter: 'blur(30px)',
-                      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.05)'
-                    }}
-                  >
-                    {/* Glass highlight effect */}
-                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                    <h4 className="text-white font-outfit font-medium text-lg mb-2 group-hover:text-blue-400 transition-colors relative z-10">{item.title}</h4>
-                    <p className="text-gray-400 font-light text-sm leading-relaxed relative z-10">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Portfolio Section */}
-      <section ref={portfolioRef} id="portfolio" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 flex flex-col items-center overflow-hidden">
-        {/* Decorative background glows */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-blue-600/5 rounded-full blur-[160px] pointer-events-none z-0"></div>
-
-        {/* Section Header */}
-        <div className="relative z-10 max-w-4xl mx-auto w-full mb-16 md:mb-20 text-center animate-on-scroll">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
-            <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Nosso Portfólio</span>
-          </div>
-          <h2 className="font-outfit text-4xl md:text-5xl font-light text-white mb-6 tracking-tight leading-tight">
-            Experiências digitais que <span className="font-medium text-blue-400">geram lucro</span>
-          </h2>
-          <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto font-light leading-relaxed">
-            Desenvolvemos landing pages premium e estruturas de alta performance projetadas especificamente para reter atenção, transmitir autoridade e converter cliques em vendas reais.
-          </p>
-        </div>
-
-        {/* Carousel Outer Frame */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8">
-          {/* Controls Header (Arrow controllers for desktop) */}
-          <div className="flex justify-end gap-3 mb-6">
-            <button
-              onClick={() => scrollCarousel('prev')}
-              className="w-12 h-12 rounded-full bg-[#080b14]/40 hover:bg-[#0c0f1d]/85 backdrop-blur-md border border-white/10 hover:border-white/20 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 transform active:scale-95 cursor-pointer shadow-lg hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] animate-on-scroll"
-              aria-label="Anterior"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"/></svg>
-            </button>
-            <button
-              onClick={() => scrollCarousel('next')}
-              className="w-12 h-12 rounded-full bg-[#080b14]/40 hover:bg-[#0c0f1d]/85 backdrop-blur-md border border-white/10 hover:border-white/20 flex items-center justify-center text-gray-400 hover:text-white transition-all duration-300 transform active:scale-95 cursor-pointer shadow-lg hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] animate-on-scroll"
-              aria-label="Próximo"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-
-          {/* Carousel Slider Container */}
-          <div
-            ref={carouselRef}
-            onScroll={handleCarouselScroll}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth select-none pb-8 pt-4 no-scrollbar -mx-4 px-4 md:-mx-8 md:px-8"
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-            }}
-          >
-            {portfolioProjects.map((project) => (
-              <a
-                key={project.id}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-w-[290px] sm:min-w-[360px] md:min-w-[400px] max-w-[400px] snap-start snap-always animate-on-scroll block cursor-pointer group"
-              >
-                <div
-                  className="relative p-5 rounded-[2.5rem] bg-[#080b14]/30 backdrop-blur-3xl border border-white/10 hover:border-blue-500/30 hover:bg-[#0a0f1d]/40 transition-all duration-500 h-full flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:shadow-[0_25px_60px_rgba(59,130,246,0.08)] hover:-translate-y-1.5"
-                  style={{
-                    boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.05)'
-                  }}
-                >
-                  {/* Subtle top light inside the card */}
-                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none"></div>
-
-                  {/* Browser Mockup Header */}
-                  <div className="w-full rounded-2xl overflow-hidden mb-5 aspect-[16/10] relative shadow-2xl border border-white/10 flex flex-col bg-[#0b0e17]">
-                    {/* Browser Address Bar */}
-                    <div className="w-full h-7 px-4 flex items-center gap-1.5 border-b border-white/5" style={{ backgroundColor: project.mockup.headerBg }}>
-                      <div className="w-2 h-2 rounded-full bg-red-500/80"></div>
-                      <div className="w-2 h-2 rounded-full bg-yellow-500/80"></div>
-                      <div className="w-2 h-2 rounded-full bg-green-500/80"></div>
-                      <div className="h-4 flex-1 max-w-[200px] mx-auto rounded-full bg-white/5 border border-white/5 flex items-center justify-center px-3 gap-1">
-                        <svg className="w-1.5 h-1.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-                        <span className="text-[7px] text-gray-400/80 truncate font-light tracking-wide">{project.domain || `${project.title.toLowerCase().replace(/\s+/g, '')}.com.br`}</span>
-                      </div>
-                    </div>
-                    {/* Browser Viewport */}
-                    <div className={`flex-1 w-full overflow-hidden relative ${project.mockup.bg} transition-all duration-750 group-hover:scale-[1.03]`}>
-                      {project.mockup.previewElement}
-                    </div>
-                  </div>
-
-                  {/* Card Body */}
-                  <div className="flex-grow flex flex-col justify-between pt-2">
-                    <div>
-                      {/* Brand Info & Tag */}
-                      <div className="mb-3">
-                        <span className={`text-[9px] tracking-[0.25em] uppercase font-bold px-2.5 py-1 rounded-full bg-white/[0.03] border ${project.mockup.accent}`}>
-                          {project.category}
-                        </span>
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="text-xl font-outfit font-medium text-white mb-2 tracking-tight group-hover:text-blue-400 transition-colors">
-                        {project.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p className="text-gray-400 font-light text-xs md:text-sm leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-
-          {/* Carousel Progress Tracking Line */}
-          <div className="w-full max-w-xs mx-auto h-[2px] bg-white/5 rounded-full overflow-hidden mt-6 relative">
-            <div
-              className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-150"
-              style={{ width: `${carouselProgress}%` }}
-            ></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section ref={clientsRef} id="clients" className="relative z-10 w-full px-4 md:px-8 pt-16 md:pt-24 pb-24 md:pb-32 flex flex-col items-center">
-        <div className="relative z-10 max-w-7xl mx-auto w-full animate-on-scroll">
-          <div className="text-center mb-16 md:mb-24">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
-              <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Resultados Reais</span>
-            </div>
-            <h2 className="font-outfit text-4xl md:text-5xl font-light text-white mb-6 tracking-tight">
-              Negócios que entenderam <span className="font-medium text-blue-400">o jogo</span>
+        <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="animate-on-scroll">
+            <SectionBadge live>Prospecção ativa</SectionBadge>
+            <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-6 tracking-tight leading-[1.05]">
+              Pare de esperar cliente.<br />
+              <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 bg-[length:200%_auto] animate-[sheen_8s_linear_infinite]">A Mindflow vai buscar.</span>
             </h2>
-            <p className="text-gray-400 text-sm md:text-base max-w-2xl mx-auto font-light leading-relaxed">
-              Tráfego sem landing boa é dinheiro jogado fora. Landing sem tráfego é página parada. Junto, vira máquina de venda. Quem entendeu isso, parou de improvisar.
+            <p className="text-gray-300 text-base md:text-lg font-light leading-relaxed mb-10 max-w-xl">
+              Indicação acaba, anúncio encarece e ninguém do time gosta de prospectar. A Mindflow encontra as empresas que você quer atender e começa a conversa por você.
+            </p>
+
+            <div className="space-y-3">
+              {prospectSteps.map((s, i) => {
+                const active = prospectStep === i;
+                return (
+                  <button
+                    key={i}
+                    onClick={() => setProspectStep(i)}
+                    className={`w-full text-left flex items-start gap-4 p-4 rounded-2xl border transition-all duration-500 cursor-pointer ${active ? 'border-blue-500/40 bg-blue-500/10' : 'border-white/5 bg-white/[0.02] hover:border-white/15'}`}
+                  >
+                    <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-outfit font-semibold transition-all duration-500 ${active ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(59,130,246,0.6)]' : 'bg-white/5 text-gray-500'}`}>{i + 1}</span>
+                    <span>
+                      <span className={`block font-outfit font-medium transition-colors ${active ? 'text-white' : 'text-gray-400'}`}>{s.title}</span>
+                      <span className={`block text-sm font-light transition-colors ${active ? 'text-gray-300' : 'text-gray-500'}`}>{s.desc}</span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Mock da tela de prospecção */}
+          <div className="animate-on-scroll" style={{ transitionDelay: '150ms' }}>
+            <div className="rounded-[2rem] border border-white/10 bg-[#080b14]/60 overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.5)]" style={glassStyle}>
+              <div className="h-10 px-5 flex items-center gap-1.5 border-b border-white/5 bg-white/[0.02]">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500/70"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/70"></div>
+                <span className="ml-3 text-[11px] text-gray-500 font-outfit tracking-wide">Mindflow · Prospecção</span>
+              </div>
+              <div className="p-5 md:p-7 min-h-[380px]">
+                <AnimatePresence mode="wait">
+                  {prospectStep === 0 && (
+                    <motion.div key="p0" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+                      <p className="text-[11px] uppercase tracking-[0.2em] text-gray-500 font-outfit mb-3">Nova busca</p>
+                      <div className="space-y-3 mb-6">
+                        <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/10">
+                          <Search className="w-4 h-4 text-blue-400 shrink-0" />
+                          <span className="text-white text-sm">Clínicas odontológicas</span>
+                        </div>
+                        <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-white/[0.04] border border-white/10">
+                          <MapPin className="w-4 h-4 text-blue-400 shrink-0" />
+                          <span className="text-white text-sm">Belo Horizonte, MG</span>
+                        </div>
+                      </div>
+                      <div className="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-center text-white text-sm font-outfit font-semibold">Buscar empresas</div>
+                      <p className="mt-5 text-xs text-gray-500 text-center">Ou suba a sua própria planilha de contatos.</p>
+                      <p className="mt-6 text-[11px] text-gray-500 flex items-center justify-center gap-2">
+                        Empresas reais, direto do <BrandLogo name="googleMaps" className="w-6 h-6" /> <span className="text-gray-300">Google Maps</span>
+                      </p>
+                    </motion.div>
+                  )}
+
+                  {prospectStep === 1 && (
+                    <motion.div key="p1" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+                      <div className="flex items-center justify-between mb-4">
+                        <p className="text-[11px] uppercase tracking-[0.2em] text-gray-500 font-outfit">Empresas encontradas</p>
+                        <span className="text-xs text-blue-300 font-outfit flex items-center gap-1.5"><BrandLogo name="googleMaps" className="w-5 h-5" rounded="rounded" /> 48 resultados</span>
+                      </div>
+                      <div className="space-y-2.5">
+                        {prospectCompanies.map((c, i) => (
+                          <motion.div key={c.name} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.12 }} className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-white/[0.03] border border-white/5">
+                            <div className="min-w-0">
+                              <p className="text-white text-sm truncate">{c.name}</p>
+                              <p className="text-[11px] text-gray-500 flex items-center gap-1 mt-0.5">
+                                <Star className="w-3 h-3 text-amber-400 fill-amber-400" /> {c.rating} · {c.reviews} avaliações
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-2 shrink-0 text-gray-500">
+                              <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                              <Globe className={`w-3.5 h-3.5 ${c.site ? 'text-emerald-400' : 'text-gray-700'}`} />
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {prospectStep === 2 && (
+                    <motion.div key="p2" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+                      <p className="text-[11px] uppercase tracking-[0.2em] text-gray-500 font-outfit mb-4">Abordagem para Odonto Prime</p>
+                      <div className="rounded-2xl rounded-tr-none bg-blue-600/20 border border-blue-500/20 p-4 mb-5">
+                        <p className="text-gray-200 text-sm leading-relaxed">
+                          Oi! Vi que a Odonto Prime tem nota 4,9 no Google, parabéns pelo trabalho. Notei que o agendamento ainda é só por telefone. A gente ajuda clínicas a marcar avaliações direto pelo WhatsApp, até fora do horário. Posso te mostrar como em 2 minutos?
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2 text-[11px] text-gray-500 mb-5">
+                        <Bot className="w-3.5 h-3.5 text-blue-400" /> Escrita pela IA com base no perfil da empresa
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="py-3 rounded-xl border border-white/10 text-center text-sm text-gray-300 font-outfit">Editar</div>
+                        <div className="py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-center text-sm text-white font-outfit font-semibold flex items-center justify-center gap-2">
+                          <Check className="w-4 h-4" /> Aprovar
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {prospectStep === 3 && (
+                    <motion.div key="p3" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.35 }}>
+                      <p className="text-[11px] uppercase tracking-[0.2em] text-gray-500 font-outfit mb-4">Conversa · Odonto Prime</p>
+                      <div className="space-y-3 mb-6">
+                        <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-none bg-blue-600/20 border border-blue-500/20 px-4 py-3 text-sm text-gray-200">Posso te mostrar como em 2 minutos?</div>
+                        <div className="max-w-[85%] rounded-2xl rounded-tl-none bg-white/[0.06] px-4 py-3 text-sm text-gray-200">Pode sim! Hoje a gente perde muito paciente à noite.</div>
+                        <div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-none bg-blue-600/20 border border-blue-500/20 px-4 py-3 text-sm text-gray-200">Perfeito. Qual o melhor horário para uma conversa rápida amanhã?</div>
+                      </div>
+                      <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10">
+                        <TrendingUp className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <span className="text-sm text-emerald-200">Lead quente movido para <span className="font-semibold">Qualificado</span></span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── IA no funil ── */}
+      <section id="funil" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-36 bg-[#02040a]/60 border-y border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14 md:mb-20 animate-on-scroll">
+            <SectionBadge live>A IA trabalha no seu funil</SectionBadge>
+            <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-6 tracking-tight leading-tight">
+              Seu vendedor só entra <span className="font-medium text-blue-400">para fechar</span>.
+            </h2>
+            <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+              Não é um chatbot que responde e esquece. A IA qualifica, move o cliente de etapa, marca horário e retoma quem sumiu. O funil anda sozinho, e você vê tudo em tempo real.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {testimonials.map((t) => (
-              <div key={t.id} className="group relative">
-                <div className="absolute -inset-0.5 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-[2.5rem] blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                <div className="relative p-8 rounded-[2.5rem] bg-[#080b14]/40 backdrop-blur-3xl border border-white/10 h-full flex flex-col transition-all duration-500 hover:translate-y-[-8px] hover:bg-[#0a0f1c]/60">
-                  <div className="flex items-center gap-1 mb-6">
-                    {[...Array(t.rating)].map((_, i) => (
-                      <svg key={i} className="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <p className="text-gray-300 font-light leading-relaxed mb-8 italic flex-grow">
-                    "{t.content}"
-                  </p>
-                  <div className="flex items-center gap-4 pt-6 border-t border-white/5">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-br from-blue-500/25 to-purple-500/25 border border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
-                      <span className="font-outfit font-semibold text-lg text-white">{t.letter}</span>
+          <div className="animate-on-scroll rounded-[2rem] border border-white/10 bg-[#080b14]/50 p-4 md:p-8" style={glassStyle}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+              {kanbanColumns.map((col, i) => {
+                const isCurrent = currentKanban.col === i;
+                return (
+                  <div key={col} className={`rounded-2xl p-3 md:p-4 min-h-[150px] md:min-h-[220px] border transition-colors duration-500 ${isCurrent ? 'border-blue-500/30 bg-blue-500/[0.06]' : 'border-white/5 bg-white/[0.02]'}`}>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className={`text-[10px] md:text-xs uppercase tracking-[0.15em] font-outfit font-semibold ${isCurrent ? 'text-blue-300' : 'text-gray-500'}`}>{col}</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/10"></span>
                     </div>
-                    <div className="text-left">
-                      <h4 className="text-white font-outfit font-medium text-sm">{t.company}</h4>
-                      <p className="text-gray-500 text-[10px] uppercase tracking-wider">{t.segment}</p>
+                    <div className="space-y-2">
+                      {isCurrent && (
+                        <motion.div layoutId="lead-card" transition={{ type: 'spring', damping: 24, stiffness: 220 }} className={`rounded-xl p-3 border ${i === 3 ? 'border-emerald-500/40 bg-emerald-500/15' : 'border-white/15 bg-white/[0.07]'} shadow-[0_10px_30px_rgba(0,0,0,0.4)]`}>
+                          <div className="flex items-center gap-2 mb-1.5">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-[10px] font-semibold text-white shrink-0">A</div>
+                            <span className="text-white text-xs md:text-sm font-medium truncate">Ana Souza</span>
+                          </div>
+                          <p className="text-[10px] md:text-[11px] text-gray-400 truncate flex items-center gap-1">Clareamento · <BrandLogo name="meta" className="w-4 h-4" rounded="rounded" /> Meta Ads</p>
+                        </motion.div>
+                      )}
+                      <div className="rounded-xl p-3 border border-white/5 bg-white/[0.02] opacity-50">
+                        <div className="h-2 w-2/3 rounded bg-white/10 mb-2"></div>
+                        <div className="h-2 w-1/2 rounded bg-white/5"></div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-5 md:mt-6 min-h-[64px] flex items-center gap-3 md:gap-4 px-4 md:px-5 py-4 rounded-2xl border border-white/10 bg-white/[0.03]">
+              <AnimatePresence mode="wait">
+                <motion.div key={kanbanStep} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="flex items-center gap-3 md:gap-4">
+                  <span className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center ${currentKanban.who === 'ia' ? 'bg-blue-600/30 text-blue-300' : 'bg-emerald-500/20 text-emerald-300'}`}>
+                    {currentKanban.who === 'ia' ? <Bot className="w-4 h-4" /> : <UserCheck className="w-4 h-4" />}
+                  </span>
+                  <p className="text-sm md:text-base text-gray-200 font-light">{currentKanban.text}</p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-8">
+            {[
+              { icon: Clock, title: 'Retoma quem sumiu', desc: 'Follow-up automático no momento certo, para nenhuma conversa morrer no “vou pensar”.' },
+              { icon: Target, title: 'Avisa o que está esfriando', desc: 'Um radar mostra quem está sem resposta e corre risco de ser perdido.' },
+              { icon: UserCheck, title: 'Chama você na hora certa', desc: 'Quando o cliente está pronto ou pede uma pessoa, seu time assume com todo o histórico.' },
+            ].map(({ icon: Icon, title, desc }, i) => (
+              <div key={title} className="animate-on-scroll p-6 rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-blue-500/40 transition-colors duration-500" style={{ ...glassStyle, transitionDelay: `${i * 100}ms` }}>
+                <Icon className="w-6 h-6 text-blue-400 mb-4" strokeWidth={1.75} />
+                <h3 className="text-white font-outfit font-medium text-lg mb-2">{title}</h3>
+                <p className="text-gray-400 font-light text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section ref={faqRef} id="faq" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 bg-[#02040a]">
+      {/* ── Conexão ── */}
+      <section id="conexao" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-36 overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none z-0">
+          <div className="animate-liquid absolute bottom-[0%] right-[10%] w-[50vw] h-[50vw] bg-purple-600/15 blur-[120px] opacity-30" style={{ animationDirection: 'reverse', animationDuration: '30s' }}></div>
+        </div>
+
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <div className="text-center mb-14 md:mb-20 animate-on-scroll">
+            <SectionBadge>Conecte do seu jeito</SectionBadge>
+            <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-6 tracking-tight leading-tight">
+              Seu WhatsApp, <span className="font-medium text-blue-400">do jeito que fizer sentido</span>
+            </h2>
+            <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+              Sem trocar de número se você não quiser, e sem medo de bloqueio quando chegar a hora de escalar.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {connections.map(({ icon: Icon, brand, badge, title, lead, points }, i) => (
+              <div key={title} className="animate-on-scroll group p-7 md:p-9 rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-blue-500/40 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden" style={{ ...glassStyle, transitionDelay: `${i * 120}ms` }}>
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="flex items-center gap-3">
+                      <BrandLogo name={brand} className="w-14 h-14" rounded="rounded-2xl" />
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-600/30 to-purple-600/30 border border-white/10 flex items-center justify-center">
+                        <Icon className="w-7 h-7 text-blue-300" strokeWidth={1.75} />
+                      </div>
+                    </div>
+                    <span className="text-[10px] tracking-[0.2em] uppercase font-bold px-3 py-1.5 rounded-full bg-white/[0.04] border border-blue-500/20 text-blue-300">{badge}</span>
+                  </div>
+                  <h3 className="font-outfit text-2xl md:text-3xl text-white font-light tracking-tight mb-3">{title}</h3>
+                  <p className="text-gray-300 font-light leading-relaxed mb-7">{lead}</p>
+                  <ul className="space-y-3">
+                    {points.map((p) => (
+                      <li key={p} className="flex items-start gap-3 text-sm text-gray-400 font-light">
+                        <Check className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" strokeWidth={2.5} /> {p}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p className="animate-on-scroll text-center text-gray-400 font-light mt-10">
+            Comece por um e mude quando quiser.{' '}
+            <span className="inline-flex items-center gap-1.5 align-middle"><BrandLogo name="instagram" className="w-6 h-6" /><BrandLogo name="facebook" className="w-6 h-6" /></span>{' '}
+            <span className="text-white">Instagram e Facebook</span> caem na mesma caixa de entrada.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Comparação ── */}
+      <section id="diferenca" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 bg-[#02040a]/60 border-y border-white/5">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14 md:mb-16 animate-on-scroll">
+            <SectionBadge>Não é mais um CRM</SectionBadge>
+            <h2 className="font-outfit text-4xl md:text-6xl font-light text-white tracking-tight leading-[1.1]">
+              CRM é onde você anota a venda.<br />
+              <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 bg-[length:200%_auto] animate-[sheen_8s_linear_infinite]">A Mindflow faz ela acontecer.</span>
+            </h2>
+          </div>
+
+          <div className="animate-on-scroll rounded-[2rem] border border-white/10 bg-[#080b14]/50 overflow-hidden" style={glassStyle}>
+            <div className="grid grid-cols-[1.4fr_1fr_1fr_1.1fr] md:grid-cols-[2fr_1fr_1fr_1.2fr] text-center border-b border-white/10">
+              <div className="p-3 md:p-5"></div>
+              <div className="p-3 md:p-5 text-[10px] md:text-xs uppercase tracking-[0.15em] text-gray-500 font-outfit font-semibold">CRM comum</div>
+              <div className="p-3 md:p-5 text-[10px] md:text-xs uppercase tracking-[0.15em] text-gray-500 font-outfit font-semibold">Chatbot</div>
+              <div className="p-3 md:p-5 text-[10px] md:text-xs uppercase tracking-[0.15em] text-blue-300 font-outfit font-semibold bg-blue-500/10">Mindflow</div>
+            </div>
+            {comparison.map((row, i) => (
+              <div key={row.label} className={`grid grid-cols-[1.4fr_1fr_1fr_1.1fr] md:grid-cols-[2fr_1fr_1fr_1.2fr] items-center text-center ${i < comparison.length - 1 ? 'border-b border-white/5' : ''}`}>
+                <div className="p-3 md:p-5 text-left text-xs md:text-base text-gray-200 font-light">{row.label}</div>
+                <div className="p-2 md:p-5"><ComparisonCell value={row.crm} /></div>
+                <div className="p-2 md:p-5"><ComparisonCell value={row.bot} /></div>
+                <div className="p-2 md:p-5 bg-blue-500/10 h-full flex items-center justify-center"><ComparisonCell value={row.mf} highlight /></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Recursos ── */}
+      <section id="recursos" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-14 md:mb-20 animate-on-scroll">
+            <SectionBadge>Tudo numa assinatura</SectionBadge>
+            <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-6 tracking-tight leading-tight">
+              Troque cinco ferramentas <span className="font-medium text-blue-400">por uma</span>
+            </h2>
+            <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
+              Atendimento, funil, agenda, propostas e campanhas conversando entre si. Sem planilha paralela, sem cinco mensalidades.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {features.map(({ icon: Icon, brands, title, desc }, i) => (
+              <div key={title} className="animate-on-scroll group p-6 rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-blue-500/40 hover:bg-white/[0.06] hover:-translate-y-2 transition-all duration-500" style={{ ...glassStyle, transitionDelay: `${(i % 4) * 80}ms` }}>
+                <div className="flex items-center gap-3 mb-4">
+                  <Icon className="w-6 h-6 text-blue-400 group-hover:scale-110 transition-transform" strokeWidth={1.75} />
+                  {brands && (
+                    <span className="flex items-center gap-1.5 pl-3 border-l border-white/10">
+                      {brands.map((b) => <BrandLogo key={b} name={b} className="w-7 h-7" />)}
+                    </span>
+                  )}
+                </div>
+                <h3 className="text-white font-outfit font-medium text-lg mb-2 group-hover:text-blue-300 transition-colors">{title}</h3>
+                <p className="text-gray-400 font-light text-sm leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section id="faq" className="relative z-10 w-full px-4 md:px-8 py-24 md:py-32 bg-[#02040a]">
         <div className="max-w-4xl mx-auto w-full">
           <div className="text-center mb-16 animate-on-scroll">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6 backdrop-blur-md">
-              <span className="text-[11px] tracking-[0.3em] uppercase text-gray-400 font-outfit font-medium">Antes de Falar com a Gente</span>
-            </div>
+            <SectionBadge>Dúvidas</SectionBadge>
             <h2 className="font-outfit text-4xl md:text-5xl font-light text-white mb-6 tracking-tight">
               O que <span className="font-medium text-blue-400">todo mundo</span> pergunta
             </h2>
@@ -871,34 +851,17 @@ const LandingPage = ({ onOpenModal }) => {
 
           <div className="space-y-4 animate-on-scroll">
             {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className={`group border transition-all duration-500 rounded-3xl overflow-hidden ${activeFaq === index
-                  ? 'bg-white/[0.04] border-white/20'
-                  : 'bg-white/[0.01] border-white/5 hover:border-white/10'
-                  }`}
-              >
-                <button
-                  onClick={() => setActiveFaq(activeFaq === index ? null : index)}
-                  className="w-full px-8 py-6 flex items-center justify-between text-left cursor-pointer"
-                >
-                  <span className={`font-outfit text-base md:text-lg transition-colors duration-300 ${activeFaq === index ? 'text-white font-medium' : 'text-gray-400 group-hover:text-gray-300'}`}>
-                    {faq.question}
-                  </span>
-                  <div className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-500 ${activeFaq === index
-                    ? 'border-blue-500 bg-blue-500 text-white rotate-180'
-                    : 'border-white/10 text-gray-500 group-hover:border-white/20'
-                    }`}>
+              <div key={index} className={`group border transition-all duration-500 rounded-3xl overflow-hidden ${activeFaq === index ? 'bg-white/[0.04] border-white/20' : 'bg-white/[0.01] border-white/5 hover:border-white/10'}`}>
+                <button onClick={() => setActiveFaq(activeFaq === index ? null : index)} className="w-full px-6 md:px-8 py-6 flex items-center justify-between gap-4 text-left cursor-pointer">
+                  <span className={`font-outfit text-base md:text-lg transition-colors duration-300 ${activeFaq === index ? 'text-white font-medium' : 'text-gray-400 group-hover:text-gray-300'}`}>{faq.question}</span>
+                  <div className={`shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-500 ${activeFaq === index ? 'border-blue-500 bg-blue-500 text-white rotate-180' : 'border-white/10 text-gray-500 group-hover:border-white/20'}`}>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
                 </button>
-                <div className={`transition-all duration-500 ease-in-out overflow-hidden ${activeFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                  }`}>
-                  <div className="px-8 pb-8 text-gray-400 font-light leading-relaxed border-t border-white/5 pt-4">
-                    {faq.answer}
-                  </div>
+                <div className={`transition-all duration-500 ease-in-out overflow-hidden ${activeFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div className="px-6 md:px-8 pb-8 text-gray-400 font-light leading-relaxed border-t border-white/5 pt-4">{faq.answer}</div>
                 </div>
               </div>
             ))}
@@ -906,29 +869,41 @@ const LandingPage = ({ onOpenModal }) => {
         </div>
       </section>
 
-      {/* Footer / CTA Section */}
-      <footer ref={footerRef} className="relative z-10 w-full px-4 md:px-8 py-20 mt-20 border-t border-white/5 bg-[#02040a]/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+      {/* ── CTA final ── */}
+      <section className="relative z-10 w-full px-4 md:px-8 py-28 md:py-40 overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+        <div className="relative z-10 max-w-3xl mx-auto text-center animate-on-scroll">
+          <h2 className="font-outfit text-4xl md:text-6xl font-light text-white mb-6 tracking-tight leading-tight">
+            Cada mensagem sem resposta<br className="hidden md:block" /> é uma <span className="font-medium text-blue-400">venda para o concorrente</span>.
+          </h2>
+          <p className="text-gray-400 text-base md:text-lg font-light leading-relaxed mb-10 max-w-xl mx-auto">
+            Coloque a Mindflow para trabalhar e deixe seu time só com o que importa: fechar.
+          </p>
+          <PrimaryButton onClick={onOpenModal}>QUERO A MINDFLOW</PrimaryButton>
+          <p className="mt-6 text-xs text-gray-500 flex items-center justify-center gap-2">
+            <ShieldCheck className="w-4 h-4" /> Implantação feita junto com a nossa equipe
+          </p>
+        </div>
+      </section>
+
+      {/* Rodapé */}
+      <footer className="relative z-10 w-full px-4 md:px-8 py-16 border-t border-white/5 bg-[#02040a]/80 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
-            <img src="/logo-mindflow.png" alt="Mindflow" className="h-10 mb-6 opacity-80" />
+            <img src="/logo-mindflow.png" alt="Mindflow" className="h-10 mb-5 opacity-80" />
             <p className="text-gray-500 text-sm max-w-xs leading-relaxed font-light">
-              Especialistas em tráfego pago e landing pages premium. Foco no que importa: levar o cliente certo até você, e fazer ele comprar.
+              A máquina de vendas com IA no WhatsApp. Encontra o cliente, atende na hora e conduz até a venda.
             </p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-8 text-xs font-outfit tracking-widest text-gray-400 uppercase">
-            <a href="#" className="hover:text-white transition-colors">Termos de Uso</a>
-            <a href="#" className="hover:text-white transition-colors">Privacidade</a>
-            <button onClick={onOpenModal} className="hover:text-white transition-colors">Falar com Especialista</button>
+            <a href="#jornada" className="hover:text-white transition-colors">Como funciona</a>
+            <a href="#faq" className="hover:text-white transition-colors">Dúvidas</a>
+            <button onClick={onOpenModal} className="hover:text-white transition-colors uppercase tracking-widest cursor-pointer">Quero a Mindflow</button>
           </div>
 
-          <div className="flex flex-col items-center md:items-end gap-2">
-            <div className="text-gray-600 text-[10px] tracking-[0.2em] font-light uppercase">
-              © 2026 MINDFLOW AI.
-            </div>
-            <div className="text-gray-700 text-[9px] tracking-widest font-light uppercase">
-              CNPJ 00.000.000/0001-00
-            </div>
+          <div className="text-gray-600 text-[10px] tracking-[0.2em] font-light uppercase">
+            © 2026 Mindflow
           </div>
         </div>
       </footer>
